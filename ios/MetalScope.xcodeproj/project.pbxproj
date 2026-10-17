@@ -1,0 +1,595 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1001 /* MetalScopeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2001 /* MetalScopeApp.swift */; };
+		1002 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2002 /* ContentView.swift */; };
+		1003 /* ColorTokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2003 /* ColorTokens.swift */; };
+		1004 /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2004 /* ThemeManager.swift */; };
+		1005 /* MetalType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2005 /* MetalType.swift */; };
+		1006 /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2006 /* Currency.swift */; };
+		1007 /* WeightUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2007 /* WeightUnit.swift */; };
+		1008 /* TimeRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2008 /* TimeRange.swift */; };
+		1009 /* PriceQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2009 /* PriceQuote.swift */; };
+		1010 /* HistoricalRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2010 /* HistoricalRecord.swift */; };
+		1011 /* MarketInsight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2011 /* MarketInsight.swift */; };
+		1012 /* CurrencyFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2012 /* CurrencyFormatter.swift */; };
+		1013 /* UnitConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2013 /* UnitConverter.swift */; };
+		1014 /* HapticManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2014 /* HapticManager.swift */; };
+		1015 /* RealMarketDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2015 /* RealMarketDataSource.swift */; };
+		1016 /* DemoDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2016 /* DemoDataProvider.swift */; };
+		1017 /* MetalRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2017 /* MetalRepository.swift */; };
+		1018 /* PreferencesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2018 /* PreferencesRepository.swift */; };
+		1019 /* WatchlistRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2019 /* WatchlistRepository.swift */; };
+		1020 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2020 /* MainViewModel.swift */; };
+		1021 /* SparklineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2021 /* SparklineView.swift */; };
+		1022 /* TimeRangeSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2022 /* TimeRangeSelectorView.swift */; };
+		1023 /* InteractiveChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2023 /* InteractiveChartView.swift */; };
+		1024 /* ComparisonChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2024 /* ComparisonChartView.swift */; };
+		1025 /* FeaturedGoldCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2025 /* FeaturedGoldCardView.swift */; };
+		1026 /* MetalPriceCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2026 /* MetalPriceCardView.swift */; };
+		1027 /* QuickInsightCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2027 /* QuickInsightCardView.swift */; };
+		1028 /* MarketStatusBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2028 /* MarketStatusBadgeView.swift */; };
+		1029 /* HeaderBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2029 /* HeaderBarView.swift */; };
+		1030 /* CurrencyPickerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2030 /* CurrencyPickerSheet.swift */; };
+		1031 /* UnitPickerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2031 /* UnitPickerSheet.swift */; };
+		1032 /* HomeScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2032 /* HomeScreenView.swift */; };
+		1033 /* MarketsScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2033 /* MarketsScreenView.swift */; };
+		1034 /* ChartsScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2034 /* ChartsScreenView.swift */; };
+		1035 /* HistoryScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2035 /* HistoryScreenView.swift */; };
+		1036 /* MetalDetailScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2036 /* MetalDetailScreenView.swift */; };
+		1037 /* WatchlistScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2037 /* WatchlistScreenView.swift */; };
+		1038 /* SearchScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2038 /* SearchScreenView.swift */; };
+		1039 /* SettingsScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2039 /* SettingsScreenView.swift */; };
+		1040 /* DataSourcesScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2040 /* DataSourcesScreenView.swift */; };
+		1041 /* AboutScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2041 /* AboutScreenView.swift */; };
+		1042 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2042 /* Assets.xcassets */; };
+		1050 /* CurrencyFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2050 /* CurrencyFormatterTests.swift */; };
+		1051 /* UnitConverterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2051 /* UnitConverterTests.swift */; };
+		1052 /* MetalModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2052 /* MetalModelTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		0001 /* MetalScope.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MetalScope.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0002 /* MetalScopeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MetalScopeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		2001 /* MetalScopeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalScopeApp.swift; sourceTree = "<group>"; };
+		2002 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		2003 /* ColorTokens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorTokens.swift; sourceTree = "<group>"; };
+		2004 /* ThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
+		2005 /* MetalType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalType.swift; sourceTree = "<group>"; };
+		2006 /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
+		2007 /* WeightUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightUnit.swift; sourceTree = "<group>"; };
+		2008 /* TimeRange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeRange.swift; sourceTree = "<group>"; };
+		2009 /* PriceQuote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceQuote.swift; sourceTree = "<group>"; };
+		2010 /* HistoricalRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoricalRecord.swift; sourceTree = "<group>"; };
+		2011 /* MarketInsight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketInsight.swift; sourceTree = "<group>"; };
+		2012 /* CurrencyFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyFormatter.swift; sourceTree = "<group>"; };
+		2013 /* UnitConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitConverter.swift; sourceTree = "<group>"; };
+		2014 /* HapticManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticManager.swift; sourceTree = "<group>"; };
+		2015 /* RealMarketDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealMarketDataSource.swift; sourceTree = "<group>"; };
+		2016 /* DemoDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoDataProvider.swift; sourceTree = "<group>"; };
+		2017 /* MetalRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalRepository.swift; sourceTree = "<group>"; };
+		2018 /* PreferencesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesRepository.swift; sourceTree = "<group>"; };
+		2019 /* WatchlistRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistRepository.swift; sourceTree = "<group>"; };
+		2020 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
+		2021 /* SparklineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SparklineView.swift; sourceTree = "<group>"; };
+		2022 /* TimeRangeSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeRangeSelectorView.swift; sourceTree = "<group>"; };
+		2023 /* InteractiveChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractiveChartView.swift; sourceTree = "<group>"; };
+		2024 /* ComparisonChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComparisonChartView.swift; sourceTree = "<group>"; };
+		2025 /* FeaturedGoldCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturedGoldCardView.swift; sourceTree = "<group>"; };
+		2026 /* MetalPriceCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalPriceCardView.swift; sourceTree = "<group>"; };
+		2027 /* QuickInsightCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickInsightCardView.swift; sourceTree = "<group>"; };
+		2028 /* MarketStatusBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketStatusBadgeView.swift; sourceTree = "<group>"; };
+		2029 /* HeaderBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderBarView.swift; sourceTree = "<group>"; };
+		2030 /* CurrencyPickerSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyPickerSheet.swift; sourceTree = "<group>"; };
+		2031 /* UnitPickerSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitPickerSheet.swift; sourceTree = "<group>"; };
+		2032 /* HomeScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenView.swift; sourceTree = "<group>"; };
+		2033 /* MarketsScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketsScreenView.swift; sourceTree = "<group>"; };
+		2034 /* ChartsScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartsScreenView.swift; sourceTree = "<group>"; };
+		2035 /* HistoryScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryScreenView.swift; sourceTree = "<group>"; };
+		2036 /* MetalDetailScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalDetailScreenView.swift; sourceTree = "<group>"; };
+		2037 /* WatchlistScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistScreenView.swift; sourceTree = "<group>"; };
+		2038 /* SearchScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchScreenView.swift; sourceTree = "<group>"; };
+		2039 /* SettingsScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsScreenView.swift; sourceTree = "<group>"; };
+		2040 /* DataSourcesScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSourcesScreenView.swift; sourceTree = "<group>"; };
+		2041 /* AboutScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutScreenView.swift; sourceTree = "<group>"; };
+		2042 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		2043 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2050 /* CurrencyFormatterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyFormatterTests.swift; sourceTree = "<group>"; };
+		2051 /* UnitConverterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitConverterTests.swift; sourceTree = "<group>"; };
+		2052 /* MetalModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalModelTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		3001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3002 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		4000 = {
+			isa = PBXGroup;
+			children = (
+				4001 /* MetalScope */,
+				0001 /* MetalScope.app */,
+				0002 /* MetalScopeTests.xctest */,
+			);
+			sourceTree = "<group>";
+		};
+		4001 /* MetalScope */ = {
+			isa = PBXGroup;
+			children = (
+				4002 /* App */,
+				4003 /* Theme */,
+				4004 /* Models */,
+				4005 /* Utilities */,
+				4006 /* Services */,
+				4007 /* Repositories */,
+				4008 /* ViewModels */,
+				4009 /* Components */,
+				4010 /* Screens */,
+				4011 /* Resources */,
+				4012 /* Tests */,
+			);
+			path = MetalScope;
+			sourceTree = "<group>";
+		};
+		4002 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				2001 /* MetalScopeApp.swift */,
+				2002 /* ContentView.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		4003 /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				2003 /* ColorTokens.swift */,
+				2004 /* ThemeManager.swift */,
+			);
+			path = Theme;
+			sourceTree = "<group>";
+		};
+		4004 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				2005 /* MetalType.swift */,
+				2006 /* Currency.swift */,
+				2007 /* WeightUnit.swift */,
+				2008 /* TimeRange.swift */,
+				2009 /* PriceQuote.swift */,
+				2010 /* HistoricalRecord.swift */,
+				2011 /* MarketInsight.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		4005 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				2012 /* CurrencyFormatter.swift */,
+				2013 /* UnitConverter.swift */,
+				2014 /* HapticManager.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		4006 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				2015 /* RealMarketDataSource.swift */,
+				2016 /* DemoDataProvider.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		4007 /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+				2017 /* MetalRepository.swift */,
+				2018 /* PreferencesRepository.swift */,
+				2019 /* WatchlistRepository.swift */,
+			);
+			path = Repositories;
+			sourceTree = "<group>";
+		};
+		4008 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				2020 /* MainViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		4009 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				2021 /* SparklineView.swift */,
+				2022 /* TimeRangeSelectorView.swift */,
+				2023 /* InteractiveChartView.swift */,
+				2024 /* ComparisonChartView.swift */,
+				2025 /* FeaturedGoldCardView.swift */,
+				2026 /* MetalPriceCardView.swift */,
+				2027 /* QuickInsightCardView.swift */,
+				2028 /* MarketStatusBadgeView.swift */,
+				2029 /* HeaderBarView.swift */,
+				2030 /* CurrencyPickerSheet.swift */,
+				2031 /* UnitPickerSheet.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		4010 /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				2032 /* HomeScreenView.swift */,
+				2033 /* MarketsScreenView.swift */,
+				2034 /* ChartsScreenView.swift */,
+				2035 /* HistoryScreenView.swift */,
+				2036 /* MetalDetailScreenView.swift */,
+				2037 /* WatchlistScreenView.swift */,
+				2038 /* SearchScreenView.swift */,
+				2039 /* SettingsScreenView.swift */,
+				2040 /* DataSourcesScreenView.swift */,
+				2041 /* AboutScreenView.swift */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
+		4011 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				2042 /* Assets.xcassets */,
+				2043 /* Info.plist */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		4012 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				2050 /* CurrencyFormatterTests.swift */,
+				2051 /* UnitConverterTests.swift */,
+				2052 /* MetalModelTests.swift */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		5001 /* MetalScope */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6001 /* Build configuration list for PBXNativeTarget "MetalScope" */;
+			buildPhases = (
+				7001 /* Sources */,
+				3001 /* Frameworks */,
+				8001 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MetalScope;
+			productName = MetalScope;
+			productReference = 0001 /* MetalScope.app */;
+			productType = "com.apple.product-type.application";
+		};
+		5002 /* MetalScopeTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6002 /* Build configuration list for PBXNativeTarget "MetalScopeTests" */;
+			buildPhases = (
+				7002 /* Sources */,
+				3002 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MetalScopeTests;
+			productName = MetalScopeTests;
+			productReference = 0002 /* MetalScopeTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		9001 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					5001 = {
+						CreatedOnToolsVersion = 15.0;
+					};
+					5002 = {
+						CreatedOnToolsVersion = 15.0;
+						TestTargetID = 5001;
+					};
+				};
+			};
+			buildConfigurationList = 6000 /* Build configuration list for PBXProject "MetalScope" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 4000;
+			productRefGroup = 4000;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				5001 /* MetalScope */,
+				5002 /* MetalScopeTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8001 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1042 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		7001 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1001 /* MetalScopeApp.swift in Sources */,
+				1002 /* ContentView.swift in Sources */,
+				1003 /* ColorTokens.swift in Sources */,
+				1004 /* ThemeManager.swift in Sources */,
+				1005 /* MetalType.swift in Sources */,
+				1006 /* Currency.swift in Sources */,
+				1007 /* WeightUnit.swift in Sources */,
+				1008 /* TimeRange.swift in Sources */,
+				1009 /* PriceQuote.swift in Sources */,
+				1010 /* HistoricalRecord.swift in Sources */,
+				1011 /* MarketInsight.swift in Sources */,
+				1012 /* CurrencyFormatter.swift in Sources */,
+				1013 /* UnitConverter.swift in Sources */,
+				1014 /* HapticManager.swift in Sources */,
+				1015 /* RealMarketDataSource.swift in Sources */,
+				1016 /* DemoDataProvider.swift in Sources */,
+				1017 /* MetalRepository.swift in Sources */,
+				1018 /* PreferencesRepository.swift in Sources */,
+				1019 /* WatchlistRepository.swift in Sources */,
+				1020 /* MainViewModel.swift in Sources */,
+				1021 /* SparklineView.swift in Sources */,
+				1022 /* TimeRangeSelectorView.swift in Sources */,
+				1023 /* InteractiveChartView.swift in Sources */,
+				1024 /* ComparisonChartView.swift in Sources */,
+				1025 /* FeaturedGoldCardView.swift in Sources */,
+				1026 /* MetalPriceCardView.swift in Sources */,
+				1027 /* QuickInsightCardView.swift in Sources */,
+				1028 /* MarketStatusBadgeView.swift in Sources */,
+				1029 /* HeaderBarView.swift in Sources */,
+				1030 /* CurrencyPickerSheet.swift in Sources */,
+				1031 /* UnitPickerSheet.swift in Sources */,
+				1032 /* HomeScreenView.swift in Sources */,
+				1033 /* MarketsScreenView.swift in Sources */,
+				1034 /* ChartsScreenView.swift in Sources */,
+				1035 /* HistoryScreenView.swift in Sources */,
+				1036 /* MetalDetailScreenView.swift in Sources */,
+				1037 /* WatchlistScreenView.swift in Sources */,
+				1038 /* SearchScreenView.swift in Sources */,
+				1039 /* SettingsScreenView.swift in Sources */,
+				1040 /* DataSourcesScreenView.swift in Sources */,
+				1041 /* AboutScreenView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7002 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1050 /* CurrencyFormatterTests.swift in Sources */,
+				1051 /* UnitConverterTests.swift in Sources */,
+				1052 /* MetalModelTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		9101 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		9102 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		9201 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = MetalScope/Resources/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = MetalScope;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = org.metalscope.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		9202 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = MetalScope/Resources/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = MetalScope;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = org.metalscope.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		9301 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = org.metalscope.app.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MetalScope.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MetalScope";
+			};
+			name = Debug;
+		};
+		9302 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = org.metalscope.app.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MetalScope.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MetalScope";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		6000 /* Build configuration list for PBXProject "MetalScope" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9101 /* Debug */,
+				9102 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6001 /* Build configuration list for PBXNativeTarget "MetalScope" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9201 /* Debug */,
+				9202 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6002 /* Build configuration list for PBXNativeTarget "MetalScopeTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9301 /* Debug */,
+				9302 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+	};
+	rootObject = 9001 /* Project object */;
+}

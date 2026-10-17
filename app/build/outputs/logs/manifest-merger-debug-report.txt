@@ -1,0 +1,361 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /home/huydo/Downloads/metalcharts/app/src/main/AndroidManifest.xml:2:1-28:12
+INJECTED from /home/huydo/Downloads/metalcharts/app/src/main/AndroidManifest.xml:2:1-28:12
+INJECTED from /home/huydo/Downloads/metalcharts/app/src/main/AndroidManifest.xml:2:1-28:12
+INJECTED from /home/huydo/Downloads/metalcharts/app/src/main/AndroidManifest.xml:2:1-28:12
+MERGED from [androidx.navigation:navigation-common:2.8.5] /home/huydo/.gradle/caches/8.14.3/transforms/0c499c074e3eed84ed8407f7e4dd07df/transformed/navigation-common-2.8.5/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.navigation:navigation-runtime:2.8.5] /home/huydo/.gradle/caches/8.14.3/transforms/a603d40b0ce811cc036a8c7a9d4bd45e/transformed/navigation-runtime-2.8.5/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.navigation:navigation-common-ktx:2.8.5] /home/huydo/.gradle/caches/8.14.3/transforms/ff37f2a5c7bd58bc4b923df280308430/transformed/navigation-common-ktx-2.8.5/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.navigation:navigation-runtime-ktx:2.8.5] /home/huydo/.gradle/caches/8.14.3/transforms/349e8e382cce2b726b6ed12da8645c4d/transformed/navigation-runtime-ktx-2.8.5/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.navigation:navigation-compose:2.8.5] /home/huydo/.gradle/caches/8.14.3/transforms/dceed5154279f2d67325eba2f1c3f1eb/transformed/navigation-compose-2.8.5/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.material3:material3-android:1.3.1] /home/huydo/.gradle/caches/8.14.3/transforms/3b1529c3aa8ae2f8cdd842fcbfb14ec5/transformed/material3-release/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.compose.material:material-android:1.7.6] /home/huydo/.gradle/caches/8.14.3/transforms/91815557300aa7c5537201baed6daac4/transformed/material-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.material:material-ripple-android:1.7.6] /home/huydo/.gradle/caches/8.14.3/transforms/17b4638b205b5a4125208160040a557b/transformed/material-ripple-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.foundation:foundation-android:1.7.6] /home/huydo/.gradle/caches/8.14.3/transforms/b0a99b72105d16f541a11cedb355afba/transformed/foundation-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.foundation:foundation-layout-android:1.7.6] /home/huydo/.gradle/caches/8.14.3/transforms/09f49b5451ba22a8ebc3a953b4777c8d/transformed/foundation-layout-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.animation:animation-core-android:1.7.6] /home/huydo/.gradle/caches/8.14.3/transforms/3324e412f5301c9ba2beeed639d9da8a/transformed/animation-core-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.animation:animation-android:1.7.6] /home/huydo/.gradle/caches/8.14.3/transforms/090e0fe1a88a878e5ff186f105d0206f/transformed/animation-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-tooling-data-android:1.7.6] /home/huydo/.gradle/caches/8.14.3/transforms/7746e7c18944e3ff6bb3dc01697853d6/transformed/ui-tooling-data-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-unit-android:1.7.6] /home/huydo/.gradle/caches/8.14.3/transforms/818854e8f57108c7749d2ec7e225a17a/transformed/ui-unit-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-geometry-android:1.7.6] /home/huydo/.gradle/caches/8.14.3/transforms/9043a2f2e527aa8df210b7bb9f941199/transformed/ui-geometry-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-util-android:1.7.6] /home/huydo/.gradle/caches/8.14.3/transforms/11c79b7c429c1b1b0ff6bbfcf7edcc81/transformed/ui-util-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-text-android:1.7.6] /home/huydo/.gradle/caches/8.14.3/transforms/c38b04a181a9397647077b266f997173/transformed/ui-text-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-tooling-preview-android:1.7.6] /home/huydo/.gradle/caches/8.14.3/transforms/e4b63bfad2ae3c24912208e27dbb9919/transformed/ui-tooling-preview-release/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.compose.ui:ui-tooling-android:1.7.6] /home/huydo/.gradle/caches/8.14.3/transforms/d92ef484a5bf5a75ada26fa91ccf7aef/transformed/ui-tooling-release/AndroidManifest.xml:17:1-28:12
+MERGED from [androidx.compose.ui:ui-graphics-android:1.7.6] /home/huydo/.gradle/caches/8.14.3/transforms/8425ca85ad2468c0d4431f2261da0dab/transformed/ui-graphics-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.autofill:autofill:1.0.0] /home/huydo/.gradle/caches/8.14.3/transforms/b89deac545c16341645dd4fbdd7201d5/transformed/autofill-1.0.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.graphics:graphics-path:1.0.1] /home/huydo/.gradle/caches/8.14.3/transforms/1f03ae6a2cfc004a28eb8dec2e10383c/transformed/graphics-path-1.0.1/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.emoji2:emoji2:1.3.0] /home/huydo/.gradle/caches/8.14.3/transforms/cd7751744bbedb7d87b83dc3b3b9dca0/transformed/emoji2-1.3.0/AndroidManifest.xml:17:1-35:12
+MERGED from [androidx.core:core:1.15.0] /home/huydo/.gradle/caches/8.14.3/transforms/e2ab9e1fa5c5f02ab85a2cf17c4b3318/transformed/core-1.15.0/AndroidManifest.xml:17:1-30:12
+MERGED from [androidx.savedstate:savedstate-ktx:1.2.1] /home/huydo/.gradle/caches/8.14.3/transforms/1d060e2f76c1cbc5fbc826d385ebc342/transformed/savedstate-ktx-1.2.1/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.savedstate:savedstate:1.2.1] /home/huydo/.gradle/caches/8.14.3/transforms/5546560b9f401afeeff97f44bedce60a/transformed/savedstate-1.2.1/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-process:2.8.7] /home/huydo/.gradle/caches/8.14.3/transforms/edfe916c1d8917ec7393407cfd2d1c48/transformed/lifecycle-process-2.8.7/AndroidManifest.xml:17:1-35:12
+MERGED from [androidx.lifecycle:lifecycle-runtime-compose-android:2.8.7] /home/huydo/.gradle/caches/8.14.3/transforms/e53777a13057acee3a5d77c28281482f/transformed/lifecycle-runtime-compose-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.8.7] /home/huydo/.gradle/caches/8.14.3/transforms/290993dac2e75bc1033c96e1e2fb600b/transformed/lifecycle-livedata-core-2.8.7/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-android:2.8.7] /home/huydo/.gradle/caches/8.14.3/transforms/9c32b9c3773a7aa881908ca58e91ee98/transformed/lifecycle-viewmodel-release/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-runtime-android:2.8.7] /home/huydo/.gradle/caches/8.14.3/transforms/0267583df059da8485ec26687b95c461/transformed/lifecycle-runtime-release/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.7] /home/huydo/.gradle/caches/8.14.3/transforms/f12e978b86ef0d1c329795f378924061/transformed/lifecycle-viewmodel-ktx-2.8.7/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.8.7] /home/huydo/.gradle/caches/8.14.3/transforms/46e69e37352712d103d6a17b1b850da2/transformed/lifecycle-viewmodel-savedstate-2.8.7/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-runtime-ktx-android:2.8.7] /home/huydo/.gradle/caches/8.14.3/transforms/ff3af88a0ed6f05c4437d2410b4db7eb/transformed/lifecycle-runtime-ktx-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-compose-android:2.8.7] /home/huydo/.gradle/caches/8.14.3/transforms/a97ffff6c4fd10b1fb157752bfa5db91/transformed/lifecycle-viewmodel-compose-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.material:material-icons-extended-android:1.7.6] /home/huydo/.gradle/caches/8.14.3/transforms/79dc704df7a9f44f84ec2fe68ee66e29/transformed/material-icons-extended-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.material:material-icons-core-android:1.7.6] /home/huydo/.gradle/caches/8.14.3/transforms/2aa39a168f8e34cd5a40e3acbf0fa56d/transformed/material-icons-core-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-android:1.7.6] /home/huydo/.gradle/caches/8.14.3/transforms/2747aad4f917f3838976cad130cc8d30/transformed/ui-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-test-manifest:1.7.6] /home/huydo/.gradle/caches/8.14.3/transforms/2729107e20e718fbd61c44ac15d803af/transformed/ui-test-manifest-1.7.6/AndroidManifest.xml:17:1-28:12
+MERGED from [androidx.activity:activity:1.10.0] /home/huydo/.gradle/caches/8.14.3/transforms/6f3e9fdd9392185f8be26841801ce135/transformed/activity-1.10.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.activity:activity-ktx:1.10.0] /home/huydo/.gradle/caches/8.14.3/transforms/4c90aaa77b94316ad9d6de2d12722b3d/transformed/activity-ktx-1.10.0/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.activity:activity-compose:1.10.0] /home/huydo/.gradle/caches/8.14.3/transforms/bf433da04d9e85f1a43931ab7a0e581a/transformed/activity-compose-1.10.0/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.customview:customview-poolingcontainer:1.0.0] /home/huydo/.gradle/caches/8.14.3/transforms/7afa101bcf1dde9648b14055d17e3ae0/transformed/customview-poolingcontainer-1.0.0/AndroidManifest.xml:17:1-23:12
+MERGED from [androidx.core:core-ktx:1.15.0] /home/huydo/.gradle/caches/8.14.3/transforms/ac50230619ab0fd2d6accb53bf2be97c/transformed/core-ktx-1.15.0/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.datastore:datastore-core-android:1.1.2] /home/huydo/.gradle/caches/8.14.3/transforms/1c7b832e0e15656e0d9bf700c3493eb5/transformed/datastore-core-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.datastore:datastore-android:1.1.2] /home/huydo/.gradle/caches/8.14.3/transforms/077762238ace5031e1c1ee120bae50db/transformed/datastore-release/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.datastore:datastore-preferences-android:1.1.2] /home/huydo/.gradle/caches/8.14.3/transforms/db944f30d162e83e62274aa22a07c8db/transformed/datastore-preferences-release/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.compose.runtime:runtime-saveable-android:1.7.6] /home/huydo/.gradle/caches/8.14.3/transforms/d5cc7f38b4667845f01e975cb10a41b0/transformed/runtime-saveable-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.runtime:runtime-android:1.7.6] /home/huydo/.gradle/caches/8.14.3/transforms/5f71e2fcee589bfe3e3e8019b7fd42ab/transformed/runtime-release/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.interpolator:interpolator:1.0.0] /home/huydo/.gradle/caches/8.14.3/transforms/a732828d690e00779ec46abf9305f788/transformed/interpolator-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.profileinstaller:profileinstaller:1.4.0] /home/huydo/.gradle/caches/8.14.3/transforms/1f037676c28a38261b8891301e7407df/transformed/profileinstaller-1.4.0/AndroidManifest.xml:17:1-55:12
+MERGED from [androidx.startup:startup-runtime:1.1.1] /home/huydo/.gradle/caches/8.14.3/transforms/010b9830b63ce40ca1bec3cf08ac84a5/transformed/startup-runtime-1.1.1/AndroidManifest.xml:17:1-33:12
+MERGED from [androidx.tracing:tracing:1.2.0] /home/huydo/.gradle/caches/8.14.3/transforms/df57559f3585f9432133d3b2995274da/transformed/tracing-1.2.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /home/huydo/.gradle/caches/8.14.3/transforms/ecd1cf9247a757c960a184cbdb76f411/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:17:1-27:12
+MERGED from [androidx.arch.core:core-runtime:2.2.0] /home/huydo/.gradle/caches/8.14.3/transforms/10edcc410771ab4f1dac6208cb9a4ac4/transformed/core-runtime-2.2.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.annotation:annotation-experimental:1.4.1] /home/huydo/.gradle/caches/8.14.3/transforms/4dfc41a480b4dd9179cb2becc336c4ec/transformed/annotation-experimental-1.4.1/AndroidManifest.xml:2:1-7:12
+	package
+		INJECTED from /home/huydo/Downloads/metalcharts/app/src/main/AndroidManifest.xml
+	android:versionName
+		INJECTED from /home/huydo/Downloads/metalcharts/app/src/main/AndroidManifest.xml
+	android:versionCode
+		INJECTED from /home/huydo/Downloads/metalcharts/app/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /home/huydo/Downloads/metalcharts/app/src/main/AndroidManifest.xml:2:11-69
+uses-permission#android.permission.INTERNET
+ADDED from /home/huydo/Downloads/metalcharts/app/src/main/AndroidManifest.xml:4:5-67
+	android:name
+		ADDED from /home/huydo/Downloads/metalcharts/app/src/main/AndroidManifest.xml:4:22-64
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from /home/huydo/Downloads/metalcharts/app/src/main/AndroidManifest.xml:5:5-79
+	android:name
+		ADDED from /home/huydo/Downloads/metalcharts/app/src/main/AndroidManifest.xml:5:22-76
+uses-permission#android.permission.VIBRATE
+ADDED from /home/huydo/Downloads/metalcharts/app/src/main/AndroidManifest.xml:6:5-66
+	android:name
+		ADDED from /home/huydo/Downloads/metalcharts/app/src/main/AndroidManifest.xml:6:22-63
+application
+ADDED from /home/huydo/Downloads/metalcharts/app/src/main/AndroidManifest.xml:8:5-26:19
+INJECTED from /home/huydo/Downloads/metalcharts/app/src/main/AndroidManifest.xml:8:5-26:19
+MERGED from [androidx.compose.ui:ui-tooling-android:1.7.6] /home/huydo/.gradle/caches/8.14.3/transforms/d92ef484a5bf5a75ada26fa91ccf7aef/transformed/ui-tooling-release/AndroidManifest.xml:22:5-26:19
+MERGED from [androidx.compose.ui:ui-tooling-android:1.7.6] /home/huydo/.gradle/caches/8.14.3/transforms/d92ef484a5bf5a75ada26fa91ccf7aef/transformed/ui-tooling-release/AndroidManifest.xml:22:5-26:19
+MERGED from [androidx.emoji2:emoji2:1.3.0] /home/huydo/.gradle/caches/8.14.3/transforms/cd7751744bbedb7d87b83dc3b3b9dca0/transformed/emoji2-1.3.0/AndroidManifest.xml:23:5-33:19
+MERGED from [androidx.emoji2:emoji2:1.3.0] /home/huydo/.gradle/caches/8.14.3/transforms/cd7751744bbedb7d87b83dc3b3b9dca0/transformed/emoji2-1.3.0/AndroidManifest.xml:23:5-33:19
+MERGED from [androidx.core:core:1.15.0] /home/huydo/.gradle/caches/8.14.3/transforms/e2ab9e1fa5c5f02ab85a2cf17c4b3318/transformed/core-1.15.0/AndroidManifest.xml:28:5-89
+MERGED from [androidx.core:core:1.15.0] /home/huydo/.gradle/caches/8.14.3/transforms/e2ab9e1fa5c5f02ab85a2cf17c4b3318/transformed/core-1.15.0/AndroidManifest.xml:28:5-89
+MERGED from [androidx.lifecycle:lifecycle-process:2.8.7] /home/huydo/.gradle/caches/8.14.3/transforms/edfe916c1d8917ec7393407cfd2d1c48/transformed/lifecycle-process-2.8.7/AndroidManifest.xml:23:5-33:19
+MERGED from [androidx.lifecycle:lifecycle-process:2.8.7] /home/huydo/.gradle/caches/8.14.3/transforms/edfe916c1d8917ec7393407cfd2d1c48/transformed/lifecycle-process-2.8.7/AndroidManifest.xml:23:5-33:19
+MERGED from [androidx.compose.ui:ui-test-manifest:1.7.6] /home/huydo/.gradle/caches/8.14.3/transforms/2729107e20e718fbd61c44ac15d803af/transformed/ui-test-manifest-1.7.6/AndroidManifest.xml:22:5-26:19
+MERGED from [androidx.compose.ui:ui-test-manifest:1.7.6] /home/huydo/.gradle/caches/8.14.3/transforms/2729107e20e718fbd61c44ac15d803af/transformed/ui-test-manifest-1.7.6/AndroidManifest.xml:22:5-26:19
+MERGED from [androidx.profileinstaller:profileinstaller:1.4.0] /home/huydo/.gradle/caches/8.14.3/transforms/1f037676c28a38261b8891301e7407df/transformed/profileinstaller-1.4.0/AndroidManifest.xml:23:5-53:19
+MERGED from [androidx.profileinstaller:profileinstaller:1.4.0] /home/huydo/.gradle/caches/8.14.3/transforms/1f037676c28a38261b8891301e7407df/transformed/profileinstaller-1.4.0/AndroidManifest.xml:23:5-53:19
+MERGED from [androidx.startup:startup-runtime:1.1.1] /home/huydo/.gradle/caches/8.14.3/transforms/010b9830b63ce40ca1bec3cf08ac84a5/transformed/startup-runtime-1.1.1/AndroidManifest.xml:25:5-31:19
+MERGED from [androidx.startup:startup-runtime:1.1.1] /home/huydo/.gradle/caches/8.14.3/transforms/010b9830b63ce40ca1bec3cf08ac84a5/transformed/startup-runtime-1.1.1/AndroidManifest.xml:25:5-31:19
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /home/huydo/.gradle/caches/8.14.3/transforms/ecd1cf9247a757c960a184cbdb76f411/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:24:5-25:19
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /home/huydo/.gradle/caches/8.14.3/transforms/ecd1cf9247a757c960a184cbdb76f411/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:24:5-25:19
+	android:extractNativeLibs
+		INJECTED from /home/huydo/Downloads/metalcharts/app/src/main/AndroidManifest.xml
+	android:appComponentFactory
+		ADDED from [androidx.core:core:1.15.0] /home/huydo/.gradle/caches/8.14.3/transforms/e2ab9e1fa5c5f02ab85a2cf17c4b3318/transformed/core-1.15.0/AndroidManifest.xml:28:18-86
+	android:supportsRtl
+		ADDED from /home/huydo/Downloads/metalcharts/app/src/main/AndroidManifest.xml:14:9-35
+	android:label
+		ADDED from /home/huydo/Downloads/metalcharts/app/src/main/AndroidManifest.xml:13:9-41
+	android:roundIcon
+		ADDED from /home/huydo/Downloads/metalcharts/app/src/main/AndroidManifest.xml:12:9-54
+	android:icon
+		ADDED from /home/huydo/Downloads/metalcharts/app/src/main/AndroidManifest.xml:11:9-43
+	android:allowBackup
+		ADDED from /home/huydo/Downloads/metalcharts/app/src/main/AndroidManifest.xml:10:9-35
+	android:theme
+		ADDED from /home/huydo/Downloads/metalcharts/app/src/main/AndroidManifest.xml:15:9-48
+	android:name
+		ADDED from /home/huydo/Downloads/metalcharts/app/src/main/AndroidManifest.xml:9:9-38
+activity#org.metalscope.app.MainActivity
+ADDED from /home/huydo/Downloads/metalcharts/app/src/main/AndroidManifest.xml:16:9-25:20
+	android:windowSoftInputMode
+		ADDED from /home/huydo/Downloads/metalcharts/app/src/main/AndroidManifest.xml:20:13-55
+	android:exported
+		ADDED from /home/huydo/Downloads/metalcharts/app/src/main/AndroidManifest.xml:18:13-36
+	android:theme
+		ADDED from /home/huydo/Downloads/metalcharts/app/src/main/AndroidManifest.xml:19:13-52
+	android:name
+		ADDED from /home/huydo/Downloads/metalcharts/app/src/main/AndroidManifest.xml:17:13-41
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
+ADDED from /home/huydo/Downloads/metalcharts/app/src/main/AndroidManifest.xml:21:13-24:29
+action#android.intent.action.MAIN
+ADDED from /home/huydo/Downloads/metalcharts/app/src/main/AndroidManifest.xml:22:17-69
+	android:name
+		ADDED from /home/huydo/Downloads/metalcharts/app/src/main/AndroidManifest.xml:22:25-66
+category#android.intent.category.LAUNCHER
+ADDED from /home/huydo/Downloads/metalcharts/app/src/main/AndroidManifest.xml:23:17-77
+	android:name
+		ADDED from /home/huydo/Downloads/metalcharts/app/src/main/AndroidManifest.xml:23:27-74
+uses-sdk
+INJECTED from /home/huydo/Downloads/metalcharts/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /home/huydo/Downloads/metalcharts/app/src/main/AndroidManifest.xml
+INJECTED from /home/huydo/Downloads/metalcharts/app/src/main/AndroidManifest.xml
+MERGED from [androidx.navigation:navigation-common:2.8.5] /home/huydo/.gradle/caches/8.14.3/transforms/0c499c074e3eed84ed8407f7e4dd07df/transformed/navigation-common-2.8.5/AndroidManifest.xml:20:5-44
+MERGED from [androidx.navigation:navigation-common:2.8.5] /home/huydo/.gradle/caches/8.14.3/transforms/0c499c074e3eed84ed8407f7e4dd07df/transformed/navigation-common-2.8.5/AndroidManifest.xml:20:5-44
+MERGED from [androidx.navigation:navigation-runtime:2.8.5] /home/huydo/.gradle/caches/8.14.3/transforms/a603d40b0ce811cc036a8c7a9d4bd45e/transformed/navigation-runtime-2.8.5/AndroidManifest.xml:20:5-44
+MERGED from [androidx.navigation:navigation-runtime:2.8.5] /home/huydo/.gradle/caches/8.14.3/transforms/a603d40b0ce811cc036a8c7a9d4bd45e/transformed/navigation-runtime-2.8.5/AndroidManifest.xml:20:5-44
+MERGED from [androidx.navigation:navigation-common-ktx:2.8.5] /home/huydo/.gradle/caches/8.14.3/transforms/ff37f2a5c7bd58bc4b923df280308430/transformed/navigation-common-ktx-2.8.5/AndroidManifest.xml:5:5-44
+MERGED from [androidx.navigation:navigation-common-ktx:2.8.5] /home/huydo/.gradle/caches/8.14.3/transforms/ff37f2a5c7bd58bc4b923df280308430/transformed/navigation-common-ktx-2.8.5/AndroidManifest.xml:5:5-44
+MERGED from [androidx.navigation:navigation-runtime-ktx:2.8.5] /home/huydo/.gradle/caches/8.14.3/transforms/349e8e382cce2b726b6ed12da8645c4d/transformed/navigation-runtime-ktx-2.8.5/AndroidManifest.xml:5:5-44
+MERGED from [androidx.navigation:navigation-runtime-ktx:2.8.5] /home/huydo/.gradle/caches/8.14.3/transforms/349e8e382cce2b726b6ed12da8645c4d/transformed/navigation-runtime-ktx-2.8.5/AndroidManifest.xml:5:5-44
+MERGED from [androidx.navigation:navigation-compose:2.8.5] /home/huydo/.gradle/caches/8.14.3/transforms/dceed5154279f2d67325eba2f1c3f1eb/transformed/navigation-compose-2.8.5/AndroidManifest.xml:5:5-44
+MERGED from [androidx.navigation:navigation-compose:2.8.5] /home/huydo/.gradle/caches/8.14.3/transforms/dceed5154279f2d67325eba2f1c3f1eb/transformed/navigation-compose-2.8.5/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material3:material3-android:1.3.1] /home/huydo/.gradle/caches/8.14.3/transforms/3b1529c3aa8ae2f8cdd842fcbfb14ec5/transformed/material3-release/AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.material3:material3-android:1.3.1] /home/huydo/.gradle/caches/8.14.3/transforms/3b1529c3aa8ae2f8cdd842fcbfb14ec5/transformed/material3-release/AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.material:material-android:1.7.6] /home/huydo/.gradle/caches/8.14.3/transforms/91815557300aa7c5537201baed6daac4/transformed/material-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material:material-android:1.7.6] /home/huydo/.gradle/caches/8.14.3/transforms/91815557300aa7c5537201baed6daac4/transformed/material-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material:material-ripple-android:1.7.6] /home/huydo/.gradle/caches/8.14.3/transforms/17b4638b205b5a4125208160040a557b/transformed/material-ripple-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material:material-ripple-android:1.7.6] /home/huydo/.gradle/caches/8.14.3/transforms/17b4638b205b5a4125208160040a557b/transformed/material-ripple-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.foundation:foundation-android:1.7.6] /home/huydo/.gradle/caches/8.14.3/transforms/b0a99b72105d16f541a11cedb355afba/transformed/foundation-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.foundation:foundation-android:1.7.6] /home/huydo/.gradle/caches/8.14.3/transforms/b0a99b72105d16f541a11cedb355afba/transformed/foundation-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.foundation:foundation-layout-android:1.7.6] /home/huydo/.gradle/caches/8.14.3/transforms/09f49b5451ba22a8ebc3a953b4777c8d/transformed/foundation-layout-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.foundation:foundation-layout-android:1.7.6] /home/huydo/.gradle/caches/8.14.3/transforms/09f49b5451ba22a8ebc3a953b4777c8d/transformed/foundation-layout-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.animation:animation-core-android:1.7.6] /home/huydo/.gradle/caches/8.14.3/transforms/3324e412f5301c9ba2beeed639d9da8a/transformed/animation-core-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.animation:animation-core-android:1.7.6] /home/huydo/.gradle/caches/8.14.3/transforms/3324e412f5301c9ba2beeed639d9da8a/transformed/animation-core-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.animation:animation-android:1.7.6] /home/huydo/.gradle/caches/8.14.3/transforms/090e0fe1a88a878e5ff186f105d0206f/transformed/animation-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.animation:animation-android:1.7.6] /home/huydo/.gradle/caches/8.14.3/transforms/090e0fe1a88a878e5ff186f105d0206f/transformed/animation-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-tooling-data-android:1.7.6] /home/huydo/.gradle/caches/8.14.3/transforms/7746e7c18944e3ff6bb3dc01697853d6/transformed/ui-tooling-data-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-tooling-data-android:1.7.6] /home/huydo/.gradle/caches/8.14.3/transforms/7746e7c18944e3ff6bb3dc01697853d6/transformed/ui-tooling-data-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-unit-android:1.7.6] /home/huydo/.gradle/caches/8.14.3/transforms/818854e8f57108c7749d2ec7e225a17a/transformed/ui-unit-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-unit-android:1.7.6] /home/huydo/.gradle/caches/8.14.3/transforms/818854e8f57108c7749d2ec7e225a17a/transformed/ui-unit-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-geometry-android:1.7.6] /home/huydo/.gradle/caches/8.14.3/transforms/9043a2f2e527aa8df210b7bb9f941199/transformed/ui-geometry-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-geometry-android:1.7.6] /home/huydo/.gradle/caches/8.14.3/transforms/9043a2f2e527aa8df210b7bb9f941199/transformed/ui-geometry-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-util-android:1.7.6] /home/huydo/.gradle/caches/8.14.3/transforms/11c79b7c429c1b1b0ff6bbfcf7edcc81/transformed/ui-util-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-util-android:1.7.6] /home/huydo/.gradle/caches/8.14.3/transforms/11c79b7c429c1b1b0ff6bbfcf7edcc81/transformed/ui-util-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-text-android:1.7.6] /home/huydo/.gradle/caches/8.14.3/transforms/c38b04a181a9397647077b266f997173/transformed/ui-text-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-text-android:1.7.6] /home/huydo/.gradle/caches/8.14.3/transforms/c38b04a181a9397647077b266f997173/transformed/ui-text-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-tooling-preview-android:1.7.6] /home/huydo/.gradle/caches/8.14.3/transforms/e4b63bfad2ae3c24912208e27dbb9919/transformed/ui-tooling-preview-release/AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.ui:ui-tooling-preview-android:1.7.6] /home/huydo/.gradle/caches/8.14.3/transforms/e4b63bfad2ae3c24912208e27dbb9919/transformed/ui-tooling-preview-release/AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.ui:ui-tooling-android:1.7.6] /home/huydo/.gradle/caches/8.14.3/transforms/d92ef484a5bf5a75ada26fa91ccf7aef/transformed/ui-tooling-release/AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.ui:ui-tooling-android:1.7.6] /home/huydo/.gradle/caches/8.14.3/transforms/d92ef484a5bf5a75ada26fa91ccf7aef/transformed/ui-tooling-release/AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.ui:ui-graphics-android:1.7.6] /home/huydo/.gradle/caches/8.14.3/transforms/8425ca85ad2468c0d4431f2261da0dab/transformed/ui-graphics-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-graphics-android:1.7.6] /home/huydo/.gradle/caches/8.14.3/transforms/8425ca85ad2468c0d4431f2261da0dab/transformed/ui-graphics-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.autofill:autofill:1.0.0] /home/huydo/.gradle/caches/8.14.3/transforms/b89deac545c16341645dd4fbdd7201d5/transformed/autofill-1.0.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.autofill:autofill:1.0.0] /home/huydo/.gradle/caches/8.14.3/transforms/b89deac545c16341645dd4fbdd7201d5/transformed/autofill-1.0.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.graphics:graphics-path:1.0.1] /home/huydo/.gradle/caches/8.14.3/transforms/1f03ae6a2cfc004a28eb8dec2e10383c/transformed/graphics-path-1.0.1/AndroidManifest.xml:5:5-44
+MERGED from [androidx.graphics:graphics-path:1.0.1] /home/huydo/.gradle/caches/8.14.3/transforms/1f03ae6a2cfc004a28eb8dec2e10383c/transformed/graphics-path-1.0.1/AndroidManifest.xml:5:5-44
+MERGED from [androidx.emoji2:emoji2:1.3.0] /home/huydo/.gradle/caches/8.14.3/transforms/cd7751744bbedb7d87b83dc3b3b9dca0/transformed/emoji2-1.3.0/AndroidManifest.xml:21:5-44
+MERGED from [androidx.emoji2:emoji2:1.3.0] /home/huydo/.gradle/caches/8.14.3/transforms/cd7751744bbedb7d87b83dc3b3b9dca0/transformed/emoji2-1.3.0/AndroidManifest.xml:21:5-44
+MERGED from [androidx.core:core:1.15.0] /home/huydo/.gradle/caches/8.14.3/transforms/e2ab9e1fa5c5f02ab85a2cf17c4b3318/transformed/core-1.15.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.core:core:1.15.0] /home/huydo/.gradle/caches/8.14.3/transforms/e2ab9e1fa5c5f02ab85a2cf17c4b3318/transformed/core-1.15.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.savedstate:savedstate-ktx:1.2.1] /home/huydo/.gradle/caches/8.14.3/transforms/1d060e2f76c1cbc5fbc826d385ebc342/transformed/savedstate-ktx-1.2.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.savedstate:savedstate-ktx:1.2.1] /home/huydo/.gradle/caches/8.14.3/transforms/1d060e2f76c1cbc5fbc826d385ebc342/transformed/savedstate-ktx-1.2.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.savedstate:savedstate:1.2.1] /home/huydo/.gradle/caches/8.14.3/transforms/5546560b9f401afeeff97f44bedce60a/transformed/savedstate-1.2.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.savedstate:savedstate:1.2.1] /home/huydo/.gradle/caches/8.14.3/transforms/5546560b9f401afeeff97f44bedce60a/transformed/savedstate-1.2.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-process:2.8.7] /home/huydo/.gradle/caches/8.14.3/transforms/edfe916c1d8917ec7393407cfd2d1c48/transformed/lifecycle-process-2.8.7/AndroidManifest.xml:21:5-44
+MERGED from [androidx.lifecycle:lifecycle-process:2.8.7] /home/huydo/.gradle/caches/8.14.3/transforms/edfe916c1d8917ec7393407cfd2d1c48/transformed/lifecycle-process-2.8.7/AndroidManifest.xml:21:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime-compose-android:2.8.7] /home/huydo/.gradle/caches/8.14.3/transforms/e53777a13057acee3a5d77c28281482f/transformed/lifecycle-runtime-compose-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime-compose-android:2.8.7] /home/huydo/.gradle/caches/8.14.3/transforms/e53777a13057acee3a5d77c28281482f/transformed/lifecycle-runtime-compose-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.8.7] /home/huydo/.gradle/caches/8.14.3/transforms/290993dac2e75bc1033c96e1e2fb600b/transformed/lifecycle-livedata-core-2.8.7/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.8.7] /home/huydo/.gradle/caches/8.14.3/transforms/290993dac2e75bc1033c96e1e2fb600b/transformed/lifecycle-livedata-core-2.8.7/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-android:2.8.7] /home/huydo/.gradle/caches/8.14.3/transforms/9c32b9c3773a7aa881908ca58e91ee98/transformed/lifecycle-viewmodel-release/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-android:2.8.7] /home/huydo/.gradle/caches/8.14.3/transforms/9c32b9c3773a7aa881908ca58e91ee98/transformed/lifecycle-viewmodel-release/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime-android:2.8.7] /home/huydo/.gradle/caches/8.14.3/transforms/0267583df059da8485ec26687b95c461/transformed/lifecycle-runtime-release/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime-android:2.8.7] /home/huydo/.gradle/caches/8.14.3/transforms/0267583df059da8485ec26687b95c461/transformed/lifecycle-runtime-release/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.7] /home/huydo/.gradle/caches/8.14.3/transforms/f12e978b86ef0d1c329795f378924061/transformed/lifecycle-viewmodel-ktx-2.8.7/AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.7] /home/huydo/.gradle/caches/8.14.3/transforms/f12e978b86ef0d1c329795f378924061/transformed/lifecycle-viewmodel-ktx-2.8.7/AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.8.7] /home/huydo/.gradle/caches/8.14.3/transforms/46e69e37352712d103d6a17b1b850da2/transformed/lifecycle-viewmodel-savedstate-2.8.7/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.8.7] /home/huydo/.gradle/caches/8.14.3/transforms/46e69e37352712d103d6a17b1b850da2/transformed/lifecycle-viewmodel-savedstate-2.8.7/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime-ktx-android:2.8.7] /home/huydo/.gradle/caches/8.14.3/transforms/ff3af88a0ed6f05c4437d2410b4db7eb/transformed/lifecycle-runtime-ktx-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime-ktx-android:2.8.7] /home/huydo/.gradle/caches/8.14.3/transforms/ff3af88a0ed6f05c4437d2410b4db7eb/transformed/lifecycle-runtime-ktx-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-compose-android:2.8.7] /home/huydo/.gradle/caches/8.14.3/transforms/a97ffff6c4fd10b1fb157752bfa5db91/transformed/lifecycle-viewmodel-compose-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-compose-android:2.8.7] /home/huydo/.gradle/caches/8.14.3/transforms/a97ffff6c4fd10b1fb157752bfa5db91/transformed/lifecycle-viewmodel-compose-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material:material-icons-extended-android:1.7.6] /home/huydo/.gradle/caches/8.14.3/transforms/79dc704df7a9f44f84ec2fe68ee66e29/transformed/material-icons-extended-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material:material-icons-extended-android:1.7.6] /home/huydo/.gradle/caches/8.14.3/transforms/79dc704df7a9f44f84ec2fe68ee66e29/transformed/material-icons-extended-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material:material-icons-core-android:1.7.6] /home/huydo/.gradle/caches/8.14.3/transforms/2aa39a168f8e34cd5a40e3acbf0fa56d/transformed/material-icons-core-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material:material-icons-core-android:1.7.6] /home/huydo/.gradle/caches/8.14.3/transforms/2aa39a168f8e34cd5a40e3acbf0fa56d/transformed/material-icons-core-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-android:1.7.6] /home/huydo/.gradle/caches/8.14.3/transforms/2747aad4f917f3838976cad130cc8d30/transformed/ui-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-android:1.7.6] /home/huydo/.gradle/caches/8.14.3/transforms/2747aad4f917f3838976cad130cc8d30/transformed/ui-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-test-manifest:1.7.6] /home/huydo/.gradle/caches/8.14.3/transforms/2729107e20e718fbd61c44ac15d803af/transformed/ui-test-manifest-1.7.6/AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.ui:ui-test-manifest:1.7.6] /home/huydo/.gradle/caches/8.14.3/transforms/2729107e20e718fbd61c44ac15d803af/transformed/ui-test-manifest-1.7.6/AndroidManifest.xml:20:5-44
+MERGED from [androidx.activity:activity:1.10.0] /home/huydo/.gradle/caches/8.14.3/transforms/6f3e9fdd9392185f8be26841801ce135/transformed/activity-1.10.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.activity:activity:1.10.0] /home/huydo/.gradle/caches/8.14.3/transforms/6f3e9fdd9392185f8be26841801ce135/transformed/activity-1.10.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.activity:activity-ktx:1.10.0] /home/huydo/.gradle/caches/8.14.3/transforms/4c90aaa77b94316ad9d6de2d12722b3d/transformed/activity-ktx-1.10.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.activity:activity-ktx:1.10.0] /home/huydo/.gradle/caches/8.14.3/transforms/4c90aaa77b94316ad9d6de2d12722b3d/transformed/activity-ktx-1.10.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.activity:activity-compose:1.10.0] /home/huydo/.gradle/caches/8.14.3/transforms/bf433da04d9e85f1a43931ab7a0e581a/transformed/activity-compose-1.10.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.activity:activity-compose:1.10.0] /home/huydo/.gradle/caches/8.14.3/transforms/bf433da04d9e85f1a43931ab7a0e581a/transformed/activity-compose-1.10.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.customview:customview-poolingcontainer:1.0.0] /home/huydo/.gradle/caches/8.14.3/transforms/7afa101bcf1dde9648b14055d17e3ae0/transformed/customview-poolingcontainer-1.0.0/AndroidManifest.xml:20:5-21:38
+MERGED from [androidx.customview:customview-poolingcontainer:1.0.0] /home/huydo/.gradle/caches/8.14.3/transforms/7afa101bcf1dde9648b14055d17e3ae0/transformed/customview-poolingcontainer-1.0.0/AndroidManifest.xml:20:5-21:38
+MERGED from [androidx.core:core-ktx:1.15.0] /home/huydo/.gradle/caches/8.14.3/transforms/ac50230619ab0fd2d6accb53bf2be97c/transformed/core-ktx-1.15.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.core:core-ktx:1.15.0] /home/huydo/.gradle/caches/8.14.3/transforms/ac50230619ab0fd2d6accb53bf2be97c/transformed/core-ktx-1.15.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.datastore:datastore-core-android:1.1.2] /home/huydo/.gradle/caches/8.14.3/transforms/1c7b832e0e15656e0d9bf700c3493eb5/transformed/datastore-core-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.datastore:datastore-core-android:1.1.2] /home/huydo/.gradle/caches/8.14.3/transforms/1c7b832e0e15656e0d9bf700c3493eb5/transformed/datastore-core-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.datastore:datastore-android:1.1.2] /home/huydo/.gradle/caches/8.14.3/transforms/077762238ace5031e1c1ee120bae50db/transformed/datastore-release/AndroidManifest.xml:20:5-44
+MERGED from [androidx.datastore:datastore-android:1.1.2] /home/huydo/.gradle/caches/8.14.3/transforms/077762238ace5031e1c1ee120bae50db/transformed/datastore-release/AndroidManifest.xml:20:5-44
+MERGED from [androidx.datastore:datastore-preferences-android:1.1.2] /home/huydo/.gradle/caches/8.14.3/transforms/db944f30d162e83e62274aa22a07c8db/transformed/datastore-preferences-release/AndroidManifest.xml:20:5-44
+MERGED from [androidx.datastore:datastore-preferences-android:1.1.2] /home/huydo/.gradle/caches/8.14.3/transforms/db944f30d162e83e62274aa22a07c8db/transformed/datastore-preferences-release/AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.runtime:runtime-saveable-android:1.7.6] /home/huydo/.gradle/caches/8.14.3/transforms/d5cc7f38b4667845f01e975cb10a41b0/transformed/runtime-saveable-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.runtime:runtime-saveable-android:1.7.6] /home/huydo/.gradle/caches/8.14.3/transforms/d5cc7f38b4667845f01e975cb10a41b0/transformed/runtime-saveable-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.runtime:runtime-android:1.7.6] /home/huydo/.gradle/caches/8.14.3/transforms/5f71e2fcee589bfe3e3e8019b7fd42ab/transformed/runtime-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.runtime:runtime-android:1.7.6] /home/huydo/.gradle/caches/8.14.3/transforms/5f71e2fcee589bfe3e3e8019b7fd42ab/transformed/runtime-release/AndroidManifest.xml:5:5-44
+MERGED from [androidx.interpolator:interpolator:1.0.0] /home/huydo/.gradle/caches/8.14.3/transforms/a732828d690e00779ec46abf9305f788/transformed/interpolator-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.interpolator:interpolator:1.0.0] /home/huydo/.gradle/caches/8.14.3/transforms/a732828d690e00779ec46abf9305f788/transformed/interpolator-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.profileinstaller:profileinstaller:1.4.0] /home/huydo/.gradle/caches/8.14.3/transforms/1f037676c28a38261b8891301e7407df/transformed/profileinstaller-1.4.0/AndroidManifest.xml:21:5-44
+MERGED from [androidx.profileinstaller:profileinstaller:1.4.0] /home/huydo/.gradle/caches/8.14.3/transforms/1f037676c28a38261b8891301e7407df/transformed/profileinstaller-1.4.0/AndroidManifest.xml:21:5-44
+MERGED from [androidx.startup:startup-runtime:1.1.1] /home/huydo/.gradle/caches/8.14.3/transforms/010b9830b63ce40ca1bec3cf08ac84a5/transformed/startup-runtime-1.1.1/AndroidManifest.xml:21:5-23:41
+MERGED from [androidx.startup:startup-runtime:1.1.1] /home/huydo/.gradle/caches/8.14.3/transforms/010b9830b63ce40ca1bec3cf08ac84a5/transformed/startup-runtime-1.1.1/AndroidManifest.xml:21:5-23:41
+MERGED from [androidx.tracing:tracing:1.2.0] /home/huydo/.gradle/caches/8.14.3/transforms/df57559f3585f9432133d3b2995274da/transformed/tracing-1.2.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.tracing:tracing:1.2.0] /home/huydo/.gradle/caches/8.14.3/transforms/df57559f3585f9432133d3b2995274da/transformed/tracing-1.2.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /home/huydo/.gradle/caches/8.14.3/transforms/ecd1cf9247a757c960a184cbdb76f411/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /home/huydo/.gradle/caches/8.14.3/transforms/ecd1cf9247a757c960a184cbdb76f411/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.arch.core:core-runtime:2.2.0] /home/huydo/.gradle/caches/8.14.3/transforms/10edcc410771ab4f1dac6208cb9a4ac4/transformed/core-runtime-2.2.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.arch.core:core-runtime:2.2.0] /home/huydo/.gradle/caches/8.14.3/transforms/10edcc410771ab4f1dac6208cb9a4ac4/transformed/core-runtime-2.2.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.annotation:annotation-experimental:1.4.1] /home/huydo/.gradle/caches/8.14.3/transforms/4dfc41a480b4dd9179cb2becc336c4ec/transformed/annotation-experimental-1.4.1/AndroidManifest.xml:5:5-44
+MERGED from [androidx.annotation:annotation-experimental:1.4.1] /home/huydo/.gradle/caches/8.14.3/transforms/4dfc41a480b4dd9179cb2becc336c4ec/transformed/annotation-experimental-1.4.1/AndroidManifest.xml:5:5-44
+	android:targetSdkVersion
+		INJECTED from /home/huydo/Downloads/metalcharts/app/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /home/huydo/Downloads/metalcharts/app/src/main/AndroidManifest.xml
+activity#androidx.compose.ui.tooling.PreviewActivity
+ADDED from [androidx.compose.ui:ui-tooling-android:1.7.6] /home/huydo/.gradle/caches/8.14.3/transforms/d92ef484a5bf5a75ada26fa91ccf7aef/transformed/ui-tooling-release/AndroidManifest.xml:23:9-25:39
+	android:exported
+		ADDED from [androidx.compose.ui:ui-tooling-android:1.7.6] /home/huydo/.gradle/caches/8.14.3/transforms/d92ef484a5bf5a75ada26fa91ccf7aef/transformed/ui-tooling-release/AndroidManifest.xml:25:13-36
+	android:name
+		ADDED from [androidx.compose.ui:ui-tooling-android:1.7.6] /home/huydo/.gradle/caches/8.14.3/transforms/d92ef484a5bf5a75ada26fa91ccf7aef/transformed/ui-tooling-release/AndroidManifest.xml:24:13-71
+provider#androidx.startup.InitializationProvider
+ADDED from [androidx.emoji2:emoji2:1.3.0] /home/huydo/.gradle/caches/8.14.3/transforms/cd7751744bbedb7d87b83dc3b3b9dca0/transformed/emoji2-1.3.0/AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.lifecycle:lifecycle-process:2.8.7] /home/huydo/.gradle/caches/8.14.3/transforms/edfe916c1d8917ec7393407cfd2d1c48/transformed/lifecycle-process-2.8.7/AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.lifecycle:lifecycle-process:2.8.7] /home/huydo/.gradle/caches/8.14.3/transforms/edfe916c1d8917ec7393407cfd2d1c48/transformed/lifecycle-process-2.8.7/AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.profileinstaller:profileinstaller:1.4.0] /home/huydo/.gradle/caches/8.14.3/transforms/1f037676c28a38261b8891301e7407df/transformed/profileinstaller-1.4.0/AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.profileinstaller:profileinstaller:1.4.0] /home/huydo/.gradle/caches/8.14.3/transforms/1f037676c28a38261b8891301e7407df/transformed/profileinstaller-1.4.0/AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.startup:startup-runtime:1.1.1] /home/huydo/.gradle/caches/8.14.3/transforms/010b9830b63ce40ca1bec3cf08ac84a5/transformed/startup-runtime-1.1.1/AndroidManifest.xml:26:9-30:34
+MERGED from [androidx.startup:startup-runtime:1.1.1] /home/huydo/.gradle/caches/8.14.3/transforms/010b9830b63ce40ca1bec3cf08ac84a5/transformed/startup-runtime-1.1.1/AndroidManifest.xml:26:9-30:34
+	tools:node
+		ADDED from [androidx.emoji2:emoji2:1.3.0] /home/huydo/.gradle/caches/8.14.3/transforms/cd7751744bbedb7d87b83dc3b3b9dca0/transformed/emoji2-1.3.0/AndroidManifest.xml:28:13-31
+	android:authorities
+		ADDED from [androidx.emoji2:emoji2:1.3.0] /home/huydo/.gradle/caches/8.14.3/transforms/cd7751744bbedb7d87b83dc3b3b9dca0/transformed/emoji2-1.3.0/AndroidManifest.xml:26:13-68
+	android:exported
+		ADDED from [androidx.emoji2:emoji2:1.3.0] /home/huydo/.gradle/caches/8.14.3/transforms/cd7751744bbedb7d87b83dc3b3b9dca0/transformed/emoji2-1.3.0/AndroidManifest.xml:27:13-37
+	android:name
+		ADDED from [androidx.emoji2:emoji2:1.3.0] /home/huydo/.gradle/caches/8.14.3/transforms/cd7751744bbedb7d87b83dc3b3b9dca0/transformed/emoji2-1.3.0/AndroidManifest.xml:25:13-67
+meta-data#androidx.emoji2.text.EmojiCompatInitializer
+ADDED from [androidx.emoji2:emoji2:1.3.0] /home/huydo/.gradle/caches/8.14.3/transforms/cd7751744bbedb7d87b83dc3b3b9dca0/transformed/emoji2-1.3.0/AndroidManifest.xml:29:13-31:52
+	android:value
+		ADDED from [androidx.emoji2:emoji2:1.3.0] /home/huydo/.gradle/caches/8.14.3/transforms/cd7751744bbedb7d87b83dc3b3b9dca0/transformed/emoji2-1.3.0/AndroidManifest.xml:31:17-49
+	android:name
+		ADDED from [androidx.emoji2:emoji2:1.3.0] /home/huydo/.gradle/caches/8.14.3/transforms/cd7751744bbedb7d87b83dc3b3b9dca0/transformed/emoji2-1.3.0/AndroidManifest.xml:30:17-75
+permission#${applicationId}.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+ADDED from [androidx.core:core:1.15.0] /home/huydo/.gradle/caches/8.14.3/transforms/e2ab9e1fa5c5f02ab85a2cf17c4b3318/transformed/core-1.15.0/AndroidManifest.xml:22:5-24:47
+	android:protectionLevel
+		ADDED from [androidx.core:core:1.15.0] /home/huydo/.gradle/caches/8.14.3/transforms/e2ab9e1fa5c5f02ab85a2cf17c4b3318/transformed/core-1.15.0/AndroidManifest.xml:24:9-44
+	android:name
+		ADDED from [androidx.core:core:1.15.0] /home/huydo/.gradle/caches/8.14.3/transforms/e2ab9e1fa5c5f02ab85a2cf17c4b3318/transformed/core-1.15.0/AndroidManifest.xml:23:9-81
+permission#org.metalscope.app.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+ADDED from [androidx.core:core:1.15.0] /home/huydo/.gradle/caches/8.14.3/transforms/e2ab9e1fa5c5f02ab85a2cf17c4b3318/transformed/core-1.15.0/AndroidManifest.xml:22:5-24:47
+	android:protectionLevel
+		ADDED from [androidx.core:core:1.15.0] /home/huydo/.gradle/caches/8.14.3/transforms/e2ab9e1fa5c5f02ab85a2cf17c4b3318/transformed/core-1.15.0/AndroidManifest.xml:24:9-44
+	android:name
+		ADDED from [androidx.core:core:1.15.0] /home/huydo/.gradle/caches/8.14.3/transforms/e2ab9e1fa5c5f02ab85a2cf17c4b3318/transformed/core-1.15.0/AndroidManifest.xml:23:9-81
+uses-permission#${applicationId}.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+ADDED from [androidx.core:core:1.15.0] /home/huydo/.gradle/caches/8.14.3/transforms/e2ab9e1fa5c5f02ab85a2cf17c4b3318/transformed/core-1.15.0/AndroidManifest.xml:26:5-97
+	android:name
+		ADDED from [androidx.core:core:1.15.0] /home/huydo/.gradle/caches/8.14.3/transforms/e2ab9e1fa5c5f02ab85a2cf17c4b3318/transformed/core-1.15.0/AndroidManifest.xml:26:22-94
+uses-permission#org.metalscope.app.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+ADDED from [androidx.core:core:1.15.0] /home/huydo/.gradle/caches/8.14.3/transforms/e2ab9e1fa5c5f02ab85a2cf17c4b3318/transformed/core-1.15.0/AndroidManifest.xml:26:5-97
+	android:name
+		ADDED from [androidx.core:core:1.15.0] /home/huydo/.gradle/caches/8.14.3/transforms/e2ab9e1fa5c5f02ab85a2cf17c4b3318/transformed/core-1.15.0/AndroidManifest.xml:26:22-94
+meta-data#androidx.lifecycle.ProcessLifecycleInitializer
+ADDED from [androidx.lifecycle:lifecycle-process:2.8.7] /home/huydo/.gradle/caches/8.14.3/transforms/edfe916c1d8917ec7393407cfd2d1c48/transformed/lifecycle-process-2.8.7/AndroidManifest.xml:29:13-31:52
+	android:value
+		ADDED from [androidx.lifecycle:lifecycle-process:2.8.7] /home/huydo/.gradle/caches/8.14.3/transforms/edfe916c1d8917ec7393407cfd2d1c48/transformed/lifecycle-process-2.8.7/AndroidManifest.xml:31:17-49
+	android:name
+		ADDED from [androidx.lifecycle:lifecycle-process:2.8.7] /home/huydo/.gradle/caches/8.14.3/transforms/edfe916c1d8917ec7393407cfd2d1c48/transformed/lifecycle-process-2.8.7/AndroidManifest.xml:30:17-78
+activity#androidx.activity.ComponentActivity
+ADDED from [androidx.compose.ui:ui-test-manifest:1.7.6] /home/huydo/.gradle/caches/8.14.3/transforms/2729107e20e718fbd61c44ac15d803af/transformed/ui-test-manifest-1.7.6/AndroidManifest.xml:23:9-25:39
+	android:exported
+		ADDED from [androidx.compose.ui:ui-test-manifest:1.7.6] /home/huydo/.gradle/caches/8.14.3/transforms/2729107e20e718fbd61c44ac15d803af/transformed/ui-test-manifest-1.7.6/AndroidManifest.xml:25:13-36
+	android:name
+		ADDED from [androidx.compose.ui:ui-test-manifest:1.7.6] /home/huydo/.gradle/caches/8.14.3/transforms/2729107e20e718fbd61c44ac15d803af/transformed/ui-test-manifest-1.7.6/AndroidManifest.xml:24:13-63
+meta-data#androidx.profileinstaller.ProfileInstallerInitializer
+ADDED from [androidx.profileinstaller:profileinstaller:1.4.0] /home/huydo/.gradle/caches/8.14.3/transforms/1f037676c28a38261b8891301e7407df/transformed/profileinstaller-1.4.0/AndroidManifest.xml:29:13-31:52
+	android:value
+		ADDED from [androidx.profileinstaller:profileinstaller:1.4.0] /home/huydo/.gradle/caches/8.14.3/transforms/1f037676c28a38261b8891301e7407df/transformed/profileinstaller-1.4.0/AndroidManifest.xml:31:17-49
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.4.0] /home/huydo/.gradle/caches/8.14.3/transforms/1f037676c28a38261b8891301e7407df/transformed/profileinstaller-1.4.0/AndroidManifest.xml:30:17-85
+receiver#androidx.profileinstaller.ProfileInstallReceiver
+ADDED from [androidx.profileinstaller:profileinstaller:1.4.0] /home/huydo/.gradle/caches/8.14.3/transforms/1f037676c28a38261b8891301e7407df/transformed/profileinstaller-1.4.0/AndroidManifest.xml:34:9-52:20
+	android:enabled
+		ADDED from [androidx.profileinstaller:profileinstaller:1.4.0] /home/huydo/.gradle/caches/8.14.3/transforms/1f037676c28a38261b8891301e7407df/transformed/profileinstaller-1.4.0/AndroidManifest.xml:37:13-35
+	android:exported
+		ADDED from [androidx.profileinstaller:profileinstaller:1.4.0] /home/huydo/.gradle/caches/8.14.3/transforms/1f037676c28a38261b8891301e7407df/transformed/profileinstaller-1.4.0/AndroidManifest.xml:38:13-36
+	android:permission
+		ADDED from [androidx.profileinstaller:profileinstaller:1.4.0] /home/huydo/.gradle/caches/8.14.3/transforms/1f037676c28a38261b8891301e7407df/transformed/profileinstaller-1.4.0/AndroidManifest.xml:39:13-57
+	android:directBootAware
+		ADDED from [androidx.profileinstaller:profileinstaller:1.4.0] /home/huydo/.gradle/caches/8.14.3/transforms/1f037676c28a38261b8891301e7407df/transformed/profileinstaller-1.4.0/AndroidManifest.xml:36:13-44
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.4.0] /home/huydo/.gradle/caches/8.14.3/transforms/1f037676c28a38261b8891301e7407df/transformed/profileinstaller-1.4.0/AndroidManifest.xml:35:13-76
+intent-filter#action:name:androidx.profileinstaller.action.INSTALL_PROFILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.4.0] /home/huydo/.gradle/caches/8.14.3/transforms/1f037676c28a38261b8891301e7407df/transformed/profileinstaller-1.4.0/AndroidManifest.xml:40:13-42:29
+action#androidx.profileinstaller.action.INSTALL_PROFILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.4.0] /home/huydo/.gradle/caches/8.14.3/transforms/1f037676c28a38261b8891301e7407df/transformed/profileinstaller-1.4.0/AndroidManifest.xml:41:17-91
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.4.0] /home/huydo/.gradle/caches/8.14.3/transforms/1f037676c28a38261b8891301e7407df/transformed/profileinstaller-1.4.0/AndroidManifest.xml:41:25-88
+intent-filter#action:name:androidx.profileinstaller.action.SKIP_FILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.4.0] /home/huydo/.gradle/caches/8.14.3/transforms/1f037676c28a38261b8891301e7407df/transformed/profileinstaller-1.4.0/AndroidManifest.xml:43:13-45:29
+action#androidx.profileinstaller.action.SKIP_FILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.4.0] /home/huydo/.gradle/caches/8.14.3/transforms/1f037676c28a38261b8891301e7407df/transformed/profileinstaller-1.4.0/AndroidManifest.xml:44:17-85
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.4.0] /home/huydo/.gradle/caches/8.14.3/transforms/1f037676c28a38261b8891301e7407df/transformed/profileinstaller-1.4.0/AndroidManifest.xml:44:25-82
+intent-filter#action:name:androidx.profileinstaller.action.SAVE_PROFILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.4.0] /home/huydo/.gradle/caches/8.14.3/transforms/1f037676c28a38261b8891301e7407df/transformed/profileinstaller-1.4.0/AndroidManifest.xml:46:13-48:29
+action#androidx.profileinstaller.action.SAVE_PROFILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.4.0] /home/huydo/.gradle/caches/8.14.3/transforms/1f037676c28a38261b8891301e7407df/transformed/profileinstaller-1.4.0/AndroidManifest.xml:47:17-88
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.4.0] /home/huydo/.gradle/caches/8.14.3/transforms/1f037676c28a38261b8891301e7407df/transformed/profileinstaller-1.4.0/AndroidManifest.xml:47:25-85
+intent-filter#action:name:androidx.profileinstaller.action.BENCHMARK_OPERATION
+ADDED from [androidx.profileinstaller:profileinstaller:1.4.0] /home/huydo/.gradle/caches/8.14.3/transforms/1f037676c28a38261b8891301e7407df/transformed/profileinstaller-1.4.0/AndroidManifest.xml:49:13-51:29
+action#androidx.profileinstaller.action.BENCHMARK_OPERATION
+ADDED from [androidx.profileinstaller:profileinstaller:1.4.0] /home/huydo/.gradle/caches/8.14.3/transforms/1f037676c28a38261b8891301e7407df/transformed/profileinstaller-1.4.0/AndroidManifest.xml:50:17-95
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.4.0] /home/huydo/.gradle/caches/8.14.3/transforms/1f037676c28a38261b8891301e7407df/transformed/profileinstaller-1.4.0/AndroidManifest.xml:50:25-92

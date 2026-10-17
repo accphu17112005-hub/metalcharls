@@ -1,0 +1,7 @@
+<resources>
+    <style name="Theme.MetalScope" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:statusBarColor">@color/metal_bg</item>
+        <item name="android:navigationBarColor">@color/metal_bg</item>
+        <item name="android:windowBackground">@color/metal_bg</item>
+    </style>
+</resources>

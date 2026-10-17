@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="metal_bg">#0B1020</color>
+    <color name="metal_gold">#D9B45B</color>
+    <color name="metal_silver">#B8C4D6</color>
+    <color name="metal_surface">#121A2B</color>
+    <string name="app_name">MetalScope</string>
+    <string name="app_tagline">Precious Metals. Clear Insights.</string>
+    <style name="Theme.MetalScope" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:statusBarColor">@color/metal_bg</item>
+        <item name="android:navigationBarColor">@color/metal_bg</item>
+        <item name="android:windowBackground">@color/metal_bg</item>
+    </style>
+</resources>
