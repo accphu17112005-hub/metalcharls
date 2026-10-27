@@ -46,15 +46,19 @@ import org.metalscope.app.data.model.Currency
 import org.metalscope.app.data.model.WeightUnit
 import org.metalscope.app.theme.MetalGold
 import org.metalscope.app.theme.MetalTheme
+import org.metalscope.app.ui.components.MarketTab
 import org.metalscope.app.ui.screens.charts.ChartsScreen
+import org.metalscope.app.ui.screens.comex.ComexSilverScreen
 import org.metalscope.app.ui.screens.detail.MetalDetailScreen
 import org.metalscope.app.ui.screens.history.HistoryScreen
 import org.metalscope.app.ui.screens.home.HomeScreen
+import org.metalscope.app.ui.screens.india.IndiaScreen
 import org.metalscope.app.ui.screens.markets.MarketsScreen
 import org.metalscope.app.ui.screens.search.SearchScreen
 import org.metalscope.app.ui.screens.settings.AboutScreen
 import org.metalscope.app.ui.screens.settings.DataSourcesScreen
 import org.metalscope.app.ui.screens.settings.SettingsScreen
+import org.metalscope.app.ui.screens.shanghai.ShanghaiScreen
 import org.metalscope.app.ui.screens.watchlist.WatchlistScreen
 import org.metalscope.app.ui.viewmodel.MainUiState
 import org.metalscope.app.ui.viewmodel.MainViewModel
@@ -73,6 +77,53 @@ fun MetalScopeNavigation(
     var showUnitDialog by remember { mutableStateOf(false) }
 
     val isTopLevelDestination = BottomNavItems.any { it.screen.route == currentRoute }
+
+    val handleTabNavigation: (MarketTab) -> Unit = { tab ->
+        when (tab) {
+            MarketTab.HOME -> {
+                navController.navigate(Screen.Home.route) {
+                    popUpTo(navController.graph.findStartDestination().id) {
+                        saveState = true
+                    }
+                    launchSingleTop = true
+                    restoreState = true
+                }
+            }
+            MarketTab.GOLD -> {
+                navController.navigate(Screen.MetalDetail.createRoute("XAU"))
+            }
+            MarketTab.SILVER -> {
+                navController.navigate(Screen.MetalDetail.createRoute("XAG"))
+            }
+            MarketTab.SHANGHAI -> {
+                navController.navigate(Screen.Shanghai.route) {
+                    popUpTo(navController.graph.findStartDestination().id) {
+                        saveState = true
+                    }
+                    launchSingleTop = true
+                    restoreState = true
+                }
+            }
+            MarketTab.COMEX -> {
+                navController.navigate(Screen.ComexSilver.route) {
+                    popUpTo(navController.graph.findStartDestination().id) {
+                        saveState = true
+                    }
+                    launchSingleTop = true
+                    restoreState = true
+                }
+            }
+            MarketTab.INDIA -> {
+                navController.navigate(Screen.India.route) {
+                    popUpTo(navController.graph.findStartDestination().id) {
+                        saveState = true
+                    }
+                    launchSingleTop = true
+                    restoreState = true
+                }
+            }
+        }
+    }
 
     Scaffold(
         modifier = modifier
@@ -147,22 +198,104 @@ fun MetalScopeNavigation(
                     onNavigateToSearch = { navController.navigate(Screen.Search.route) },
                     onNavigateToWatchlist = { navController.navigate(Screen.Watchlist.route) },
                     onOpenCurrencyPicker = { showCurrencyDialog = true },
-                    onOpenUnitPicker = { showUnitDialog = true }
+                    onOpenUnitPicker = { showUnitDialog = true },
+                    onNavigateToTab = handleTabNavigation
                 )
             }
 
-            // Tab 2: Markets
+            // Tab 2: Shanghai Premium (SGE)
+            composable(Screen.Shanghai.route) {
+                ShanghaiScreen(
+                    uiState = uiState,
+                    viewModel = viewModel,
+                    onNavigateBack = { navController.popBackStack() },
+                    onNavigateToTab = handleTabNavigation
+                )
+            }
+            composable(Screen.ShanghaiDirect.route) {
+                ShanghaiScreen(
+                    uiState = uiState,
+                    viewModel = viewModel,
+                    onNavigateBack = { navController.popBackStack() },
+                    onNavigateToTab = handleTabNavigation
+                )
+            }
+
+            // Tab 3: COMEX Silver & Inventory
+            composable(Screen.ComexSilver.route) {
+                ComexSilverScreen(
+                    uiState = uiState,
+                    viewModel = viewModel,
+                    onNavigateBack = { navController.popBackStack() },
+                    onNavigateToTab = handleTabNavigation
+                )
+            }
+            composable(Screen.ComexSilverDirect.route) {
+                ComexSilverScreen(
+                    uiState = uiState,
+                    viewModel = viewModel,
+                    onNavigateBack = { navController.popBackStack() },
+                    onNavigateToTab = handleTabNavigation
+                )
+            }
+
+            // Tab 4: India Premium (MCX)
+            composable(Screen.India.route) {
+                IndiaScreen(
+                    uiState = uiState,
+                    viewModel = viewModel,
+                    onNavigateBack = { navController.popBackStack() },
+                    onNavigateToTab = handleTabNavigation
+                )
+            }
+            composable(Screen.IndiaDirect.route) {
+                IndiaScreen(
+                    uiState = uiState,
+                    viewModel = viewModel,
+                    onNavigateBack = { navController.popBackStack() },
+                    onNavigateToTab = handleTabNavigation
+                )
+            }
+
+            // Tab 5: Markets
             composable(Screen.Markets.route) {
                 MarketsScreen(
                     uiState = uiState,
                     viewModel = viewModel,
                     onNavigateToMetal = { symbol ->
                         navController.navigate(Screen.MetalDetail.createRoute(symbol))
-                    }
+                    },
+                    onNavigateToTab = handleTabNavigation
                 )
             }
 
-            // Tab 3: Charts
+            // Direct route for https://metalcharts.org/metals/xau
+            composable(Screen.MetalsXau.route) {
+                MetalDetailScreen(
+                    symbol = "XAU",
+                    uiState = uiState,
+                    viewModel = viewModel,
+                    onNavigateBack = { navController.popBackStack() },
+                    onOpenCurrencyPicker = { showCurrencyDialog = true },
+                    onOpenUnitPicker = { showUnitDialog = true },
+                    onNavigateToTab = handleTabNavigation
+                )
+            }
+
+            // Direct route for https://metalcharts.org/metals/xag
+            composable(Screen.MetalsXag.route) {
+                MetalDetailScreen(
+                    symbol = "XAG",
+                    uiState = uiState,
+                    viewModel = viewModel,
+                    onNavigateBack = { navController.popBackStack() },
+                    onOpenCurrencyPicker = { showCurrencyDialog = true },
+                    onOpenUnitPicker = { showUnitDialog = true },
+                    onNavigateToTab = handleTabNavigation
+                )
+            }
+
+            // Charts Screen
             composable(Screen.Charts.route) {
                 ChartsScreen(
                     uiState = uiState,
@@ -170,7 +303,7 @@ fun MetalScopeNavigation(
                 )
             }
 
-            // Tab 4: History
+            // History Screen
             composable(Screen.History.route) {
                 HistoryScreen(
                     uiState = uiState,
@@ -178,7 +311,7 @@ fun MetalScopeNavigation(
                 )
             }
 
-            // Tab 5: Settings
+            // Settings Screen
             composable(Screen.Settings.route) {
                 SettingsScreen(
                     uiState = uiState,
@@ -190,7 +323,7 @@ fun MetalScopeNavigation(
                 )
             }
 
-            // Detail Screen
+            // Detail Screen (for XAU, XAG, XPT, XPD, etc.)
             composable(
                 route = Screen.MetalDetail.route,
                 arguments = listOf(navArgument("symbol") { type = NavType.StringType })
@@ -202,7 +335,8 @@ fun MetalScopeNavigation(
                     viewModel = viewModel,
                     onNavigateBack = { navController.popBackStack() },
                     onOpenCurrencyPicker = { showCurrencyDialog = true },
-                    onOpenUnitPicker = { showUnitDialog = true }
+                    onOpenUnitPicker = { showUnitDialog = true },
+                    onNavigateToTab = handleTabNavigation
                 )
             }
 

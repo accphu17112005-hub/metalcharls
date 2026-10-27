@@ -4,6 +4,8 @@ struct SettingsScreenView: View {
     @ObservedObject var viewModel: MainViewModel
     let onNavigateToDataSources: () -> Void
     let onNavigateToAbout: () -> Void
+    var onNavigateToCharts: (() -> Void)? = nil
+    var onNavigateToHistory: (() -> Void)? = nil
     
     @State private var showCurrencyPicker: Bool = false
     @State private var showUnitPicker: Bool = false
@@ -134,6 +136,38 @@ struct SettingsScreenView: View {
                     .cornerRadius(16)
                     .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.metalBorderDark, lineWidth: 1))
                     .padding(.horizontal, 16)
+                }
+                
+                // Section 2.5: Analytics & Archives
+                if onNavigateToCharts != nil || onNavigateToHistory != nil {
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text("ANALYTICS & ARCHIVES")
+                            .font(.system(size: 11, weight: .bold))
+                            .foregroundColor(.metalGold)
+                            .padding(.horizontal, 16)
+                        
+                        VStack(spacing: 1) {
+                            if let onNavigateToCharts = onNavigateToCharts {
+                                Button(action: onNavigateToCharts) {
+                                    SettingsNavRow(icon: "waveform.path.ecg", title: "Charts Studio (Multi-Metal & Ratios)")
+                                }
+                            }
+                            
+                            if onNavigateToCharts != nil && onNavigateToHistory != nil {
+                                Divider().background(Color.metalBorderDark.opacity(0.4))
+                            }
+                            
+                            if let onNavigateToHistory = onNavigateToHistory {
+                                Button(action: onNavigateToHistory) {
+                                    SettingsNavRow(icon: "clock.arrow.circlepath", title: "Historical Records & Archives")
+                                }
+                            }
+                        }
+                        .background(Color.metalSurfaceDark)
+                        .cornerRadius(16)
+                        .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.metalBorderDark, lineWidth: 1))
+                        .padding(.horizontal, 16)
+                    }
                 }
                 
                 // Section 3: Information & Resources

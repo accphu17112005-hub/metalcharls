@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="org.metalscope.app.CurrencyFormatterTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-10-13T03:00:03.488Z" hostname="kali" time="0.04">
+<testsuite name="org.metalscope.app.CurrencyFormatterTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-10-27T03:28:40.968Z" hostname="kali" time="0.082">
   <properties/>
-  <testcase name="testPercentFormatting" classname="org.metalscope.app.CurrencyFormatterTest" time="0.01"/>
+  <testcase name="testPercentFormatting" classname="org.metalscope.app.CurrencyFormatterTest" time="0.021"/>
   <testcase name="testUsdFormatting" classname="org.metalscope.app.CurrencyFormatterTest" time="0.003"/>
-  <testcase name="testPositiveChangeFormatting" classname="org.metalscope.app.CurrencyFormatterTest" time="0.014"/>
-  <testcase name="testRatioFormatting" classname="org.metalscope.app.CurrencyFormatterTest" time="0.001"/>
-  <testcase name="testPriceWithUnit" classname="org.metalscope.app.CurrencyFormatterTest" time="0.008"/>
-  <testcase name="testNegativeChangeFormatting" classname="org.metalscope.app.CurrencyFormatterTest" time="0.001"/>
+  <testcase name="testPositiveChangeFormatting" classname="org.metalscope.app.CurrencyFormatterTest" time="0.027"/>
+  <testcase name="testRatioFormatting" classname="org.metalscope.app.CurrencyFormatterTest" time="0.004"/>
+  <testcase name="testPriceWithUnit" classname="org.metalscope.app.CurrencyFormatterTest" time="0.012"/>
+  <testcase name="testNegativeChangeFormatting" classname="org.metalscope.app.CurrencyFormatterTest" time="0.002"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

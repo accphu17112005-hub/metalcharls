@@ -63,6 +63,11 @@ import org.metalscope.app.ui.viewmodel.MainUiState
 import org.metalscope.app.ui.viewmodel.MainViewModel
 import org.metalscope.app.util.CurrencyFormatter
 
+import androidx.compose.material.icons.filled.ShowChart
+import androidx.compose.material.icons.filled.TrendingUp
+import org.metalscope.app.ui.components.MarketTab
+import org.metalscope.app.ui.components.MarketTabBar
+
 @Composable
 fun MetalDetailScreen(
     symbol: String,
@@ -71,6 +76,7 @@ fun MetalDetailScreen(
     onNavigateBack: () -> Unit,
     onOpenCurrencyPicker: () -> Unit,
     onOpenUnitPicker: () -> Unit,
+    onNavigateToTab: (MarketTab) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     val quote = uiState.quotes.firstOrNull { it.symbol.equals(symbol, ignoreCase = true) }
@@ -107,6 +113,12 @@ fun MetalDetailScreen(
     // Calculated investment value
     val amountDouble = calcAmount.toDoubleOrNull() ?: 1.0
     val totalEstimatedValue = price * amountDouble
+
+    val activeMarketTab = when (quote.symbol) {
+        "XAU" -> MarketTab.GOLD
+        "XAG" -> MarketTab.SILVER
+        else -> MarketTab.HOME
+    }
 
     Column(
         modifier = modifier
@@ -161,6 +173,12 @@ fun MetalDetailScreen(
                 )
             }
         }
+
+        // Quick Market Tab Switcher
+        MarketTabBar(
+            selectedTab = activeMarketTab,
+            onTabSelected = onNavigateToTab
+        )
 
         // Quick Currency / Unit Bar
         MarketStatusBadge(
@@ -405,6 +423,144 @@ fun MetalDetailScreen(
                             style = MaterialTheme.typography.titleLarge,
                             fontWeight = FontWeight.Bold,
                             color = MetalGold
+                        )
+                    }
+                }
+            }
+        }
+
+        Spacer(modifier = Modifier.height(18.dp))
+
+        // COMEX Futures & Basis Card
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
+            shape = RoundedCornerShape(18.dp),
+            colors = CardDefaults.cardColors(containerColor = MetalTheme.colors.surface),
+            border = CardDefaults.outlinedCardBorder().copy(
+                brush = androidx.compose.ui.graphics.SolidColor(MetalTheme.colors.border),
+                width = 1.dp
+            )
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = "COMEX Futures & Basis",
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Bold,
+                        color = MetalTheme.colors.textPrimary
+                    )
+
+                    Box(
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(6.dp))
+                            .background(Color(0xFF3B82F6).copy(alpha = 0.2f))
+                            .clickable { onNavigateToTab(MarketTab.COMEX) }
+                            .padding(horizontal = 8.dp, vertical = 3.dp)
+                    ) {
+                        Text(
+                            text = "View Vaults ↗",
+                            fontSize = 11.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = Color(0xFF60A5FA)
+                        )
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                val futuresSymbol = when (quote.symbol) {
+                    "XAU" -> "GC=F (Gold Dec 26)"
+                    "XAG" -> "SI=F (Silver Dec 26)"
+                    "XPT" -> "PL=F (Platinum)"
+                    else -> "PA=F (Palladium)"
+                }
+                val basisVal = when (quote.symbol) {
+                    "XAU" -> "+$7.80 (Contango)"
+                    "XAG" -> "+$0.22 (Contango)"
+                    else -> "+$1.50"
+                }
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    DetailStatColumn("Futures Contract", futuresSymbol)
+                    DetailStatColumn("Basis Spread", basisVal)
+                    DetailStatColumn("Exchange", "CME / COMEX")
+                }
+            }
+        }
+
+        Spacer(modifier = Modifier.height(18.dp))
+
+        // Technical Indicators Summary Card
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
+            shape = RoundedCornerShape(18.dp),
+            colors = CardDefaults.cardColors(containerColor = MetalTheme.colors.surface),
+            border = CardDefaults.outlinedCardBorder().copy(
+                brush = androidx.compose.ui.graphics.SolidColor(MetalTheme.colors.border),
+                width = 1.dp
+            )
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
+            ) {
+                Text(
+                    text = "Technical Indicators",
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold,
+                    color = MetalTheme.colors.textPrimary
+                )
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    DetailStatColumn("RSI (14)", "64.2 (Bullish)")
+                    DetailStatColumn("50-Day SMA", if (quote.symbol == "XAU") "$3,920.00" else "$49.80")
+                    DetailStatColumn("200-Day SMA", if (quote.symbol == "XAU") "$3,450.00" else "$38.20")
+                }
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = "Composite Momentum:",
+                        style = MaterialTheme.typography.labelMedium,
+                        color = MetalTheme.colors.textSecondary
+                    )
+                    Box(
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(6.dp))
+                            .background(ChangePositive.copy(alpha = 0.2f))
+                            .padding(horizontal = 8.dp, vertical = 2.dp)
+                    ) {
+                        Text(
+                            text = "Strong Buy (Trend Intact)",
+                            fontSize = 11.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = ChangePositive
                         )
                     }
                 }

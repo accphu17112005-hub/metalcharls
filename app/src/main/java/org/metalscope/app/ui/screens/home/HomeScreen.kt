@@ -44,6 +44,20 @@ import org.metalscope.app.ui.components.QuickInsightCard
 import org.metalscope.app.ui.viewmodel.MainUiState
 import org.metalscope.app.ui.viewmodel.MainViewModel
 
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ChevronRight
+import androidx.compose.material.icons.filled.Inventory2
+import androidx.compose.material.icons.filled.Language
+import androidx.compose.material.icons.filled.MonetizationOn
+import androidx.compose.material.icons.filled.NorthEast
+import androidx.compose.material.icons.filled.SouthEast
+import androidx.compose.material3.Icon
+import org.metalscope.app.theme.ChangePositive
+import org.metalscope.app.theme.ChangeNegative
+import org.metalscope.app.ui.components.MarketTab
+import org.metalscope.app.ui.components.MarketTabBar
+
 @Composable
 fun HomeScreen(
     uiState: MainUiState,
@@ -53,6 +67,7 @@ fun HomeScreen(
     onNavigateToWatchlist: () -> Unit,
     onOpenCurrencyPicker: () -> Unit,
     onOpenUnitPicker: () -> Unit,
+    onNavigateToTab: (MarketTab) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     var chartMetal by remember { mutableStateOf(MetalType.GOLD) }
@@ -76,6 +91,15 @@ fun HomeScreen(
                 onWatchlistClick = onNavigateToWatchlist,
                 onRefreshClick = { viewModel.refresh() }
             )
+        }
+
+        // 1.5 Quick Market Tab Switcher
+        item {
+            MarketTabBar(
+                selectedTab = MarketTab.HOME,
+                onTabSelected = onNavigateToTab
+            )
+            Spacer(modifier = Modifier.height(4.dp))
         }
 
         // 2. Market Status Bar
@@ -153,6 +177,71 @@ fun HomeScreen(
                         onClick = { onNavigateToMetal(quote.symbol) }
                     )
                 }
+            }
+        }
+
+        // 5.5 Global Premiums & Vault Stocks (Shanghai, COMEX, India)
+        item {
+            Spacer(modifier = Modifier.height(24.dp))
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "Global Premiums & Vaults",
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.Bold,
+                    color = MetalTheme.colors.textPrimary
+                )
+                Text(
+                    text = "Arbitrage & Reserves",
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MetalTheme.colors.textSecondary
+                )
+            }
+            Spacer(modifier = Modifier.height(12.dp))
+
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp),
+                verticalArrangement = Arrangement.spacedBy(10.dp)
+            ) {
+                // Shanghai Card
+                HomeHubCard(
+                    title = "Shanghai Premium (SGE)",
+                    subtitle = "China Silver $60.65 vs US Spot $53.89/oz",
+                    badge = "+12.54% China Premium",
+                    badgePositive = true,
+                    iconEmoji = "🇨🇳",
+                    detail = "13.82 CNY/g · SHFE Warrant Stock: 2,140t",
+                    onClick = { onNavigateToTab(MarketTab.SHANGHAI) }
+                )
+
+                // COMEX Silver Card
+                HomeHubCard(
+                    title = "COMEX Silver Inventory",
+                    subtitle = "Physical Vault Reserves in NY & Depository",
+                    badge = "337.5M oz Total",
+                    badgePositive = false,
+                    iconEmoji = "🏛️",
+                    detail = "Registered: 99.8M oz (29.6%) · Drawdown: -34.8%",
+                    onClick = { onNavigateToTab(MarketTab.COMEX) }
+                )
+
+                // India Card
+                HomeHubCard(
+                    title = "India Premium (MCX)",
+                    subtitle = "MCX Silver $63.56 vs Western $53.88/oz",
+                    badge = "+17.96% India Premium",
+                    badgePositive = true,
+                    iconEmoji = "🇮🇳",
+                    detail = "₹88,450 / kg · 15% Duty + 3% GST Floor",
+                    onClick = { onNavigateToTab(MarketTab.INDIA) }
+                )
             }
         }
 
@@ -241,3 +330,102 @@ fun HomeScreen(
         }
     }
 }
+
+@Composable
+private fun HomeHubCard(
+    title: String,
+    subtitle: String,
+    badge: String,
+    badgePositive: Boolean,
+    iconEmoji: String,
+    detail: String,
+    onClick: () -> Unit
+) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { onClick() },
+        shape = RoundedCornerShape(16.dp),
+        colors = CardDefaults.cardColors(containerColor = MetalTheme.colors.surface),
+        border = CardDefaults.outlinedCardBorder().copy(
+            brush = androidx.compose.ui.graphics.SolidColor(MetalTheme.colors.border),
+            width = 1.dp
+        )
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(14.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.weight(1f)
+            ) {
+                Box(
+                    modifier = Modifier
+                        .size(42.dp)
+                        .clip(RoundedCornerShape(10.dp))
+                        .background(MetalTheme.colors.elevated),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(text = iconEmoji, fontSize = 20.sp)
+                }
+
+                Spacer(modifier = Modifier.width(12.dp))
+
+                Column {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Text(
+                            text = title,
+                            style = MaterialTheme.typography.titleSmall,
+                            fontWeight = FontWeight.Bold,
+                            color = MetalTheme.colors.textPrimary
+                        )
+                        Spacer(modifier = Modifier.width(6.dp))
+                        Box(
+                            modifier = Modifier
+                                .clip(RoundedCornerShape(6.dp))
+                                .background(
+                                    if (badgePositive) ChangePositive.copy(alpha = 0.2f) else Color(0xFF60A5FA).copy(alpha = 0.2f)
+                                )
+                                .padding(horizontal = 6.dp, vertical = 2.dp)
+                        ) {
+                            Text(
+                                text = badge,
+                                fontSize = 10.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = if (badgePositive) ChangePositive else Color(0xFF60A5FA)
+                            )
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.height(2.dp))
+
+                    Text(
+                        text = subtitle,
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MetalTheme.colors.textSecondary
+                    )
+
+                    Spacer(modifier = Modifier.height(2.dp))
+
+                    Text(
+                        text = detail,
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MetalTheme.colors.textMuted
+                    )
+                }
+            }
+
+            Icon(
+                imageVector = Icons.Default.ChevronRight,
+                contentDescription = "Open",
+                tint = MetalTheme.colors.textSecondary,
+                modifier = Modifier.size(20.dp)
+            )
+        }
+    }
+}
+

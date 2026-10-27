@@ -4,6 +4,7 @@ struct MetalDetailScreenView: View {
     let symbol: String
     @ObservedObject var viewModel: MainViewModel
     let onNavigateBack: () -> Void
+    var onNavigateToTab: ((MarketTab) -> Void)? = nil
     
     @State private var timeRange: TimeRange = .oneMonth
     @State private var holdingsQuantity: String = "1.0"
@@ -181,6 +182,84 @@ struct MetalDetailScreenView: View {
                     }
                     .padding(.horizontal, 16)
                 }
+                
+                // COMEX Futures & Basis Card
+                VStack(alignment: .leading, spacing: 12) {
+                    HStack {
+                        Text("COMEX Futures & Basis")
+                            .font(.system(size: 16, weight: .bold))
+                            .foregroundColor(.metalTextPrimaryDark)
+
+                        Spacer()
+
+                        Button(action: {
+                            HapticManager.selection()
+                            onNavigateToTab?(.comex)
+                        }) {
+                            HStack(spacing: 4) {
+                                Text("View Vaults")
+                                    .font(.system(size: 11, weight: .bold))
+                                Image(systemName: "arrow.up.forward")
+                                    .font(.system(size: 10, weight: .bold))
+                            }
+                            .foregroundColor(Color(red: 96/255, green: 165/255, blue: 250/255))
+                            .padding(.horizontal, 8)
+                            .padding(.vertical, 4)
+                            .background(Color(red: 59/255, green: 130/255, blue: 246/255).opacity(0.18))
+                            .cornerRadius(6)
+                        }
+                        .buttonStyle(PlainButtonStyle())
+                    }
+
+                    HStack {
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text("Active Month")
+                                .font(.system(size: 11))
+                                .foregroundColor(.metalTextMutedDark)
+                            Text("DEC 2026")
+                                .font(.system(size: 13, weight: .bold))
+                                .foregroundColor(.metalTextPrimaryDark)
+                        }
+
+                        Spacer()
+
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text("Futures Price")
+                                .font(.system(size: 11))
+                                .foregroundColor(.metalTextMutedDark)
+                            Text(CurrencyFormatter.formatPrice(amount: price * 1.0045, currency: viewModel.currency))
+                                .font(.system(size: 13, weight: .bold))
+                                .foregroundColor(.metalTextPrimaryDark)
+                        }
+
+                        Spacer()
+
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text("Basis Spread")
+                                .font(.system(size: 11))
+                                .foregroundColor(.metalTextMutedDark)
+                            Text("+0.45%")
+                                .font(.system(size: 13, weight: .bold))
+                                .foregroundColor(.metalGreen)
+                        }
+
+                        Spacer()
+
+                        VStack(alignment: .trailing, spacing: 2) {
+                            Text("Exchange")
+                                .font(.system(size: 11))
+                                .foregroundColor(.metalTextMutedDark)
+                            Text("CME / COMEX")
+                                .font(.system(size: 13, weight: .bold))
+                                .foregroundColor(.metalTextPrimaryDark)
+                        }
+                    }
+                }
+                .padding(16)
+                .background(Color.metalSurfaceDark)
+                .cornerRadius(18)
+                .overlay(RoundedRectangle(cornerRadius: 18).stroke(Color.metalBorderDark, lineWidth: 1))
+                .padding(.horizontal, 16)
                 
                 // Holdings Calculator Card
                 VStack(alignment: .leading, spacing: 14) {

@@ -52,6 +52,13 @@
 		1050 /* CurrencyFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2050 /* CurrencyFormatterTests.swift */; };
 		1051 /* UnitConverterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2051 /* UnitConverterTests.swift */; };
 		1052 /* MetalModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2052 /* MetalModelTests.swift */; };
+		1060 /* ComexModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2060 /* ComexModel.swift */; };
+		1061 /* IndiaModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2061 /* IndiaModel.swift */; };
+		1062 /* ShanghaiModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2062 /* ShanghaiModel.swift */; };
+		1063 /* MarketTabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2063 /* MarketTabBarView.swift */; };
+		1064 /* ComexScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2064 /* ComexScreenView.swift */; };
+		1065 /* ShanghaiScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2065 /* ShanghaiScreenView.swift */; };
+		1066 /* IndiaScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2066 /* IndiaScreenView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -103,6 +110,13 @@
 		2050 /* CurrencyFormatterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyFormatterTests.swift; sourceTree = "<group>"; };
 		2051 /* UnitConverterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitConverterTests.swift; sourceTree = "<group>"; };
 		2052 /* MetalModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalModelTests.swift; sourceTree = "<group>"; };
+		2060 /* ComexModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComexModel.swift; sourceTree = "<group>"; };
+		2061 /* IndiaModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndiaModel.swift; sourceTree = "<group>"; };
+		2062 /* ShanghaiModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShanghaiModel.swift; sourceTree = "<group>"; };
+		2063 /* MarketTabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketTabBarView.swift; sourceTree = "<group>"; };
+		2064 /* ComexScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comex/ComexScreenView.swift; sourceTree = "<group>"; };
+		2065 /* ShanghaiScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shanghai/ShanghaiScreenView.swift; sourceTree = "<group>"; };
+		2066 /* IndiaScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = India/IndiaScreenView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -178,6 +192,9 @@
 				2009 /* PriceQuote.swift */,
 				2010 /* HistoricalRecord.swift */,
 				2011 /* MarketInsight.swift */,
+				2060 /* ComexModel.swift */,
+				2061 /* IndiaModel.swift */,
+				2062 /* ShanghaiModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -233,6 +250,7 @@
 				2029 /* HeaderBarView.swift */,
 				2030 /* CurrencyPickerSheet.swift */,
 				2031 /* UnitPickerSheet.swift */,
+				2063 /* MarketTabBarView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -250,6 +268,9 @@
 				2039 /* SettingsScreenView.swift */,
 				2040 /* DataSourcesScreenView.swift */,
 				2041 /* AboutScreenView.swift */,
+				2064 /* ComexScreenView.swift */,
+				2065 /* ShanghaiScreenView.swift */,
+				2066 /* IndiaScreenView.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -404,6 +425,13 @@
 				1039 /* SettingsScreenView.swift in Sources */,
 				1040 /* DataSourcesScreenView.swift in Sources */,
 				1041 /* AboutScreenView.swift in Sources */,
+				1060 /* ComexModel.swift in Sources */,
+				1061 /* IndiaModel.swift in Sources */,
+				1062 /* ShanghaiModel.swift in Sources */,
+				1063 /* MarketTabBarView.swift in Sources */,
+				1064 /* ComexScreenView.swift in Sources */,
+				1065 /* ShanghaiScreenView.swift in Sources */,
+				1066 /* IndiaScreenView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -60,6 +60,8 @@ import org.metalscope.app.ui.viewmodel.MainUiState
 import org.metalscope.app.ui.viewmodel.MainViewModel
 import org.metalscope.app.ui.viewmodel.MarketFilter
 import org.metalscope.app.ui.viewmodel.SortOption
+import org.metalscope.app.ui.components.MarketTab
+import org.metalscope.app.ui.components.MarketTabBar
 import org.metalscope.app.util.CurrencyFormatter
 
 @Composable
@@ -67,6 +69,7 @@ fun MarketsScreen(
     uiState: MainUiState,
     viewModel: MainViewModel,
     onNavigateToMetal: (String) -> Unit,
+    onNavigateToTab: (MarketTab) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     var sortMenuOpen by remember { mutableStateOf(false) }
@@ -142,6 +145,14 @@ fun MarketsScreen(
                 }
             }
         }
+
+        // Quick Global Market Tab Switcher
+        MarketTabBar(
+            selectedTab = MarketTab.HOME,
+            onTabSelected = onNavigateToTab
+        )
+
+        Spacer(modifier = Modifier.height(4.dp))
 
         // Search Input Field
         Box(modifier = Modifier.padding(horizontal = 16.dp)) {

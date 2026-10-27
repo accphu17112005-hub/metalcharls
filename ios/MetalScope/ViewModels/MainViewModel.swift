@@ -217,6 +217,20 @@ class MainViewModel: ObservableObject {
         preferencesRepository.isCardView = cardView
     }
     
+    func setSortOption(_ option: SortOption) {
+        self.sortOption = option
+        if isHapticsEnabled {
+            HapticManager.selection()
+        }
+    }
+
+    func setMarketFilter(_ filter: MarketFilter) {
+        self.marketFilter = filter
+        if isHapticsEnabled {
+            HapticManager.selection()
+        }
+    }
+
     func clearAllData() {
         preferencesRepository.clearAll()
         watchlistRepository.clearWatchlist()
@@ -245,5 +259,28 @@ class MainViewModel: ObservableObject {
         }
         
         return fallback
+    }
+
+    // MARK: - Specialty Market Methods (Shanghai, COMEX, India)
+
+    func getShanghaiData(
+        metal: MetalType = .silver,
+        timeRange: TimeRange = .oneMonth
+    ) -> ShanghaiMarketData {
+        return metalRepository.getShanghaiData(metal: metal, timeRange: timeRange)
+    }
+
+    func getComexInventoryData(
+        metal: MetalType = .silver,
+        timeRange: TimeRange = .oneMonth
+    ) -> ComexInventoryData {
+        return metalRepository.getComexInventoryData(metal: metal, timeRange: timeRange)
+    }
+
+    func getIndiaData(
+        metal: MetalType = .silver,
+        timeRange: TimeRange = .oneMonth
+    ) -> IndiaMarketData {
+        return metalRepository.getIndiaData(metal: metal, timeRange: timeRange)
     }
 }

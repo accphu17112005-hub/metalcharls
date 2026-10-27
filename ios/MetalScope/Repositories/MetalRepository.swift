@@ -86,6 +86,29 @@ class MetalRepository: ObservableObject {
         return await RealMarketDataSource.shared.getCachedHistoricalData(metal: metal, timeRange: timeRange)
     }
     
+    // MARK: - Specialty Regional & Vault Markets (Shanghai, COMEX, India)
+    
+    func getShanghaiData(
+        metal: MetalType = .silver,
+        timeRange: TimeRange = .oneMonth
+    ) -> ShanghaiMarketData {
+        return DemoDataProvider.getShanghaiData(metalType: metal, timeRange: timeRange)
+    }
+    
+    func getComexInventoryData(
+        metal: MetalType = .silver,
+        timeRange: TimeRange = .oneMonth
+    ) -> ComexInventoryData {
+        return DemoDataProvider.getComexInventoryData(metalType: metal, timeRange: timeRange)
+    }
+    
+    func getIndiaData(
+        metal: MetalType = .silver,
+        timeRange: TimeRange = .oneMonth
+    ) -> IndiaMarketData {
+        return DemoDataProvider.getIndiaData(metalType: metal, timeRange: timeRange)
+    }
+    
     func clearCache() {
         Task { @MainActor in
             await self.refresh(simulateTick: false)

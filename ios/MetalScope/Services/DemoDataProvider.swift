@@ -225,4 +225,306 @@ enum DemoDataProvider {
             tradingHoursCommentary: session.sessionDesc
         )
     }
+    
+    // MARK: - Specialty Market Data Providers (Mirroring Android DemoDataProvider)
+    
+    static func getShanghaiData(
+        metalType: MetalType = .silver,
+        timeRange: TimeRange = .oneMonth
+    ) -> ShanghaiMarketData {
+        let isSilver = metalType == .silver
+        let westernPrice = isSilver ? 53.89 : 4016.71
+        let shanghaiPrice = isSilver ? 60.65 : 4085.20
+        let premiumUsd = shanghaiPrice - westernPrice
+        let premiumPct = (premiumUsd / westernPrice) * 100.0
+        let sgeCnyPerGram = isSilver ? 13.82 : 950.20
+        let usdCnyRate = 7.23
+        let shfeTonnes = isSilver ? 2140.5 : 32.4
+        let shfe30dChange = isSilver ? -85.2 : -2.1
+
+        let count: Int
+        let stepSeconds: Int64
+        switch timeRange {
+        case .oneDay:
+            count = 12
+            stepSeconds = 2 * 3600
+        case .oneWeek:
+            count = 7
+            stepSeconds = 24 * 3600
+        case .oneMonth:
+            count = 30
+            stepSeconds = 24 * 3600
+        case .threeMonths:
+            count = 60
+            stepSeconds = 2 * 24 * 3600
+        case .sixMonths:
+            count = 90
+            stepSeconds = 4 * 24 * 3600
+        case .oneYear:
+            count = 120
+            stepSeconds = 7 * 24 * 3600
+        case .all:
+            count = 180
+            stepSeconds = 30 * 24 * 3600
+        }
+
+        let now = Date().timeIntervalSince1970
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMM dd"
+        dateFormatter.timeZone = TimeZone(identifier: "UTC")
+
+        var history: [ShanghaiComparisonPoint] = []
+        var runningWest = westernPrice * 0.94
+        for i in 0..<count {
+            let ts = Int64(now) - (Int64(count - 1 - i) * stepSeconds)
+            let randDelta = (Double.random(in: 0...1) - 0.47) * (runningWest * 0.015)
+            runningWest += randDelta
+            let premMult = isSilver ? (1.08 + Double.random(in: 0...1) * 0.06) : (1.01 + Double.random(in: 0...1) * 0.02)
+            let runningShanghai = runningWest * premMult
+            let premVal = ((runningShanghai - runningWest) / runningWest) * 100.0
+
+            let d = Date(timeIntervalSince1970: TimeInterval(ts))
+            history.append(
+                ShanghaiComparisonPoint(
+                    timestamp: ts * 1000,
+                    dateStr: dateFormatter.string(from: d),
+                    shanghaiPriceUsd: runningShanghai,
+                    westernPriceUsd: runningWest,
+                    premiumPercent: premVal
+                )
+            )
+        }
+
+        return ShanghaiMarketData(
+            metalType: metalType,
+            shanghaiPriceUsdPerOz: shanghaiPrice,
+            westernPriceUsdPerOz: westernPrice,
+            premiumUsdPerOz: premiumUsd,
+            premiumPercent: premiumPct,
+            sgePriceCnyPerGram: sgeCnyPerGram,
+            usdCnyRate: usdCnyRate,
+            shfeInventoryTonnes: shfeTonnes,
+            shfeInventory30dChangeTonnes: shfe30dChange,
+            comparisonHistory: history
+        )
+    }
+
+    static func getComexInventoryData(
+        metalType: MetalType = .silver,
+        timeRange: TimeRange = .oneMonth
+    ) -> ComexInventoryData {
+        let isSilver = metalType == .silver
+        let price = isSilver ? 53.89 : 4016.71
+        let changePct = isSilver ? -0.02 : 0.15
+        let totalOz = isSilver ? 337500000.0 : 17400000.0
+        let registeredOz = isSilver ? 99800000.0 : 8200000.0
+        let eligibleOz = isSilver ? 237700000.0 : 9200000.0
+        let dailyChangeOz = isSilver ? -600000.0 : -48000.0
+        let drawdownAth = isSilver ? -34.8 : -43.4
+        let change30d = isSilver ? -4200000.0 : -320000.0
+        let peakReg = isSilver ? 152000000.0 : 14500000.0
+
+        let vaults: [ComexVault]
+        if isSilver {
+            vaults = [
+                ComexVault(vaultName: "JPMorgan Chase Bank, N.A.", location: "New York, NY", totalOunces: 105400000.0, registeredOunces: 38200000.0, eligibleOunces: 67200000.0, sharePercent: 31.2),
+                ComexVault(vaultName: "Brink's Inc.", location: "Springfield Gardens, NY", totalOunces: 98500000.0, registeredOunces: 28500000.0, eligibleOunces: 70000000.0, sharePercent: 29.2),
+                ComexVault(vaultName: "HSBC Bank USA, N.A.", location: "New York, NY", totalOunces: 62100000.0, registeredOunces: 18100000.0, eligibleOunces: 44000000.0, sharePercent: 18.4),
+                ComexVault(vaultName: "Loomis International", location: "Jamaica, NY", totalOunces: 34200000.0, registeredOunces: 9400000.0, eligibleOunces: 24800000.0, sharePercent: 10.1),
+                ComexVault(vaultName: "CNT Depository LLC", location: "Bridgewater, MA", totalOunces: 22800000.0, registeredOunces: 4200000.0, eligibleOunces: 18600000.0, sharePercent: 6.8),
+                ComexVault(vaultName: "Delaware Depository", location: "Wilmington, DE", totalOunces: 14500000.0, registeredOunces: 1400000.0, eligibleOunces: 13100000.0, sharePercent: 4.3)
+            ]
+        } else {
+            vaults = [
+                ComexVault(vaultName: "Brink's Inc.", location: "Springfield Gardens, NY", totalOunces: 6800000.0, registeredOunces: 3400000.0, eligibleOunces: 3400000.0, sharePercent: 39.1),
+                ComexVault(vaultName: "JPMorgan Chase Bank, N.A.", location: "New York, NY", totalOunces: 5200000.0, registeredOunces: 2600000.0, eligibleOunces: 2600000.0, sharePercent: 29.9),
+                ComexVault(vaultName: "HSBC Bank USA, N.A.", location: "New York, NY", totalOunces: 3100000.0, registeredOunces: 1300000.0, eligibleOunces: 1800000.0, sharePercent: 17.8),
+                ComexVault(vaultName: "Loomis International", location: "Jamaica, NY", totalOunces: 1400000.0, registeredOunces: 600000.0, eligibleOunces: 800000.0, sharePercent: 8.0),
+                ComexVault(vaultName: "Malca-Amit Armored", location: "Jamaica, NY", totalOunces: 900000.0, registeredOunces: 300000.0, eligibleOunces: 600000.0, sharePercent: 5.2)
+            ]
+        }
+
+        let deliveries = [
+            ComexDeliveryNotice(dateStr: "Oct 24, 2026", contractMonth: "DEC 26", dailyIssued: 148, dailyStopped: 148, ouncesDelivered: 740000.0, monthToDateOunces: 18450000.0),
+            ComexDeliveryNotice(dateStr: "Oct 23, 2026", contractMonth: "DEC 26", dailyIssued: 92, dailyStopped: 92, ouncesDelivered: 460000.0, monthToDateOunces: 17710000.0),
+            ComexDeliveryNotice(dateStr: "Oct 22, 2026", contractMonth: "DEC 26", dailyIssued: 215, dailyStopped: 215, ouncesDelivered: 1075000.0, monthToDateOunces: 17250000.0),
+            ComexDeliveryNotice(dateStr: "Oct 21, 2026", contractMonth: "DEC 26", dailyIssued: 80, dailyStopped: 80, ouncesDelivered: 400000.0, monthToDateOunces: 16175000.0),
+            ComexDeliveryNotice(dateStr: "Oct 20, 2026", contractMonth: "DEC 26", dailyIssued: 310, dailyStopped: 310, ouncesDelivered: 1550000.0, monthToDateOunces: 15775000.0)
+        ]
+
+        let count: Int
+        let stepSeconds: Int64
+        switch timeRange {
+        case .oneDay:
+            count = 12
+            stepSeconds = 2 * 3600
+        case .oneWeek:
+            count = 7
+            stepSeconds = 24 * 3600
+        case .oneMonth:
+            count = 30
+            stepSeconds = 24 * 3600
+        case .threeMonths:
+            count = 60
+            stepSeconds = 2 * 24 * 3600
+        case .sixMonths:
+            count = 90
+            stepSeconds = 4 * 24 * 3600
+        case .oneYear:
+            count = 120
+            stepSeconds = 7 * 24 * 3600
+        case .all:
+            count = 180
+            stepSeconds = 30 * 24 * 3600
+        }
+
+        let now = Date().timeIntervalSince1970
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMM dd"
+        dateFormatter.timeZone = TimeZone(identifier: "UTC")
+
+        var history: [ComexHistoricalPoint] = []
+        var runningReg = registeredOz * 1.08
+        var runningElig = eligibleOz * 0.98
+        var runningPrice = price * 0.92
+
+        for i in 0..<count {
+            let ts = Int64(now) - (Int64(count - 1 - i) * stepSeconds)
+            runningReg -= Double.random(in: 0...120000)
+            runningElig += (Double.random(in: 0...1) - 0.45) * 80000
+            runningPrice += (Double.random(in: 0...1) - 0.48) * (runningPrice * 0.01)
+
+            let d = Date(timeIntervalSince1970: TimeInterval(ts))
+            history.append(
+                ComexHistoricalPoint(
+                    timestamp: ts * 1000,
+                    dateStr: dateFormatter.string(from: d),
+                    registeredOunces: runningReg,
+                    eligibleOunces: runningElig,
+                    spotPriceUsd: runningPrice
+                )
+            )
+        }
+
+        return ComexInventoryData(
+            metalType: metalType,
+            priceUsdPerOz: price,
+            changePercent24h: changePct,
+            totalVaultOunces: totalOz,
+            registeredOunces: registeredOz,
+            eligibleOunces: eligibleOz,
+            dailyVaultNetChangeOunces: dailyChangeOz,
+            drawdownAthPercent: drawdownAth,
+            change30dOunces: change30d,
+            peakRegisteredOunces: peakReg,
+            vaults: vaults,
+            recentDeliveries: deliveries,
+            history: history
+        )
+    }
+
+    static func getIndiaData(
+        metalType: MetalType = .silver,
+        timeRange: TimeRange = .oneMonth
+    ) -> IndiaMarketData {
+        let isSilver = metalType == .silver
+        let westernPrice = isSilver ? 53.88 : 4016.71
+        let indiaPrice = isSilver ? 63.56 : 4650.00
+        let premiumUsd = indiaPrice - westernPrice
+        let premiumPct = (premiumUsd / westernPrice) * 100.0
+        let mcxInr = isSilver ? 88450.0 : 84200.0
+        let inrQuoteUnit = isSilver ? "₹/kg" : "₹/10g"
+        let usdInrRate = 86.40
+        let importDuty = 15.0
+        let gst = 3.0
+        let totalTaxFloor = 18.45
+
+        let taxBreakdown: [IndiaTaxBreakdownItem]
+        if isSilver {
+            taxBreakdown = [
+                IndiaTaxBreakdownItem(label: "Benchmark Spot Price", costFormula: "US Spot (COMEX)", valueUsd: 53.88, isTotal: false),
+                IndiaTaxBreakdownItem(label: "Import Customs Duty", costFormula: "15.0% Tariff Hiked in 2026", valueUsd: 8.08, isTotal: false),
+                IndiaTaxBreakdownItem(label: "GST on Duty-Inclusive", costFormula: "3.0% Bullion Goods & Services", valueUsd: 1.86, isTotal: false),
+                IndiaTaxBreakdownItem(label: "Port Clearance & AIDC", costFormula: "Agriculture Infra Cess + Handling", valueUsd: 0.65, isTotal: false),
+                IndiaTaxBreakdownItem(label: "Total Landed Cost Floor", costFormula: "Structural Minimum Import Basis", valueUsd: 64.47, isTotal: true)
+            ]
+        } else {
+            taxBreakdown = [
+                IndiaTaxBreakdownItem(label: "Benchmark Spot Price", costFormula: "US Spot (COMEX)", valueUsd: 4016.71, isTotal: false),
+                IndiaTaxBreakdownItem(label: "Import Customs Duty", costFormula: "15.0% Tariff Hiked in 2026", valueUsd: 602.50, isTotal: false),
+                IndiaTaxBreakdownItem(label: "GST on Duty-Inclusive", costFormula: "3.0% Bullion Goods & Services", valueUsd: 138.58, isTotal: false),
+                IndiaTaxBreakdownItem(label: "Port Clearance & AIDC", costFormula: "Agriculture Infra Cess + Handling", valueUsd: 42.00, isTotal: false),
+                IndiaTaxBreakdownItem(label: "Total Landed Cost Floor", costFormula: "Structural Minimum Import Basis", valueUsd: 4799.79, isTotal: true)
+            ]
+        }
+
+        let count: Int
+        let stepSeconds: Int64
+        switch timeRange {
+        case .oneDay:
+            count = 12
+            stepSeconds = 2 * 3600
+        case .oneWeek:
+            count = 7
+            stepSeconds = 24 * 3600
+        case .oneMonth:
+            count = 30
+            stepSeconds = 24 * 3600
+        case .threeMonths:
+            count = 60
+            stepSeconds = 2 * 24 * 3600
+        case .sixMonths:
+            count = 90
+            stepSeconds = 4 * 24 * 3600
+        case .oneYear:
+            count = 120
+            stepSeconds = 7 * 24 * 3600
+        case .all:
+            count = 180
+            stepSeconds = 30 * 24 * 3600
+        }
+
+        let now = Date().timeIntervalSince1970
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMM dd"
+        dateFormatter.timeZone = TimeZone(identifier: "UTC")
+
+        var history: [IndiaComparisonPoint] = []
+        var runningWest = westernPrice * 0.95
+        for i in 0..<count {
+            let ts = Int64(now) - (Int64(count - 1 - i) * stepSeconds)
+            runningWest += (Double.random(in: 0...1) - 0.48) * (runningWest * 0.014)
+            let premMult = isSilver ? (1.14 + Double.random(in: 0...1) * 0.06) : (1.12 + Double.random(in: 0...1) * 0.04)
+            let runningIndia = runningWest * premMult
+            let premVal = ((runningIndia - runningWest) / runningWest) * 100.0
+
+            let d = Date(timeIntervalSince1970: TimeInterval(ts))
+            history.append(
+                IndiaComparisonPoint(
+                    timestamp: ts * 1000,
+                    dateStr: dateFormatter.string(from: d),
+                    indiaPriceUsd: runningIndia,
+                    westernPriceUsd: runningWest,
+                    premiumPercent: premVal
+                )
+            )
+        }
+
+        return IndiaMarketData(
+            metalType: metalType,
+            indiaPriceUsdPerOz: indiaPrice,
+            westernPriceUsdPerOz: westernPrice,
+            premiumUsdPerOz: premiumUsd,
+            premiumPercent: premiumPct,
+            mcxPriceInr: mcxInr,
+            inrQuoteUnit: inrQuoteUnit,
+            usdInrRate: usdInrRate,
+            importDutyPercent: importDuty,
+            gstPercent: gst,
+            totalTaxFloorPercent: totalTaxFloor,
+            taxBreakdown: taxBreakdown,
+            comparisonHistory: history
+        )
+    }
 }
+

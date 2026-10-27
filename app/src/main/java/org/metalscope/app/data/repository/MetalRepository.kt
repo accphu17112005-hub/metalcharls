@@ -137,6 +137,27 @@ class MetalRepository(
         return DemoDataProvider.getHistoricalData(metal, timeRange)
     }
 
+    fun getShanghaiData(
+        metalType: MetalType = MetalType.SILVER,
+        timeRange: TimeRange = TimeRange.ONE_MONTH
+    ): org.metalscope.app.data.model.ShanghaiMarketData {
+        return DemoDataProvider.getShanghaiData(metalType, timeRange)
+    }
+
+    fun getComexInventoryData(
+        metalType: MetalType = MetalType.SILVER,
+        timeRange: TimeRange = TimeRange.ONE_MONTH
+    ): org.metalscope.app.data.model.ComexInventoryData {
+        return DemoDataProvider.getComexInventoryData(metalType, timeRange)
+    }
+
+    fun getIndiaData(
+        metalType: MetalType = MetalType.SILVER,
+        timeRange: TimeRange = TimeRange.ONE_MONTH
+    ): org.metalscope.app.data.model.IndiaMarketData {
+        return DemoDataProvider.getIndiaData(metalType, timeRange)
+    }
+
     fun clearCache() {
         refresh(simulateTick = false)
     }

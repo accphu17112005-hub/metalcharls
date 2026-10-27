@@ -8,6 +8,7 @@ struct HeaderBarView: View {
     let onSearchClick: () -> Void
     let onWatchlistClick: () -> Void
     let onRefreshClick: () -> Void
+    var onSettingsClick: (() -> Void)? = nil
     
     @State private var rotationAngle: Double = 0
     
@@ -84,6 +85,16 @@ struct HeaderBarView: View {
                         .frame(width: 36, height: 36)
                 }
                 .buttonStyle(PlainButtonStyle())
+
+                if let onSettingsClick = onSettingsClick {
+                    Button(action: onSettingsClick) {
+                        Image(systemName: "gearshape.fill")
+                            .font(.system(size: 17, weight: .semibold))
+                            .foregroundColor(.metalTextSecondaryDark)
+                            .frame(width: 36, height: 36)
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                }
             }
         }
         .padding(.horizontal, 16)
