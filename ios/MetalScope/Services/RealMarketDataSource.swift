@@ -5,6 +5,17 @@ actor RealMarketDataSource {
 
     private let userAgent = "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148"
 
+    // metalcharts.org primary API key
+    private let mcApiKey = "mc_live_811e23945324ed30ed238ba3052177e27e1e11f43fed7f9b88ffa3aaa3127461"
+    private let mcBaseUrl = "https://api.metalcharts.org"
+
+    private let mcSymbolMap: [MetalType: String] = [
+        .gold: "XAU",
+        .silver: "XAG",
+        .platinum: "XPT",
+        .palladium: "XPD"
+    ]
+
     private let yfSymbolMap: [MetalType: String] = [
         .gold: "GC=F",
         .silver: "SI=F",
@@ -21,6 +32,11 @@ actor RealMarketDataSource {
 
     // In-memory cache for historical charts
     private var historicalCache: [String: [HistoricalRecord]] = [:]
+
+    // metalcharts price cache (all metals fetched in one call, 30s TTL)
+    private var mcPriceCache: [String: [String: Any]] = [:]
+    private var mcPriceCacheTimestamp: Date = .distantPast
+    private let mcPriceCacheTTL: TimeInterval = 30
 
     // Forex cache
     private var forexCache: [String: Double] = [:]
@@ -58,8 +74,93 @@ actor RealMarketDataSource {
     // ─────────────────────────────────────────────────────────────
 
     private func fetchQuoteForMetal(_ metal: MetalType) async -> PriceQuote? {
+        // Source 1: metalcharts.org — official API, real bid/ask/change/high/low
+        if let q = await fetchFromMetalCharts(metal) { return q }
+        // Source 2: Yahoo Finance — real OHLCV + intraday sparkline
         if let q = await fetchFromYahooFinance(metal) { return q }
+        // Source 3: gold-api.com spot — basic price with limited OHLC
         return await fetchFromGoldApi(metal)
+    }
+
+    // ─────────────────────────────────────────────────────────────
+    // PRIMARY: metalcharts.org — all metals in one call, 30s cache
+    // ─────────────────────────────────────────────────────────────
+
+    private func fetchFromMetalCharts(_ metal: MetalType) async -> PriceQuote? {
+        guard let sym = mcSymbolMap[metal] else { return nil }
+
+        // Refresh cache if stale
+        if mcPriceCache.isEmpty || Date().timeIntervalSince(mcPriceCacheTimestamp) > mcPriceCacheTTL {
+            guard let url = URL(string: "\(mcBaseUrl)/v1/prices?symbol=XAU,XAG,XPT,XPD") else { return nil }
+            var request = URLRequest(url: url)
+            request.setValue(userAgent, forHTTPHeaderField: "User-Agent")
+            request.setValue("Bearer \(mcApiKey)", forHTTPHeaderField: "Authorization")
+            request.setValue("application/json", forHTTPHeaderField: "Accept")
+            request.timeoutInterval = 8.0
+
+            do {
+                let (data, response) = try await URLSession.shared.data(for: request)
+                guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200,
+                      let root = try JSONSerialization.jsonObject(with: data) as? [String: Any],
+                      let success = root["success"] as? Bool, success,
+                      let dataMap = root["data"] as? [String: Any] else { return nil }
+
+                var newCache: [String: [String: Any]] = [:]
+                for (key, val) in dataMap {
+                    if let obj = val as? [String: Any] { newCache[key] = obj }
+                }
+                mcPriceCache = newCache
+                mcPriceCacheTimestamp = Date()
+            } catch {
+                return nil
+            }
+        }
+
+        guard let obj = mcPriceCache[sym] else { return nil }
+
+        let price = (obj["price"] as? NSNumber)?.doubleValue ?? 0.0
+        guard price > 0 else { return nil }
+
+        let change24h = (obj["change24h"] as? NSNumber)?.doubleValue ?? 0.0
+        let changePct = (obj["changePercent24h"] as? NSNumber)?.doubleValue ?? 0.0
+        let high24h = (obj["high24h"] as? NSNumber)?.doubleValue ?? price
+        let low24h = (obj["low24h"] as? NSNumber)?.doubleValue ?? price
+        let bid = (obj["bid"] as? NSNumber)?.doubleValue ?? price
+        let ask = (obj["ask"] as? NSNumber)?.doubleValue ?? price
+        let isStale = obj["stale"] as? Bool ?? false
+        let open24h = price - change24h
+        let marketTypeStr = ((obj["marketType"] as? String) ?? "spot").prefix(1).uppercased() +
+            ((obj["marketType"] as? String) ?? "spot").dropFirst()
+
+        // Sparkline from Yahoo intraday
+        let sparkline = await fetchIntradaySparklineYahoo(metal: metal, currentPrice: price)
+
+        let session = DemoDataProvider.getMarketSessionStatus()
+        let nowMs = Int64(Date().timeIntervalSince1970 * 1000.0)
+
+        return PriceQuote(
+            symbol: metal.symbol,
+            name: metal.displayName,
+            metalType: metal,
+            priceUsdPerOz: price,
+            change24hUsd: change24h,
+            changePercent24h: changePct,
+            high24hUsd: high24h,
+            low24hUsd: low24h,
+            open24hUsd: open24h,
+            bidUsd: bid,
+            askUsd: ask,
+            spreadUsd: ask - bid,
+            volume24hUsd: 0.0, // not in this endpoint
+            timestamp: nowMs,
+            source: "MetalCharts Live",
+            marketType: String(marketTypeStr),
+            isMarketOpen: session.isOpen,
+            marketSession: session.sessionTitle,
+            isStale: isStale,
+            isDemoData: false,
+            sparkline: sparkline
+        )
     }
 
     private func fetchFromYahooFinance(_ metal: MetalType) async -> PriceQuote? {

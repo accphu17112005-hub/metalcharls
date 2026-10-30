@@ -35,6 +35,17 @@ object RealMarketDataSource {
     private const val CONNECT_TIMEOUT_MS = 8000
     private const val READ_TIMEOUT_MS = 8000
 
+    // metalcharts.org primary API key
+    private const val MC_API_KEY = "mc_live_811e23945324ed30ed238ba3052177e27e1e11f43fed7f9b88ffa3aaa3127461"
+    private const val MC_BASE_URL = "https://api.metalcharts.org"
+
+    private val mcSymbolMap = mapOf(
+        MetalType.GOLD to "XAU",
+        MetalType.SILVER to "XAG",
+        MetalType.PLATINUM to "XPT",
+        MetalType.PALLADIUM to "XPD"
+    )
+
     private val yfSymbolMap = mapOf(
         MetalType.GOLD to "GC=F",
         MetalType.SILVER to "SI=F",
@@ -57,6 +68,11 @@ object RealMarketDataSource {
     @Volatile private var forexCache: Map<String, Double> = emptyMap()
     @Volatile private var forexCacheTimestamp = 0L
     private const val FOREX_CACHE_TTL_MS = 60 * 60 * 1000L // 1 hour
+
+    // metalcharts price cache (all metals fetched in one call)
+    @Volatile private var mcPriceCache: Map<String, JSONObject> = emptyMap()
+    @Volatile private var mcPriceCacheTimestamp = 0L
+    private const val MC_PRICE_CACHE_TTL_MS = 30 * 1000L // 30 seconds
 
     // Latest live spot price cache (used by specialty screens)
     @Volatile private var latestSpotPrices: Map<MetalType, Double> = emptyMap()
@@ -97,15 +113,95 @@ object RealMarketDataSource {
     // ─────────────────────────────────────────────────────────────
 
     private fun fetchQuoteForMetal(metal: MetalType): PriceQuote? {
-        // Source 1: Yahoo Finance (best: has change, high, low, volume, sparkline)
+        // Source 1: metalcharts.org — official API, real bid/ask/change/high/low
+        fetchFromMetalCharts(metal)?.let { return it }
+
+        // Source 2: Yahoo Finance — real OHLCV + intraday sparkline
         fetchFromYahooFinance(metal)?.let { return it }
 
-        // Source 2: gold-api.com spot (has real price, but limited OHLC)
+        // Source 3: gold-api.com spot — basic price with limited OHLC
         fetchFromGoldApi(metal)?.let { return it }
 
-        // Source 3: metals.dev (requires API key; skipped if not configured)
-        // Intentionally left as future hook — return null so caller handles partial results
         return null
+    }
+
+    /**
+     * Primary source: metalcharts.org API
+     * Fetches all metals in one call (cached 30s), parses per-metal from map.
+     * Returns real: price, change24h, changePercent24h, high24h, low24h, bid, ask, stale, timestamp.
+     */
+    private fun fetchFromMetalCharts(metal: MetalType): PriceQuote? {
+        val sym = mcSymbolMap[metal] ?: return null
+
+        // Use cached batch response if fresh
+        val now = System.currentTimeMillis()
+        val cachedMap = if (mcPriceCache.isNotEmpty() && now - mcPriceCacheTimestamp < MC_PRICE_CACHE_TTL_MS) {
+            mcPriceCache
+        } else {
+            // Fetch all 4 metals in one call
+            val url = "$MC_BASE_URL/v1/prices?symbol=XAU,XAG,XPT,XPD"
+            val jsonStr = httpGet(url, authBearer = MC_API_KEY) ?: return null
+            try {
+                val root = JSONObject(jsonStr)
+                if (!root.optBoolean("success", false)) return null
+                val data = root.optJSONObject("data") ?: return null
+                val newMap = mutableMapOf<String, JSONObject>()
+                for (key in data.keys()) {
+                    data.optJSONObject(key)?.let { newMap[key] = it }
+                }
+                mcPriceCache = newMap
+                mcPriceCacheTimestamp = now
+                newMap
+            } catch (e: Exception) {
+                return null
+            }
+        }
+
+        val obj = cachedMap[sym] ?: return null
+        return try {
+            val price = obj.optDouble("price", 0.0)
+            if (price <= 0) return null
+
+            val change24h = obj.optDouble("change24h", 0.0)
+            val changePct = obj.optDouble("changePercent24h", 0.0)
+            val high24h = obj.optDouble("high24h", price)
+            val low24h = obj.optDouble("low24h", price)
+            val bid = obj.optDouble("bid", price)
+            val ask = obj.optDouble("ask", price)
+            val isStale = obj.optBoolean("stale", false)
+            val open24h = price - change24h // open = current - change
+
+            // Sparkline from Yahoo intraday (metalcharts doesn't expose intraday history on this plan)
+            val sparkline = fetchIntradaySparklineYahoo(metal, price)
+
+            val (isOpen, sessionTitle, _) = DemoDataProvider.getMarketSessionStatus()
+
+            PriceQuote(
+                symbol = metal.symbol,
+                name = metal.displayName,
+                metalType = metal,
+                priceUsdPerOz = price,
+                change24hUsd = change24h,
+                changePercent24h = changePct,
+                high24hUsd = high24h,
+                low24hUsd = low24h,
+                open24hUsd = open24h,
+                bidUsd = bid,
+                askUsd = ask,
+                spreadUsd = ask - bid,
+                volume24hUsd = 0.0, // not in this endpoint
+                timestamp = System.currentTimeMillis(),
+                source = "MetalCharts Live",
+                marketType = obj.optString("marketType", "spot").replaceFirstChar { it.uppercase() },
+                isMarketOpen = isOpen,
+                marketSession = sessionTitle,
+                isStale = isStale,
+                isDemoData = false,
+                sparkline = sparkline
+            )
+        } catch (e: Exception) {
+            null
+        }
     }
 
     private fun fetchFromYahooFinance(metal: MetalType): PriceQuote? {
@@ -627,7 +723,7 @@ object RealMarketDataSource {
         MetalType.PALLADIUM -> 0.0025
     }
 
-    private fun httpGet(urlString: String): String? {
+    private fun httpGet(urlString: String, authBearer: String? = null): String? {
         var conn: HttpURLConnection? = null
         return try {
             val url = URL(urlString)
@@ -637,6 +733,9 @@ object RealMarketDataSource {
             conn.readTimeout = READ_TIMEOUT_MS
             conn.setRequestProperty("User-Agent", USER_AGENT)
             conn.setRequestProperty("Accept", "application/json")
+            if (authBearer != null) {
+                conn.setRequestProperty("Authorization", "Bearer $authBearer")
+            }
 
             if (conn.responseCode == HttpURLConnection.HTTP_OK) {
                 BufferedReader(InputStreamReader(conn.inputStream)).use { it.readText() }
