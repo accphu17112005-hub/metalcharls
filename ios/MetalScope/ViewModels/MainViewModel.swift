@@ -171,7 +171,7 @@ class MainViewModel: ObservableObject {
             HapticManager.lightImpact()
         }
         Task {
-            await metalRepository.refresh(simulateTick: true)
+            await metalRepository.refresh()
         }
     }
     
@@ -246,41 +246,40 @@ class MainViewModel: ObservableObject {
             return existing
         }
         
-        // Provide demo data immediately
-        let fallback = DemoDataProvider.getHistoricalData(metal: metal, timeRange: timeRange)
-        historicalDataStore[key] = fallback
-        
-        // Fetch asynchronously from repository
+        // No demo fallback — return empty and fetch real data asynchronously
         Task {
             let fresh = await metalRepository.getHistoricalData(metal: metal, timeRange: timeRange)
             if !fresh.isEmpty {
-                self.historicalDataStore[key] = fresh
+                await MainActor.run {
+                    self.historicalDataStore[key] = fresh
+                }
             }
         }
         
-        return fallback
+        return [] // Return empty while loading — no fake data
     }
 
     // MARK: - Specialty Market Methods (Shanghai, COMEX, India)
+    // All methods return nil if real data is unavailable — never fake data
 
     func getShanghaiData(
         metal: MetalType = .silver,
         timeRange: TimeRange = .oneMonth
-    ) -> ShanghaiMarketData {
-        return metalRepository.getShanghaiData(metal: metal, timeRange: timeRange)
+    ) async -> ShanghaiMarketData? {
+        return await metalRepository.getShanghaiData(metal: metal, timeRange: timeRange)
     }
 
     func getComexInventoryData(
         metal: MetalType = .silver,
         timeRange: TimeRange = .oneMonth
-    ) -> ComexInventoryData {
-        return metalRepository.getComexInventoryData(metal: metal, timeRange: timeRange)
+    ) async -> ComexInventoryData? {
+        return await metalRepository.getComexInventoryData(metal: metal, timeRange: timeRange)
     }
 
     func getIndiaData(
         metal: MetalType = .silver,
         timeRange: TimeRange = .oneMonth
-    ) -> IndiaMarketData {
-        return metalRepository.getIndiaData(metal: metal, timeRange: timeRange)
+    ) async -> IndiaMarketData? {
+        return await metalRepository.getIndiaData(metal: metal, timeRange: timeRange)
     }
 }

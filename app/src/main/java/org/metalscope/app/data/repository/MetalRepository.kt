@@ -10,10 +10,13 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.metalscope.app.data.model.ComexInventoryData
 import org.metalscope.app.data.model.HistoricalRecord
+import org.metalscope.app.data.model.IndiaMarketData
 import org.metalscope.app.data.model.MarketInsight
 import org.metalscope.app.data.model.MetalType
 import org.metalscope.app.data.model.PriceQuote
+import org.metalscope.app.data.model.ShanghaiMarketData
 import org.metalscope.app.data.model.TimeRange
 import org.metalscope.app.data.source.DemoDataProvider
 import org.metalscope.app.data.source.RealMarketDataSource
@@ -25,8 +28,8 @@ class MetalRepository(
     private val _quotes = MutableStateFlow<List<PriceQuote>>(emptyList())
     val quotes: StateFlow<List<PriceQuote>> = _quotes.asStateFlow()
 
-    private val _insights = MutableStateFlow(DemoDataProvider.getMarketInsights())
-    val insights: StateFlow<MarketInsight> = _insights.asStateFlow()
+    private val _insights = MutableStateFlow<MarketInsight?>(null)
+    val insights: StateFlow<MarketInsight?> = _insights.asStateFlow()
 
     private val _isRefreshing = MutableStateFlow(false)
     val isRefreshing: StateFlow<Boolean> = _isRefreshing.asStateFlow()
@@ -37,41 +40,40 @@ class MetalRepository(
     private val _isRealApiConnected = MutableStateFlow(false)
     val isRealApiConnected: StateFlow<Boolean> = _isRealApiConnected.asStateFlow()
 
+    private val _networkError = MutableStateFlow(false)
+    val networkError: StateFlow<Boolean> = _networkError.asStateFlow()
+
     private var autoRefreshJob: Job? = null
 
     init {
-        // Provide immediate cached values, then fetch live market data
-        _quotes.value = DemoDataProvider.getQuotes(simulateTick = false)
+        // Start with empty state — no demo/fake data shown on init
         refresh(simulateTick = false)
-        startAutoRefresh(15) // default 15s auto-refresh
+        startAutoRefresh(15)
     }
 
-    fun refresh(simulateTick: Boolean = true) {
+    fun refresh(simulateTick: Boolean = false) {
         scope.launch {
             _isRefreshing.value = true
+            _networkError.value = false
             try {
                 val liveQuotes = withContext(Dispatchers.IO) {
                     RealMarketDataSource.fetchQuotes()
                 }
 
-                if (liveQuotes != null && liveQuotes.isNotEmpty()) {
+                if (!liveQuotes.isNullOrEmpty()) {
                     _quotes.value = liveQuotes
                     _insights.value = computeInsights(liveQuotes)
                     _isRealApiConnected.value = true
+                    _networkError.value = false
                 } else {
-                    if (_quotes.value.isEmpty()) {
-                        _quotes.value = DemoDataProvider.getQuotes(simulateTick)
-                        _insights.value = DemoDataProvider.getMarketInsights()
-                    }
+                    // Real API failed — do NOT fall back to demo data
                     _isRealApiConnected.value = false
+                    _networkError.value = _quotes.value.isEmpty()
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
-                if (_quotes.value.isEmpty()) {
-                    _quotes.value = DemoDataProvider.getQuotes(simulateTick)
-                    _insights.value = DemoDataProvider.getMarketInsights()
-                }
                 _isRealApiConnected.value = false
+                _networkError.value = _quotes.value.isEmpty()
             } finally {
                 _lastUpdatedTime.value = System.currentTimeMillis()
                 _isRefreshing.value = false
@@ -80,13 +82,13 @@ class MetalRepository(
     }
 
     private fun computeInsights(quotes: List<PriceQuote>): MarketInsight {
-        val gold = quotes.firstOrNull { it.metalType == MetalType.GOLD }?.priceUsdPerOz ?: 2658.0
-        val silver = quotes.firstOrNull { it.metalType == MetalType.SILVER }?.priceUsdPerOz ?: 31.8
-        val plat = quotes.firstOrNull { it.metalType == MetalType.PLATINUM }?.priceUsdPerOz ?: 988.0
-        val pall = quotes.firstOrNull { it.metalType == MetalType.PALLADIUM }?.priceUsdPerOz ?: 1032.0
+        val gold = quotes.firstOrNull { it.metalType == MetalType.GOLD }?.priceUsdPerOz ?: 0.0
+        val silver = quotes.firstOrNull { it.metalType == MetalType.SILVER }?.priceUsdPerOz ?: 0.0
+        val plat = quotes.firstOrNull { it.metalType == MetalType.PLATINUM }?.priceUsdPerOz ?: 0.0
+        val pall = quotes.firstOrNull { it.metalType == MetalType.PALLADIUM }?.priceUsdPerOz ?: 0.0
 
-        val ratio = if (silver > 0) gold / silver else 83.5
-        val ptRatio = if (plat > 0) gold / plat else 2.6
+        val ratio = if (silver > 0) gold / silver else 0.0
+        val ptRatio = if (plat > 0) gold / plat else 0.0
         val ptPdSpread = plat - pall
         val best = quotes.maxByOrNull { it.changePercent24h }?.metalType ?: MetalType.GOLD
         val bestPct = quotes.firstOrNull { it.metalType == best }?.changePercent24h ?: 0.0
@@ -99,14 +101,14 @@ class MetalRepository(
             platinumPalladiumSpreadUsd = ptPdSpread,
             weeklyBestPerformer = best,
             weeklyBestPerformancePercent = bestPct,
-            marketSessionSummary = if (isOpen) "Live Market • $sessionTitle" else "Weekend Pause • Friday Close",
+            marketSessionSummary = if (isOpen) "Live Market • $sessionTitle" else "Market Closed",
             tradingHoursCommentary = sessionDesc
         )
     }
 
     fun startAutoRefresh(intervalSeconds: Int) {
         autoRefreshJob?.cancel()
-        if (intervalSeconds <= 0) return // Manual mode
+        if (intervalSeconds <= 0) return
 
         autoRefreshJob = scope.launch {
             while (isActive) {
@@ -120,42 +122,35 @@ class MetalRepository(
         return _quotes.value.firstOrNull { it.symbol.equals(symbol, ignoreCase = true) }
     }
 
-    fun getHistoricalData(metal: MetalType, timeRange: TimeRange): List<HistoricalRecord> {
+    suspend fun getHistoricalData(metal: MetalType, timeRange: TimeRange): List<HistoricalRecord> {
         val cached = RealMarketDataSource.getCachedHistoricalData(metal, timeRange)
-        if (cached != null) {
-            return cached
-        }
-
-        // Fetch asynchronously in background
-        scope.launch {
-            val records = RealMarketDataSource.fetchHistoricalData(metal, timeRange)
-            if (records.isNotEmpty()) {
-                _lastUpdatedTime.value = System.currentTimeMillis()
-            }
-        }
-
-        return DemoDataProvider.getHistoricalData(metal, timeRange)
+        if (cached != null) return cached
+        return RealMarketDataSource.fetchHistoricalData(metal, timeRange)
     }
 
-    fun getShanghaiData(
-        metalType: MetalType = MetalType.SILVER,
-        timeRange: TimeRange = TimeRange.ONE_MONTH
-    ): org.metalscope.app.data.model.ShanghaiMarketData {
-        return DemoDataProvider.getShanghaiData(metalType, timeRange)
+    fun getCachedHistoricalData(metal: MetalType, timeRange: TimeRange): List<HistoricalRecord>? {
+        return RealMarketDataSource.getCachedHistoricalData(metal, timeRange)
     }
 
-    fun getComexInventoryData(
+    suspend fun getShanghaiData(
         metalType: MetalType = MetalType.SILVER,
         timeRange: TimeRange = TimeRange.ONE_MONTH
-    ): org.metalscope.app.data.model.ComexInventoryData {
-        return DemoDataProvider.getComexInventoryData(metalType, timeRange)
+    ): ShanghaiMarketData? {
+        return RealMarketDataSource.fetchShanghaiData(metalType, timeRange)
     }
 
-    fun getIndiaData(
+    suspend fun getComexInventoryData(
         metalType: MetalType = MetalType.SILVER,
         timeRange: TimeRange = TimeRange.ONE_MONTH
-    ): org.metalscope.app.data.model.IndiaMarketData {
-        return DemoDataProvider.getIndiaData(metalType, timeRange)
+    ): ComexInventoryData? {
+        return RealMarketDataSource.fetchComexInventoryData(metalType, timeRange)
+    }
+
+    suspend fun getIndiaData(
+        metalType: MetalType = MetalType.SILVER,
+        timeRange: TimeRange = TimeRange.ONE_MONTH
+    ): IndiaMarketData? {
+        return RealMarketDataSource.fetchIndiaData(metalType, timeRange)
     }
 
     fun clearCache() {
