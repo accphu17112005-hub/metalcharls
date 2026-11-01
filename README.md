@@ -93,7 +93,7 @@ org.metalscope.app
 ├── theme/                    # Color, Type, Theme tokens
 ├── data/
 │   ├── model/               # MetalType, PriceQuote, WeightUnit, Currency, TimeRange
-│   ├── source/              # DemoDataProvider & API adapter
+│   ├── source/              # RealMarketDataSource (Live APIs & WebSocket/HTTP)
 │   └── repository/          # MetalRepository, PreferencesRepository, WatchlistRepository
 ├── ui/
 │   ├── navigation/          # Screen routes, BottomNavItems, MetalScopeNavigation

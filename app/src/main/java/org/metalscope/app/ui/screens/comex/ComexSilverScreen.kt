@@ -28,6 +28,7 @@ import androidx.compose.material.icons.filled.SouthEast
 import androidx.compose.material.icons.filled.TrendingDown
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
@@ -82,7 +83,9 @@ fun ComexSilverScreen(
     val registeredColor = Color(0xFFEF4444)
     val eligibleColor = Color(0xFF3B82F6)
 
-    val registeredRatio = (data.registeredOunces / data.totalVaultOunces).toFloat().coerceIn(0f, 1f)
+    val registeredRatio = if (data != null && data.totalVaultOunces > 0) {
+        (data.registeredOunces / data.totalVaultOunces).toFloat().coerceIn(0f, 1f)
+    } else 0f
 
     Column(
         modifier = modifier
@@ -187,11 +190,29 @@ fun ComexSilverScreen(
 
             Spacer(modifier = Modifier.height(14.dp))
 
-            // Hero Inventory Overview Card
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
+            if (data == null) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(300.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        CircularProgressIndicator(color = metalColor)
+                        Spacer(modifier = Modifier.height(16.dp))
+                        Text(
+                            text = "Fetching live COMEX data from metalcharts.org...",
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MetalTheme.colors.textSecondary
+                        )
+                    }
+                }
+            } else {
+                // Hero Inventory Overview Card
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp),
                 shape = RoundedCornerShape(20.dp),
                 colors = CardDefaults.cardColors(containerColor = MetalTheme.colors.surface),
                 border = CardDefaults.outlinedCardBorder().copy(
@@ -727,6 +748,7 @@ fun ComexSilverScreen(
                         description = "When registered inventory drops below 100M ounces while paper open interest remains high, the paper-to-physical ratio stretches. This makes short positions vulnerable to physical delivery demands and short squeezes."
                     )
                 }
+            }
             }
         }
     }

@@ -18,6 +18,7 @@ import org.metalscope.app.data.model.PriceQuote
 import org.metalscope.app.data.model.ShanghaiComparisonPoint
 import org.metalscope.app.data.model.ShanghaiMarketData
 import org.metalscope.app.data.model.TimeRange
+import org.metalscope.app.util.MarketSessionUtils
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
@@ -208,7 +209,7 @@ object RealMarketDataSource {
             // Sparkline from Yahoo intraday (metalcharts doesn't expose intraday history on this plan)
             val sparkline = fetchIntradaySparklineYahoo(metal, price)
 
-            val (isOpen, sessionTitle, _) = DemoDataProvider.getMarketSessionStatus()
+            val (isOpen, sessionTitle, _) = MarketSessionUtils.getMarketSessionStatus()
 
             PriceQuote(
                 symbol = metal.symbol,
@@ -272,7 +273,7 @@ object RealMarketDataSource {
             // Real intraday sparkline from 15-min close data
             val sparkline = extractSparkline(res, metal, currentPrice)
 
-            val (isOpen, sessionTitle, _) = DemoDataProvider.getMarketSessionStatus()
+            val (isOpen, sessionTitle, _) = MarketSessionUtils.getMarketSessionStatus()
 
             PriceQuote(
                 symbol = metal.symbol,
@@ -328,7 +329,7 @@ object RealMarketDataSource {
             val spreadFactor = spreadFactorFor(metal)
             val spread = price * spreadFactor
 
-            val (isOpen, sessionTitle, _) = DemoDataProvider.getMarketSessionStatus()
+            val (isOpen, sessionTitle, _) = MarketSessionUtils.getMarketSessionStatus()
 
             // Sparkline from intraday Yahoo Finance if possible, else empty list
             val sparkline = fetchIntradaySparklineYahoo(metal, price)
@@ -859,8 +860,8 @@ object RealMarketDataSource {
             e.printStackTrace()
         }
 
-        // Fallback to DemoDataProvider if network failed
-        DemoDataProvider.getComexInventoryData(metalType, timeRange)
+        // Return null if network failed — no fake data
+        null
     }
 
     // ─────────────────────────────────────────────────────────────

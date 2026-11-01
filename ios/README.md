@@ -44,8 +44,7 @@ ios/
     │   ├── UnitConverter.swift
     │   └── HapticManager.swift
     ├── Services/
-    │   ├── RealMarketDataSource.swift # Live market network feed
-    │   └── DemoDataProvider.swift     # Fallback & simulation feed
+    │   └── RealMarketDataSource.swift # Live market network feed
     ├── Repositories/
     │   ├── MetalRepository.swift
     │   ├── PreferencesRepository.swift

@@ -10,7 +10,7 @@ struct ShanghaiScreenView: View {
     @State private var selectedTimeRange: TimeRange = .oneMonth
     @State private var showPremiumOverlay: Bool = true
 
-    var data: ShanghaiMarketData {
+    var data: ShanghaiMarketData? {
         viewModel.getShanghaiData(metal: selectedMetal, timeRange: selectedTimeRange)
     }
 
@@ -85,8 +85,9 @@ struct ShanghaiScreenView: View {
                     .padding(.horizontal, 16)
                     .padding(.top, 10)
 
-                    // Hero Summary Card
-                    VStack(alignment: .leading, spacing: 10) {
+                    if let data = data {
+                        // Hero Summary Card
+                        VStack(alignment: .leading, spacing: 10) {
                         Text("The Shanghai \(selectedMetal.displayName.lowercased()) price is currently")
                             .font(.system(size: 13))
                             .foregroundColor(.metalTextSecondaryDark)
@@ -371,6 +372,17 @@ struct ShanghaiScreenView: View {
                     )
                     .padding(.horizontal, 16)
                     .padding(.bottom, 24)
+                    } else {
+                        VStack(spacing: 16) {
+                            ProgressView()
+                                .progressViewStyle(CircularProgressViewStyle(tint: chinaColor))
+                                .scaleEffect(1.3)
+                            Text("Fetching live Shanghai Premium data...")
+                                .font(.system(size: 14))
+                                .foregroundColor(.metalTextSecondaryDark)
+                        }
+                        .frame(maxWidth: .infinity, minHeight: 280)
+                    }
                 }
             }
         }

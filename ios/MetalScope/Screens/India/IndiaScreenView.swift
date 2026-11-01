@@ -10,7 +10,7 @@ struct IndiaScreenView: View {
     @State private var selectedTimeRange: TimeRange = .oneMonth
     @State private var showPremiumOverlay: Bool = true
 
-    var data: IndiaMarketData {
+    var data: IndiaMarketData? {
         viewModel.getIndiaData(metal: selectedMetal, timeRange: selectedTimeRange)
     }
 
@@ -85,8 +85,9 @@ struct IndiaScreenView: View {
                     .padding(.horizontal, 16)
                     .padding(.top, 10)
 
-                    // Hero Summary Card
-                    VStack(alignment: .leading, spacing: 10) {
+                    if let data = data {
+                        // Hero Summary Card
+                        VStack(alignment: .leading, spacing: 10) {
                         Text("The India \(selectedMetal.displayName.lowercased()) price (MCX) is currently")
                             .font(.system(size: 13))
                             .foregroundColor(.metalTextSecondaryDark)
@@ -375,6 +376,17 @@ struct IndiaScreenView: View {
                     )
                     .padding(.horizontal, 16)
                     .padding(.bottom, 24)
+                    } else {
+                        VStack(spacing: 16) {
+                            ProgressView()
+                                .progressViewStyle(CircularProgressViewStyle(tint: indiaColor))
+                                .scaleEffect(1.3)
+                            Text("Fetching live India MCX data...")
+                                .font(.system(size: 14))
+                                .foregroundColor(.metalTextSecondaryDark)
+                        }
+                        .frame(maxWidth: .infinity, minHeight: 280)
+                    }
                 }
             }
         }

@@ -26,6 +26,7 @@ import androidx.compose.material.icons.filled.NorthEast
 import androidx.compose.material.icons.filled.ReceiptLong
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -183,11 +184,29 @@ fun IndiaScreen(
 
             Spacer(modifier = Modifier.height(14.dp))
 
-            // Hero Summary Card
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
+            if (data == null) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(300.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        CircularProgressIndicator(color = indiaColor)
+                        Spacer(modifier = Modifier.height(16.dp))
+                        Text(
+                            text = "Fetching live India MCX data...",
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MetalTheme.colors.textSecondary
+                        )
+                    }
+                }
+            } else {
+                // Hero Summary Card
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp),
                 shape = RoundedCornerShape(20.dp),
                 colors = CardDefaults.cardColors(containerColor = MetalTheme.colors.surface),
                 border = CardDefaults.outlinedCardBorder().copy(
@@ -617,6 +636,7 @@ fun IndiaScreen(
                         description = "Over 60% of India's metal purchases originate in rural districts where farming families rely on physical gold and silver as non-banking stores of intergenerational wealth."
                     )
                 }
+            }
             }
         }
     }

@@ -54,7 +54,7 @@ class MetalRepository: ObservableObject {
         let ptPdSpread = plat - pall
         let best = quotes.max(by: { $0.changePercent24h < $1.changePercent24h })?.metalType ?? .gold
         let bestPct = quotes.first(where: { $0.metalType == best })?.changePercent24h ?? 0.0
-        let session = DemoDataProvider.getMarketSessionStatus()
+        let session = MarketSessionUtils.getMarketSessionStatus()
 
         return MarketInsight(
             goldSilverRatio: ratio,
@@ -92,7 +92,7 @@ class MetalRepository: ObservableObject {
     func getShanghaiData(
         metal: MetalType = .silver,
         timeRange: TimeRange = .oneMonth
-    ) -> ShanghaiMarketData {
+    ) -> ShanghaiMarketData? {
         if let cached = RealMarketDataSource.shared.getCachedShanghaiData(metal: metal, timeRange: timeRange) {
             return cached
         }
@@ -100,13 +100,13 @@ class MetalRepository: ObservableObject {
             _ = await RealMarketDataSource.shared.fetchShanghaiData(metal: metal, timeRange: timeRange)
             self.lastUpdatedTime = Int64(Date().timeIntervalSince1970 * 1000.0)
         }
-        return DemoDataProvider.getShanghaiData(metal: metal, timeRange: timeRange)
+        return nil
     }
 
     func getComexInventoryData(
         metal: MetalType = .silver,
         timeRange: TimeRange = .oneMonth
-    ) -> ComexInventoryData {
+    ) -> ComexInventoryData? {
         if let cached = RealMarketDataSource.shared.getCachedComexData(metal: metal, timeRange: timeRange) {
             return cached
         }
@@ -114,13 +114,13 @@ class MetalRepository: ObservableObject {
             _ = await RealMarketDataSource.shared.fetchComexInventoryData(metal: metal, timeRange: timeRange)
             self.lastUpdatedTime = Int64(Date().timeIntervalSince1970 * 1000.0)
         }
-        return DemoDataProvider.getComexInventoryData(metal: metal, timeRange: timeRange)
+        return nil
     }
 
     func getIndiaData(
         metal: MetalType = .silver,
         timeRange: TimeRange = .oneMonth
-    ) -> IndiaMarketData {
+    ) -> IndiaMarketData? {
         if let cached = RealMarketDataSource.shared.getCachedIndiaData(metal: metal, timeRange: timeRange) {
             return cached
         }
@@ -128,7 +128,7 @@ class MetalRepository: ObservableObject {
             _ = await RealMarketDataSource.shared.fetchIndiaData(metal: metal, timeRange: timeRange)
             self.lastUpdatedTime = Int64(Date().timeIntervalSince1970 * 1000.0)
         }
-        return DemoDataProvider.getIndiaData(metal: metal, timeRange: timeRange)
+        return nil
     }
 
     func clearCache() {

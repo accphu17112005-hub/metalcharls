@@ -22,7 +22,7 @@
 		1013 /* UnitConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2013 /* UnitConverter.swift */; };
 		1014 /* HapticManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2014 /* HapticManager.swift */; };
 		1015 /* RealMarketDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2015 /* RealMarketDataSource.swift */; };
-		1016 /* DemoDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2016 /* DemoDataProvider.swift */; };
+		1016 /* MarketSessionUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2016 /* MarketSessionUtils.swift */; };
 		1017 /* MetalRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2017 /* MetalRepository.swift */; };
 		1018 /* PreferencesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2018 /* PreferencesRepository.swift */; };
 		1019 /* WatchlistRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2019 /* WatchlistRepository.swift */; };
@@ -79,7 +79,7 @@
 		2013 /* UnitConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitConverter.swift; sourceTree = "<group>"; };
 		2014 /* HapticManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticManager.swift; sourceTree = "<group>"; };
 		2015 /* RealMarketDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealMarketDataSource.swift; sourceTree = "<group>"; };
-		2016 /* DemoDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoDataProvider.swift; sourceTree = "<group>"; };
+		2016 /* MarketSessionUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketSessionUtils.swift; sourceTree = "<group>"; };
 		2017 /* MetalRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalRepository.swift; sourceTree = "<group>"; };
 		2018 /* PreferencesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesRepository.swift; sourceTree = "<group>"; };
 		2019 /* WatchlistRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistRepository.swift; sourceTree = "<group>"; };
@@ -205,6 +205,7 @@
 				2012 /* CurrencyFormatter.swift */,
 				2013 /* UnitConverter.swift */,
 				2014 /* HapticManager.swift */,
+				2016 /* MarketSessionUtils.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -213,7 +214,6 @@
 			isa = PBXGroup;
 			children = (
 				2015 /* RealMarketDataSource.swift */,
-				2016 /* DemoDataProvider.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -399,7 +399,7 @@
 				1013 /* UnitConverter.swift in Sources */,
 				1014 /* HapticManager.swift in Sources */,
 				1015 /* RealMarketDataSource.swift in Sources */,
-				1016 /* DemoDataProvider.swift in Sources */,
+				1016 /* MarketSessionUtils.swift in Sources */,
 				1017 /* MetalRepository.swift in Sources */,
 				1018 /* PreferencesRepository.swift in Sources */,
 				1019 /* WatchlistRepository.swift in Sources */,

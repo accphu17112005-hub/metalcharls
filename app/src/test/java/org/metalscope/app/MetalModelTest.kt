@@ -2,12 +2,13 @@ package org.metalscope.app
 
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.metalscope.app.data.model.Currency
 import org.metalscope.app.data.model.MetalType
-import org.metalscope.app.data.model.TimeRange
+import org.metalscope.app.data.model.PriceQuote
 import org.metalscope.app.data.model.WeightUnit
-import org.metalscope.app.data.source.DemoDataProvider
+import org.metalscope.app.util.MarketSessionUtils
 
 class MetalModelTest {
 
@@ -20,39 +21,46 @@ class MetalModelTest {
     }
 
     @Test
-    fun testDemoDataProviderQuotes() {
-        val quotes = DemoDataProvider.getQuotes()
-        assertEquals(4, quotes.size)
+    fun testPriceQuoteCalculations() {
+        val testQuote = PriceQuote(
+            symbol = "XAU",
+            name = "Gold",
+            metalType = MetalType.GOLD,
+            priceUsdPerOz = 3000.0,
+            change24hUsd = 15.0,
+            changePercent24h = 0.5,
+            high24hUsd = 3010.0,
+            low24hUsd = 2990.0,
+            open24hUsd = 2985.0,
+            bidUsd = 2999.0,
+            askUsd = 3001.0,
+            spreadUsd = 2.0,
+            volume24hUsd = 10000.0,
+            timestamp = System.currentTimeMillis(),
+            source = "metalcharts.org",
+            marketType = "Spot",
+            isMarketOpen = true,
+            marketSession = "European Session",
+            isStale = false,
+            isDemoData = false,
+            sparkline = listOf(2990.0, 2995.0, 3000.0)
+        )
 
-        val goldQuote = quotes.first { it.symbol == "XAU" }
-        assertNotNull(goldQuote)
-        assertEquals("Gold", goldQuote.name)
-        assert(goldQuote.priceUsdPerOz > 2000.0)
-        assert(goldQuote.sparkline.isNotEmpty())
-    }
-
-    @Test
-    fun testCurrencyConversions() {
-        val quotes = DemoDataProvider.getQuotes()
-        val goldQuote = quotes.first { it.symbol == "XAU" }
-
-        val usdPrice = goldQuote.calculatePrice(Currency.USD, WeightUnit.OZ)
-        val vndPrice = goldQuote.calculatePrice(Currency.VND, WeightUnit.OZ)
+        val usdPrice = testQuote.calculatePrice(Currency.USD, WeightUnit.OZ)
+        val vndPrice = testQuote.calculatePrice(Currency.VND, WeightUnit.OZ)
         val expectedVnd = usdPrice * 25420.0
         assertEquals(expectedVnd, vndPrice, 1.0)
+
+        val gramPrice = testQuote.calculatePrice(Currency.USD, WeightUnit.GRAM)
+        val expectedGram = usdPrice / 31.1034768
+        assertEquals(expectedGram, gramPrice, 0.01)
     }
 
     @Test
-    fun testHistoricalDataGeneration() {
-        val records1M = DemoDataProvider.getHistoricalData(MetalType.GOLD, TimeRange.ONE_MONTH)
-        assertEquals(TimeRange.ONE_MONTH.pointCount, records1M.size)
-        assert(records1M.all { it.closeUsdPerOz > 0 })
-    }
-
-    @Test
-    fun testMarketInsightsCalculation() {
-        val insight = DemoDataProvider.getMarketInsights()
-        assert(insight.goldSilverRatio > 50.0 && insight.goldSilverRatio < 120.0)
-        assertNotNull(insight.weeklyBestPerformer)
+    fun testMarketSessionStatus() {
+        val status = MarketSessionUtils.getMarketSessionStatus()
+        assertNotNull(status.sessionTitle)
+        assertNotNull(status.sessionDesc)
+        assertTrue(status.sessionTitle.isNotEmpty())
     }
 }

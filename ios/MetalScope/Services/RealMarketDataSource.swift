@@ -171,7 +171,7 @@ actor RealMarketDataSource {
         // Sparkline from Yahoo intraday
         let sparkline = await fetchIntradaySparklineYahoo(metal: metal, currentPrice: price)
 
-        let session = DemoDataProvider.getMarketSessionStatus()
+        let session = MarketSessionUtils.getMarketSessionStatus()
         let nowMs = Int64(Date().timeIntervalSince1970 * 1000.0)
 
         return PriceQuote(
@@ -233,7 +233,7 @@ actor RealMarketDataSource {
             let spread = currentPrice * spreadFactor
             let sparkline = extractSparkline(from: res, currentPrice: currentPrice)
 
-            let session = DemoDataProvider.getMarketSessionStatus()
+            let session = MarketSessionUtils.getMarketSessionStatus()
             let nowMs = Int64(Date().timeIntervalSince1970 * 1000.0)
 
             return PriceQuote(
@@ -299,7 +299,7 @@ actor RealMarketDataSource {
             // Try to get real sparkline from Yahoo Finance intraday
             let sparkline = await fetchIntradaySparklineYahoo(metal: metal, currentPrice: price)
 
-            let session = DemoDataProvider.getMarketSessionStatus()
+            let session = MarketSessionUtils.getMarketSessionStatus()
             let nowMs = Int64(Date().timeIntervalSince1970 * 1000.0)
 
             return PriceQuote(
@@ -594,7 +594,7 @@ actor RealMarketDataSource {
         let changePct = spotQuote?.changePercent24h ?? 0.0
 
         guard let token = await getWebSecurityToken() else {
-            return DemoDataProvider.getComexInventoryData(metal: metal, timeRange: timeRange)
+            return nil
         }
 
         let authHeaders = [
@@ -751,7 +751,7 @@ actor RealMarketDataSource {
             return result
         }
 
-        return DemoDataProvider.getComexInventoryData(metal: metal, timeRange: timeRange)
+        return nil
     }
 
     // ─────────────────────────────────────────────────────────────

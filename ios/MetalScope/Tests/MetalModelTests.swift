@@ -10,39 +10,44 @@ final class MetalModelTests: XCTestCase {
         XCTAssertEqual(MetalType.from(symbol: "XPD"), .palladium)
     }
     
-    func testDemoDataProviderQuotes() {
-        let quotes = DemoDataProvider.getQuotes()
-        XCTAssertEqual(quotes.count, 4)
-        
-        let goldQuote = quotes.first { $0.symbol == "XAU" }
-        XCTAssertNotNil(goldQuote)
-        XCTAssertEqual(goldQuote?.name, "Gold")
-        XCTAssertTrue((goldQuote?.priceUsdPerOz ?? 0) > 2000.0)
-        XCTAssertFalse(goldQuote?.sparkline.isEmpty ?? true)
-    }
-    
-    func testCurrencyConversions() {
-        let quotes = DemoDataProvider.getQuotes()
-        guard let goldQuote = quotes.first(where: { $0.symbol == "XAU" }) else {
-            XCTFail("Gold quote should exist")
-            return
-        }
+    func testPriceQuoteCalculations() {
+        let goldQuote = PriceQuote(
+            symbol: "XAU",
+            name: "Gold",
+            metalType: .gold,
+            priceUsdPerOz: 3000.0,
+            change24hUsd: 15.0,
+            changePercent24h: 0.5,
+            high24hUsd: 3010.0,
+            low24hUsd: 2990.0,
+            open24hUsd: 2985.0,
+            bidUsd: 2999.0,
+            askUsd: 3001.0,
+            spreadUsd: 2.0,
+            volume24hUsd: 10000.0,
+            timestamp: Int64(Date().timeIntervalSince1970 * 1000.0),
+            source: "MetalCharts Live",
+            marketType: "Spot",
+            isMarketOpen: true,
+            marketSession: "European Session",
+            isStale: false,
+            isDemoData: false,
+            sparkline: [2990.0, 2995.0, 3000.0]
+        )
         
         let usdPrice = goldQuote.calculatePrice(currency: .usd, unit: .oz)
         let vndPrice = goldQuote.calculatePrice(currency: .vnd, unit: .oz)
         let expectedVnd = usdPrice * 25420.0
         XCTAssertEqual(vndPrice, expectedVnd, accuracy: 1.0)
+        
+        let gramPrice = goldQuote.calculatePrice(currency: .usd, unit: .gram)
+        let expectedGram = usdPrice / 31.1034768
+        XCTAssertEqual(gramPrice, expectedGram, accuracy: 0.01)
     }
     
-    func testHistoricalDataGeneration() {
-        let records1M = DemoDataProvider.getHistoricalData(metal: .gold, timeRange: .oneMonth)
-        XCTAssertEqual(records1M.count, TimeRange.oneMonth.pointCount)
-        XCTAssertTrue(records1M.allSatisfy { $0.closeUsdPerOz > 0 })
-    }
-    
-    func testMarketInsightsCalculation() {
-        let insight = DemoDataProvider.getMarketInsights()
-        XCTAssertTrue(insight.goldSilverRatio > 50.0 && insight.goldSilverRatio < 120.0)
-        XCTAssertEqual(insight.weeklyBestPerformer, .silver)
+    func testMarketSessionStatus() {
+        let session = MarketSessionUtils.getMarketSessionStatus()
+        XCTAssertFalse(session.sessionTitle.isEmpty)
+        XCTAssertFalse(session.sessionDesc.isEmpty)
     }
 }

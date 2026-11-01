@@ -215,21 +215,21 @@ class MainViewModel(
     fun getShanghaiData(
         metalType: MetalType = MetalType.SILVER,
         timeRange: TimeRange = TimeRange.ONE_MONTH
-    ): org.metalscope.app.data.model.ShanghaiMarketData {
+    ): org.metalscope.app.data.model.ShanghaiMarketData? {
         return metalRepository.getShanghaiData(metalType, timeRange)
     }
 
     fun getComexInventoryData(
         metalType: MetalType = MetalType.SILVER,
         timeRange: TimeRange = TimeRange.ONE_MONTH
-    ): org.metalscope.app.data.model.ComexInventoryData {
+    ): org.metalscope.app.data.model.ComexInventoryData? {
         return metalRepository.getComexInventoryData(metalType, timeRange)
     }
 
     fun getIndiaData(
         metalType: MetalType = MetalType.SILVER,
         timeRange: TimeRange = TimeRange.ONE_MONTH
-    ): org.metalscope.app.data.model.IndiaMarketData {
+    ): org.metalscope.app.data.model.IndiaMarketData? {
         return metalRepository.getIndiaData(metalType, timeRange)
     }
 }

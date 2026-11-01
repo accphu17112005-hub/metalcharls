@@ -9,7 +9,7 @@ struct ComexScreenView: View {
     @State private var selectedMetal: MetalType = .silver
     @State private var selectedTimeRange: TimeRange = .oneMonth
 
-    var data: ComexInventoryData {
+    var data: ComexInventoryData? {
         viewModel.getComexInventoryData(metal: selectedMetal, timeRange: selectedTimeRange)
     }
 
@@ -18,8 +18,8 @@ struct ComexScreenView: View {
 
     private var metalColor: Color { selectedMetal == .silver ? .metalSilver : .metalGold }
     private var registeredRatio: Double {
-        guard data.totalVaultOunces > 0 else { return 0.5 }
-        return min(max(data.registeredOunces / data.totalVaultOunces, 0), 1)
+        guard let d = data, d.totalVaultOunces > 0 else { return 0.5 }
+        return min(max(d.registeredOunces / d.totalVaultOunces, 0), 1)
     }
 
     var body: some View {
@@ -87,8 +87,9 @@ struct ComexScreenView: View {
                     .padding(.horizontal, 16)
                     .padding(.top, 10)
 
-                    // Hero Inventory Overview Card
-                    VStack(alignment: .leading, spacing: 8) {
+                    if let data = data {
+                        // Hero Inventory Overview Card
+                        VStack(alignment: .leading, spacing: 8) {
                         Text("Total \(selectedMetal.displayName) in COMEX Approved Vaults")
                             .font(.system(size: 13))
                             .foregroundColor(.metalTextSecondaryDark)
@@ -349,6 +350,17 @@ struct ComexScreenView: View {
                     .overlay(RoundedRectangle(cornerRadius: 18).stroke(Color.metalBorderDark, lineWidth: 1))
                     .padding(.horizontal, 16)
                     .padding(.bottom, 24)
+                    } else {
+                        VStack(spacing: 16) {
+                            ProgressView()
+                                .progressViewStyle(CircularProgressViewStyle(tint: metalColor))
+                                .scaleEffect(1.3)
+                            Text("Fetching live COMEX data from metalcharts.org...")
+                                .font(.system(size: 14))
+                                .foregroundColor(.metalTextSecondaryDark)
+                        }
+                        .frame(maxWidth: .infinity, minHeight: 280)
+                    }
                 }
             }
         }

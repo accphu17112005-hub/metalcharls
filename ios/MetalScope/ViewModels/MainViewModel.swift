@@ -264,21 +264,21 @@ class MainViewModel: ObservableObject {
     func getShanghaiData(
         metal: MetalType = .silver,
         timeRange: TimeRange = .oneMonth
-    ) -> ShanghaiMarketData {
+    ) -> ShanghaiMarketData? {
         return metalRepository.getShanghaiData(metal: metal, timeRange: timeRange)
     }
 
     func getComexInventoryData(
         metal: MetalType = .silver,
         timeRange: TimeRange = .oneMonth
-    ) -> ComexInventoryData {
+    ) -> ComexInventoryData? {
         return metalRepository.getComexInventoryData(metal: metal, timeRange: timeRange)
     }
 
     func getIndiaData(
         metal: MetalType = .silver,
         timeRange: TimeRange = .oneMonth
-    ) -> IndiaMarketData {
+    ) -> IndiaMarketData? {
         return metalRepository.getIndiaData(metal: metal, timeRange: timeRange)
     }
 }

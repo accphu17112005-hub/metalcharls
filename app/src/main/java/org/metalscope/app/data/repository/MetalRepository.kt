@@ -18,8 +18,8 @@ import org.metalscope.app.data.model.MetalType
 import org.metalscope.app.data.model.PriceQuote
 import org.metalscope.app.data.model.ShanghaiMarketData
 import org.metalscope.app.data.model.TimeRange
-import org.metalscope.app.data.source.DemoDataProvider
 import org.metalscope.app.data.source.RealMarketDataSource
+import org.metalscope.app.util.MarketSessionUtils
 
 class MetalRepository(
     private val scope: CoroutineScope = CoroutineScope(Dispatchers.Default)
@@ -92,7 +92,7 @@ class MetalRepository(
         val ptPdSpread = plat - pall
         val best = quotes.maxByOrNull { it.changePercent24h }?.metalType ?: MetalType.GOLD
         val bestPct = quotes.firstOrNull { it.metalType == best }?.changePercent24h ?: 0.0
-        val (isOpen, sessionTitle, sessionDesc) = DemoDataProvider.getMarketSessionStatus()
+        val (isOpen, sessionTitle, sessionDesc) = MarketSessionUtils.getMarketSessionStatus()
 
         return MarketInsight(
             goldSilverRatio = ratio,
@@ -132,7 +132,7 @@ class MetalRepository(
                 _lastUpdatedTime.value = System.currentTimeMillis()
             }
         }
-        return DemoDataProvider.getHistoricalData(metal, timeRange)
+        return cached ?: emptyList()
     }
 
     fun getCachedHistoricalData(metal: MetalType, timeRange: TimeRange): List<HistoricalRecord>? {
@@ -142,7 +142,7 @@ class MetalRepository(
     fun getShanghaiData(
         metalType: MetalType = MetalType.SILVER,
         timeRange: TimeRange = TimeRange.ONE_MONTH
-    ): ShanghaiMarketData {
+    ): ShanghaiMarketData? {
         val cached = RealMarketDataSource.getCachedShanghaiData(metalType, timeRange)
         if (cached != null) return cached
 
@@ -152,13 +152,13 @@ class MetalRepository(
                 _lastUpdatedTime.value = System.currentTimeMillis()
             }
         }
-        return DemoDataProvider.getShanghaiData(metalType, timeRange)
+        return null
     }
 
     fun getComexInventoryData(
         metalType: MetalType = MetalType.SILVER,
         timeRange: TimeRange = TimeRange.ONE_MONTH
-    ): ComexInventoryData {
+    ): ComexInventoryData? {
         val cached = RealMarketDataSource.getCachedComexData(metalType, timeRange)
         if (cached != null) return cached
 
@@ -168,13 +168,13 @@ class MetalRepository(
                 _lastUpdatedTime.value = System.currentTimeMillis()
             }
         }
-        return DemoDataProvider.getComexInventoryData(metalType, timeRange)
+        return null
     }
 
     fun getIndiaData(
         metalType: MetalType = MetalType.SILVER,
         timeRange: TimeRange = TimeRange.ONE_MONTH
-    ): IndiaMarketData {
+    ): IndiaMarketData? {
         val cached = RealMarketDataSource.getCachedIndiaData(metalType, timeRange)
         if (cached != null) return cached
 
@@ -184,7 +184,7 @@ class MetalRepository(
                 _lastUpdatedTime.value = System.currentTimeMillis()
             }
         }
-        return DemoDataProvider.getIndiaData(metalType, timeRange)
+        return null
     }
 
     fun clearCache() {
