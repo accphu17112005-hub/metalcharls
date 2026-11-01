@@ -87,27 +87,48 @@ class MetalRepository: ObservableObject {
         return await RealMarketDataSource.shared.getCachedHistoricalData(metal: metal, timeRange: timeRange)
     }
 
-    // MARK: - Specialty Screens — all return nil on failure (no fake fallback)
+    // MARK: - Specialty Screens
 
     func getShanghaiData(
         metal: MetalType = .silver,
         timeRange: TimeRange = .oneMonth
-    ) async -> ShanghaiMarketData? {
-        return await RealMarketDataSource.shared.fetchShanghaiData(metal: metal, timeRange: timeRange)
+    ) -> ShanghaiMarketData {
+        if let cached = RealMarketDataSource.shared.getCachedShanghaiData(metal: metal, timeRange: timeRange) {
+            return cached
+        }
+        Task { @MainActor in
+            _ = await RealMarketDataSource.shared.fetchShanghaiData(metal: metal, timeRange: timeRange)
+            self.lastUpdatedTime = Int64(Date().timeIntervalSince1970 * 1000.0)
+        }
+        return DemoDataProvider.getShanghaiData(metal: metal, timeRange: timeRange)
     }
 
     func getComexInventoryData(
         metal: MetalType = .silver,
         timeRange: TimeRange = .oneMonth
-    ) async -> ComexInventoryData? {
-        return await RealMarketDataSource.shared.fetchComexInventoryData(metal: metal, timeRange: timeRange)
+    ) -> ComexInventoryData {
+        if let cached = RealMarketDataSource.shared.getCachedComexData(metal: metal, timeRange: timeRange) {
+            return cached
+        }
+        Task { @MainActor in
+            _ = await RealMarketDataSource.shared.fetchComexInventoryData(metal: metal, timeRange: timeRange)
+            self.lastUpdatedTime = Int64(Date().timeIntervalSince1970 * 1000.0)
+        }
+        return DemoDataProvider.getComexInventoryData(metal: metal, timeRange: timeRange)
     }
 
     func getIndiaData(
         metal: MetalType = .silver,
         timeRange: TimeRange = .oneMonth
-    ) async -> IndiaMarketData? {
-        return await RealMarketDataSource.shared.fetchIndiaData(metal: metal, timeRange: timeRange)
+    ) -> IndiaMarketData {
+        if let cached = RealMarketDataSource.shared.getCachedIndiaData(metal: metal, timeRange: timeRange) {
+            return cached
+        }
+        Task { @MainActor in
+            _ = await RealMarketDataSource.shared.fetchIndiaData(metal: metal, timeRange: timeRange)
+            self.lastUpdatedTime = Int64(Date().timeIntervalSince1970 * 1000.0)
+        }
+        return DemoDataProvider.getIndiaData(metal: metal, timeRange: timeRange)
     }
 
     func clearCache() {

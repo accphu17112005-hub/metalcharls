@@ -51,10 +51,10 @@ org.metalscope.app-lifecycle-process-2.8.7-49 /home/huydo/.gradle/caches/8.14.3/
 org.metalscope.app-lifecycle-viewmodel-ktx-2.8.7-50 /home/huydo/.gradle/caches/8.14.3/transforms/f12e978b86ef0d1c329795f378924061/transformed/lifecycle-viewmodel-ktx-2.8.7/res
 org.metalscope.app-navigation-common-ktx-2.8.5-51 /home/huydo/.gradle/caches/8.14.3/transforms/ff37f2a5c7bd58bc4b923df280308430/transformed/navigation-common-ktx-2.8.5/res
 org.metalscope.app-lifecycle-runtime-ktx-release-52 /home/huydo/.gradle/caches/8.14.3/transforms/ff3af88a0ed6f05c4437d2410b4db7eb/transformed/lifecycle-runtime-ktx-release/res
-org.metalscope.app-pngs-53 /home/huydo/Downloads/metalcharts/app/build/generated/res/pngs/debug
-org.metalscope.app-resValues-54 /home/huydo/Downloads/metalcharts/app/build/generated/res/resValues/debug
-org.metalscope.app-packageDebugResources-55 /home/huydo/Downloads/metalcharts/app/build/intermediates/incremental/debug/packageDebugResources/merged.dir
-org.metalscope.app-packageDebugResources-56 /home/huydo/Downloads/metalcharts/app/build/intermediates/incremental/debug/packageDebugResources/stripped.dir
-org.metalscope.app-debug-57 /home/huydo/Downloads/metalcharts/app/build/intermediates/merged_res/debug/mergeDebugResources
-org.metalscope.app-debug-58 /home/huydo/Downloads/metalcharts/app/src/debug/res
-org.metalscope.app-main-59 /home/huydo/Downloads/metalcharts/app/src/main/res
+org.metalscope.app-pngs-53 /home/huydo/Downloads/metalcharls/app/build/generated/res/pngs/debug
+org.metalscope.app-resValues-54 /home/huydo/Downloads/metalcharls/app/build/generated/res/resValues/debug
+org.metalscope.app-packageDebugResources-55 /home/huydo/Downloads/metalcharls/app/build/intermediates/incremental/debug/packageDebugResources/merged.dir
+org.metalscope.app-packageDebugResources-56 /home/huydo/Downloads/metalcharls/app/build/intermediates/incremental/debug/packageDebugResources/stripped.dir
+org.metalscope.app-debug-57 /home/huydo/Downloads/metalcharls/app/build/intermediates/merged_res/debug/mergeDebugResources
+org.metalscope.app-debug-58 /home/huydo/Downloads/metalcharls/app/src/debug/res
+org.metalscope.app-main-59 /home/huydo/Downloads/metalcharls/app/src/main/res

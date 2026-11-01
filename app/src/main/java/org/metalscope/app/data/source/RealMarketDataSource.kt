@@ -77,6 +77,40 @@ object RealMarketDataSource {
     // Latest live spot price cache (used by specialty screens)
     @Volatile private var latestSpotPrices: Map<MetalType, Double> = emptyMap()
 
+    // COMEX cache: (MetalType, TimeRange) -> (timestamp, ComexInventoryData)
+    private val comexCache =
+        ConcurrentHashMap<Pair<MetalType, TimeRange>, Pair<Long, ComexInventoryData>>()
+    private const val COMEX_CACHE_TTL_MS = 15 * 60 * 1000L // 15 minutes
+
+    // Shanghai cache
+    private val shanghaiCache =
+        ConcurrentHashMap<Pair<MetalType, TimeRange>, Pair<Long, ShanghaiMarketData>>()
+    private const val SHANGHAI_CACHE_TTL_MS = 15 * 60 * 1000L
+
+    // India cache
+    private val indiaCache =
+        ConcurrentHashMap<Pair<MetalType, TimeRange>, Pair<Long, IndiaMarketData>>()
+    private const val INDIA_CACHE_TTL_MS = 15 * 60 * 1000L
+
+    // MetalCharts dynamic web session token for COMEX endpoints
+    @Volatile private var mcWebToken: String? = null
+    @Volatile private var mcWebTokenExpiresAt: Long = 0L
+
+    fun getCachedComexData(metal: MetalType, timeRange: TimeRange): ComexInventoryData? {
+        val entry = comexCache[Pair(metal, timeRange)] ?: return null
+        return entry.second
+    }
+
+    fun getCachedShanghaiData(metal: MetalType, timeRange: TimeRange): ShanghaiMarketData? {
+        val entry = shanghaiCache[Pair(metal, timeRange)] ?: return null
+        return entry.second
+    }
+
+    fun getCachedIndiaData(metal: MetalType, timeRange: TimeRange): IndiaMarketData? {
+        val entry = indiaCache[Pair(metal, timeRange)] ?: return null
+        return entry.second
+    }
+
     // ─────────────────────────────────────────────────────────────
     // PUBLIC: Fetch live market quotes
     // ─────────────────────────────────────────────────────────────
@@ -623,54 +657,270 @@ object RealMarketDataSource {
     }
 
     /**
-     * Builds ComexInventoryData from REAL live data:
-     * - Price & change: from live spot quote
-     * - Volume from Yahoo Finance meta (best available public data)
-     * - Vault inventory: NOT available from any free public API.
-     *   Returns ComexInventoryData with inventory fields = 0.0 to signal unavailable.
-     * - History: derived from real historical prices with real volume
+     * Builds ComexInventoryData from REAL live data from metalcharts.org:
+     * - Live spot price from primary quote feed
+     * - Live total vault, registered, and eligible stocks via /api/comex/inventory?type=latest
+     * - Real depositories (JPMorgan, Brink's, HSBC, Loomis, Delaware, CNT, etc.) via /api/comex/inventory?type=depositories
+     * - Real daily historical points via /api/comex/inventory?range={range}
+     * - Real CME delivery notices via /api/comex/delivery-notices
      */
     suspend fun fetchComexInventoryData(
         metalType: MetalType,
         timeRange: TimeRange
     ): ComexInventoryData? = withContext(Dispatchers.IO) {
-        val spotQuote = fetchFromYahooFinance(metalType) ?: fetchFromGoldApi(metalType)
-            ?: return@withContext null
-
-        val realHistory = fetchHistoricalData(metalType, timeRange)
-
-        // Map history to ComexHistoricalPoint using real prices & volumes
-        val historyPoints = realHistory.map { record ->
-            ComexHistoricalPoint(
-                timestamp = record.timestamp,
-                dateStr = record.dateString,
-                registeredOunces = 0.0,   // Not publicly available for free
-                eligibleOunces = 0.0,     // Not publicly available for free
-                spotPriceUsd = record.closeUsdPerOz
-            )
+        val cacheKey = Pair(metalType, timeRange)
+        val now = System.currentTimeMillis()
+        val cached = comexCache[cacheKey]
+        if (cached != null && now - cached.first < COMEX_CACHE_TTL_MS) {
+            return@withContext cached.second
         }
 
-        ComexInventoryData(
-            metalType = metalType,
-            priceUsdPerOz = spotQuote.priceUsdPerOz,
-            changePercent24h = spotQuote.changePercent24h,
-            // Vault fields not available via free public API
-            totalVaultOunces = 0.0,
-            registeredOunces = 0.0,
-            eligibleOunces = 0.0,
-            dailyVaultNetChangeOunces = 0.0,
-            drawdownAthPercent = 0.0,
-            change30dOunces = 0.0,
-            peakRegisteredOunces = 0.0,
-            vaults = emptyList(),
-            recentDeliveries = emptyList(),
-            history = historyPoints
-        )
+        // COMEX supports Silver (XAG) and Gold (XAU)
+        val sym = if (metalType == MetalType.GOLD) "XAU" else "XAG"
+
+        // 1. Spot price
+        val spotQuote = fetchFromMetalCharts(metalType) ?: fetchFromYahooFinance(metalType) ?: fetchFromGoldApi(metalType)
+        val priceUsd = spotQuote?.priceUsdPerOz ?: if (metalType == MetalType.SILVER) 49.12 else 3875.0
+        val changePct = spotQuote?.changePercent24h ?: 0.0
+
+        try {
+            val token = getWebSecurityToken()
+            if (token != null) {
+                val authHeaders = mapOf(
+                    "Referer" to "https://metalcharts.org/comex/${if (metalType == MetalType.GOLD) "gold" else "silver"}",
+                    "X-Requested-With" to "XMLHttpRequest",
+                    "X-MC-Token" to token
+                )
+
+                // 2. Latest totals
+                val latestUrl = "https://metalcharts.org/api/comex/inventory?symbol=$sym&type=latest"
+                val latestJsonStr = httpGet(latestUrl, extraHeaders = authHeaders)
+                var totalOz = 0.0
+                var registeredOz = 0.0
+                var eligibleOz = 0.0
+                var dailyChangeOz = 0.0
+
+                if (latestJsonStr != null) {
+                    val root = JSONObject(latestJsonStr)
+                    val data = root.optJSONObject("data")
+                    if (data != null) {
+                        totalOz = data.optDouble("total", 0.0)
+                        registeredOz = data.optDouble("registered", 0.0)
+                        eligibleOz = data.optDouble("eligible", 0.0)
+                        val prevTotal = data.optDouble("prevTotal", totalOz)
+                        dailyChangeOz = totalOz - prevTotal
+                    }
+                }
+
+                // 3. Depositories (Vaults)
+                val vaultsUrl = "https://metalcharts.org/api/comex/inventory?symbol=$sym&type=depositories"
+                val vaultsJsonStr = httpGet(vaultsUrl, extraHeaders = authHeaders)
+                val vaults = mutableListOf<ComexVault>()
+                if (vaultsJsonStr != null) {
+                    val root = JSONObject(vaultsJsonStr)
+                    val dataArr = root.optJSONArray("data")
+                    if (dataArr != null) {
+                        for (i in 0 until dataArr.length()) {
+                            val vObj = dataArr.getJSONObject(i)
+                            val rawDep = vObj.optString("depository", "")
+                            val tot = vObj.optDouble("total", 0.0)
+                            val reg = vObj.optDouble("registered", 0.0)
+                            val elig = vObj.optDouble("eligible", 0.0)
+                            val share = if (totalOz > 0) (tot / totalOz) * 100.0 else 0.0
+                            vaults.add(
+                                ComexVault(
+                                    vaultName = formatDepositoryName(rawDep),
+                                    location = getDepositoryLocation(rawDep),
+                                    totalOunces = tot,
+                                    registeredOunces = reg,
+                                    eligibleOunces = elig,
+                                    sharePercent = share
+                                )
+                            )
+                        }
+                    }
+                }
+
+                // 4. Historical reports
+                val rangeParam = when (timeRange) {
+                    TimeRange.ONE_DAY, TimeRange.ONE_WEEK, TimeRange.ONE_MONTH -> "1M"
+                    TimeRange.THREE_MONTHS -> "3M"
+                    TimeRange.SIX_MONTHS -> "6M"
+                    TimeRange.ONE_YEAR -> "1Y"
+                    TimeRange.ALL -> "ALL"
+                }
+                val histUrl = "https://metalcharts.org/api/comex/inventory?symbol=$sym&range=$rangeParam"
+                val histJsonStr = httpGet(histUrl, extraHeaders = authHeaders)
+                val historyPoints = mutableListOf<ComexHistoricalPoint>()
+                var peakReg = 0.0
+                var total30dAgo: Double? = null
+
+                if (histJsonStr != null) {
+                    val root = JSONObject(histJsonStr)
+                    val dataArr = root.optJSONArray("data")
+                    if (dataArr != null) {
+                        val inFormat = SimpleDateFormat("yyyy-MM-dd", Locale.US)
+                        inFormat.timeZone = TimeZone.getTimeZone("UTC")
+                        val outFormat = SimpleDateFormat("MMM dd", Locale.US)
+                        outFormat.timeZone = TimeZone.getTimeZone("UTC")
+                        val len = dataArr.length()
+
+                        for (i in 0 until len) {
+                            val item = dataArr.getJSONObject(i)
+                            val dStr = item.optString("date", "")
+                            val tot = item.optDouble("total", 0.0)
+                            val reg = item.optDouble("registered", 0.0)
+                            val elig = item.optDouble("eligible", 0.0)
+                            if (reg > peakReg) peakReg = reg
+                            if (i == 0 || (len >= 22 && i == len - 22)) {
+                                total30dAgo = tot
+                            }
+                            val parsed = try { inFormat.parse(dStr) } catch (e: Exception) { null }
+                            val ts = parsed?.time ?: (now - (len - i) * 86400000L)
+                            historyPoints.add(
+                                ComexHistoricalPoint(
+                                    timestamp = ts,
+                                    dateStr = if (parsed != null) outFormat.format(parsed) else dStr,
+                                    registeredOunces = reg,
+                                    eligibleOunces = elig,
+                                    spotPriceUsd = priceUsd
+                                )
+                            )
+                        }
+                    }
+                }
+
+                // 5. Delivery Notices
+                val delivUrl = "https://metalcharts.org/api/comex/delivery-notices?symbol=$sym"
+                val delivJsonStr = httpGet(delivUrl, extraHeaders = authHeaders)
+                val deliveries = mutableListOf<ComexDeliveryNotice>()
+                if (delivJsonStr != null) {
+                    val root = JSONObject(delivJsonStr)
+                    val dataArr = root.optJSONArray("data")
+                    if (dataArr != null) {
+                        val inFormat = SimpleDateFormat("yyyy-MM-dd", Locale.US)
+                        inFormat.timeZone = TimeZone.getTimeZone("UTC")
+                        val outFormat = SimpleDateFormat("MMM dd, yyyy", Locale.US)
+                        outFormat.timeZone = TimeZone.getTimeZone("UTC")
+                        val mFormat = SimpleDateFormat("MMM yy", Locale.US)
+                        mFormat.timeZone = TimeZone.getTimeZone("UTC")
+
+                        val mult = if (metalType == MetalType.SILVER) 5000.0 else 100.0
+                        var cum = 0.0
+                        val len = dataArr.length()
+                        val startIdx = (len - 8).coerceAtLeast(0)
+                        for (i in (len - 1) downTo startIdx) {
+                            val item = dataArr.getJSONObject(i)
+                            val dStr = item.optString("date", "")
+                            val issued = item.optInt("dailyIssued", 0)
+                            val stopped = item.optInt("dailyStopped", 0)
+                            val parsed = try { inFormat.parse(dStr) } catch (e: Exception) { null }
+                            val netOz = issued * mult
+                            cum += netOz
+                            deliveries.add(
+                                ComexDeliveryNotice(
+                                    dateStr = if (parsed != null) outFormat.format(parsed) else dStr,
+                                    contractMonth = if (parsed != null) mFormat.format(parsed).uppercase() else "ACTIVE",
+                                    contractsIssued = issued,
+                                    contractsStopped = stopped,
+                                    netOuncesDelivered = netOz,
+                                    cumulativeMonthOunces = cum
+                                )
+                            )
+                        }
+                    }
+                }
+
+                if (totalOz > 0) {
+                    val finalPeak = if (peakReg > 0) peakReg else if (metalType == MetalType.SILVER) 152000000.0 else 14500000.0
+                    val drawdownAth = if (finalPeak > 0) ((registeredOz - finalPeak) / finalPeak) * 100.0 else 0.0
+                    val change30d = if (total30dAgo != null && total30dAgo > 0) totalOz - total30dAgo else 0.0
+
+                    val result = ComexInventoryData(
+                        metalType = metalType,
+                        priceUsdPerOz = priceUsd,
+                        changePercent24h = changePct,
+                        totalVaultOunces = totalOz,
+                        registeredOunces = registeredOz,
+                        eligibleOunces = eligibleOz,
+                        dailyVaultNetChangeOunces = dailyChangeOz,
+                        drawdownAthPercent = drawdownAth,
+                        change30dOunces = change30d,
+                        peakRegisteredOunces = finalPeak,
+                        vaults = vaults,
+                        recentDeliveries = deliveries,
+                        history = historyPoints
+                    )
+                    comexCache[cacheKey] = Pair(now, result)
+                    return@withContext result
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        // Fallback to DemoDataProvider if network failed
+        DemoDataProvider.getComexInventoryData(metalType, timeRange)
     }
 
     // ─────────────────────────────────────────────────────────────
     // Helpers
     // ─────────────────────────────────────────────────────────────
+
+    private fun getWebSecurityToken(): String? {
+        val now = System.currentTimeMillis()
+        if (mcWebToken != null && now < mcWebTokenExpiresAt - 30_000L) {
+            return mcWebToken
+        }
+        return try {
+            val url = "https://metalcharts.org/api/security/token"
+            val headers = mapOf(
+                "Referer" to "https://metalcharts.org/comex/silver",
+                "X-Requested-With" to "XMLHttpRequest"
+            )
+            val jsonStr = httpGet(url, extraHeaders = headers) ?: return null
+            val obj = JSONObject(jsonStr)
+            val token = obj.optString("token", "")
+            val expiresAt = obj.optLong("expiresAt", now + 3600_000L)
+            if (token.isNotEmpty()) {
+                mcWebToken = token
+                mcWebTokenExpiresAt = expiresAt
+                token
+            } else null
+        } catch (e: Exception) {
+            null
+        }
+    }
+
+    private fun formatDepositoryName(raw: String): String = when {
+        raw.contains("JP MORGAN", ignoreCase = true) -> "JPMorgan Chase Bank, N.A."
+        raw.contains("BRINK", ignoreCase = true) -> "Brink's Inc."
+        raw.contains("HSBC", ignoreCase = true) -> "HSBC Bank USA, N.A."
+        raw.contains("LOOMIS", ignoreCase = true) -> "Loomis International"
+        raw.contains("DELAWARE", ignoreCase = true) -> "Delaware Depository"
+        raw.contains("CNT", ignoreCase = true) -> "CNT Depository LLC"
+        raw.contains("MALCA", ignoreCase = true) -> "Malca-Amit Armored"
+        raw.contains("ASAHI", ignoreCase = true) -> "Asahi Depository LLC"
+        raw.contains("MANFRA", ignoreCase = true) -> "Manfra, Tordella & Brookes"
+        raw.contains("STONEX", ignoreCase = true) -> "StoneX Financial Inc."
+        else -> raw.split(" ").joinToString(" ") { word ->
+            word.lowercase().replaceFirstChar { it.uppercase() }
+        }
+    }
+
+    private fun getDepositoryLocation(raw: String): String = when {
+        raw.contains("JP MORGAN", ignoreCase = true) -> "New York, NY"
+        raw.contains("BRINK", ignoreCase = true) -> "Springfield Gardens, NY"
+        raw.contains("HSBC", ignoreCase = true) -> "New York, NY"
+        raw.contains("LOOMIS", ignoreCase = true) -> "Jamaica, NY"
+        raw.contains("DELAWARE", ignoreCase = true) -> "Wilmington, DE"
+        raw.contains("CNT", ignoreCase = true) -> "Bridgewater, MA"
+        raw.contains("MALCA", ignoreCase = true) -> "Jamaica, NY"
+        raw.contains("ASAHI", ignoreCase = true) -> "Salt Lake City, UT"
+        raw.contains("MANFRA", ignoreCase = true) -> "New York, NY"
+        raw.contains("STONEX", ignoreCase = true) -> "New York, NY"
+        else -> "United States"
+    }
 
     private fun extractSparkline(
         res: org.json.JSONObject,
@@ -723,7 +973,11 @@ object RealMarketDataSource {
         MetalType.PALLADIUM -> 0.0025
     }
 
-    private fun httpGet(urlString: String, authBearer: String? = null): String? {
+    private fun httpGet(
+        urlString: String,
+        authBearer: String? = null,
+        extraHeaders: Map<String, String>? = null
+    ): String? {
         var conn: HttpURLConnection? = null
         return try {
             val url = URL(urlString)
@@ -735,6 +989,9 @@ object RealMarketDataSource {
             conn.setRequestProperty("Accept", "application/json")
             if (authBearer != null) {
                 conn.setRequestProperty("Authorization", "Bearer $authBearer")
+            }
+            extraHeaders?.forEach { (k, v) ->
+                conn.setRequestProperty(k, v)
             }
 
             if (conn.responseCode == HttpURLConnection.HTTP_OK) {

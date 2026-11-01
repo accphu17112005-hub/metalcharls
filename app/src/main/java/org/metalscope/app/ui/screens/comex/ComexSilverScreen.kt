@@ -73,7 +73,7 @@ fun ComexSilverScreen(
     var selectedMetal by remember { mutableStateOf(MetalType.SILVER) }
     var selectedTimeRange by remember { mutableStateOf(TimeRange.ONE_MONTH) }
 
-    val data = remember(selectedMetal, selectedTimeRange) {
+    val data = remember(selectedMetal, selectedTimeRange, uiState.lastUpdated) {
         viewModel.getComexInventoryData(selectedMetal, selectedTimeRange)
     }
 

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="org.metalscope.app.MetalModelTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-10-27T03:28:41.058Z" hostname="kali" time="0.16">
+<testsuite name="org.metalscope.app.MetalModelTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-01T17:42:52.247Z" hostname="kali" time="0.068">
   <properties/>
-  <testcase name="testCurrencyConversions" classname="org.metalscope.app.MetalModelTest" time="0.126"/>
-  <testcase name="testHistoricalDataGeneration" classname="org.metalscope.app.MetalModelTest" time="0.017"/>
-  <testcase name="testMarketInsightsCalculation" classname="org.metalscope.app.MetalModelTest" time="0.002"/>
-  <testcase name="testDemoDataProviderQuotes" classname="org.metalscope.app.MetalModelTest" time="0.0"/>
-  <testcase name="testMetalTypeSymbols" classname="org.metalscope.app.MetalModelTest" time="0.014"/>
+  <testcase name="testCurrencyConversions" classname="org.metalscope.app.MetalModelTest" time="0.053"/>
+  <testcase name="testHistoricalDataGeneration" classname="org.metalscope.app.MetalModelTest" time="0.006"/>
+  <testcase name="testMarketInsightsCalculation" classname="org.metalscope.app.MetalModelTest" time="0.001"/>
+  <testcase name="testDemoDataProviderQuotes" classname="org.metalscope.app.MetalModelTest" time="0.001"/>
+  <testcase name="testMetalTypeSymbols" classname="org.metalscope.app.MetalModelTest" time="0.006"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

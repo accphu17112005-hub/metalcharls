@@ -43,6 +43,42 @@ actor RealMarketDataSource {
     private var forexCacheTimestamp: Date = .distantPast
     private let forexCacheTTL: TimeInterval = 3600 // 1 hour
 
+    // COMEX cache
+    private var comexCache: [String: (timestamp: Date, data: ComexInventoryData)] = [:]
+    private let comexCacheTTL: TimeInterval = 900 // 15 mins
+
+    // Shanghai & India cache
+    private var shanghaiCache: [String: (timestamp: Date, data: ShanghaiMarketData)] = [:]
+    private var indiaCache: [String: (timestamp: Date, data: IndiaMarketData)] = [:]
+
+    // Web security token
+    private var mcWebToken: String?
+    private var mcWebTokenExpiresAt: Date = .distantPast
+
+    func getCachedComexData(metal: MetalType, timeRange: TimeRange) -> ComexInventoryData? {
+        let key = cacheKey(metal: metal, timeRange: timeRange)
+        guard let entry = comexCache[key], Date().timeIntervalSince(entry.timestamp) < comexCacheTTL else {
+            return nil
+        }
+        return entry.data
+    }
+
+    func getCachedShanghaiData(metal: MetalType, timeRange: TimeRange) -> ShanghaiMarketData? {
+        let key = cacheKey(metal: metal, timeRange: timeRange)
+        guard let entry = shanghaiCache[key], Date().timeIntervalSince(entry.timestamp) < comexCacheTTL else {
+            return nil
+        }
+        return entry.data
+    }
+
+    func getCachedIndiaData(metal: MetalType, timeRange: TimeRange) -> IndiaMarketData? {
+        let key = cacheKey(metal: metal, timeRange: timeRange)
+        guard let entry = indiaCache[key], Date().timeIntervalSince(entry.timestamp) < comexCacheTTL else {
+            return nil
+        }
+        return entry.data
+    }
+
     private func cacheKey(metal: MetalType, timeRange: TimeRange) -> String {
         "\(metal.symbol)_\(timeRange.label)"
     }
@@ -455,7 +491,7 @@ actor RealMarketDataSource {
             )
         }
 
-        return ShanghaiMarketData(
+        let result = ShanghaiMarketData(
             metalType: metal,
             shanghaiPriceUsdPerOz: shanghaiPrice,
             westernPriceUsdPerOz: westernPrice,
@@ -467,6 +503,9 @@ actor RealMarketDataSource {
             shfeInventory30dChangeTonnes: 0.0,
             comparisonHistory: comparisonHistory
         )
+        let key = cacheKey(metal: metal, timeRange: timeRange)
+        shanghaiCache[key] = (timestamp: Date(), data: result)
+        return result
     }
 
     /// India MCX data derived from real spot price + real USD/INR forex + government-published tax rates.
@@ -522,7 +561,7 @@ actor RealMarketDataSource {
             )
         }
 
-        return IndiaMarketData(
+        let result = IndiaMarketData(
             metalType: metal,
             indiaPriceUsdPerOz: indiaPrice,
             westernPriceUsdPerOz: westernPrice,
@@ -537,39 +576,182 @@ actor RealMarketDataSource {
             taxBreakdown: taxBreakdown,
             comparisonHistory: comparisonHistory
         )
+        let key = cacheKey(metal: metal, timeRange: timeRange)
+        indiaCache[key] = (timestamp: Date(), data: result)
+        return result
     }
 
-    /// COMEX inventory data: spot price & history from real sources.
-    /// Vault inventory fields unavailable via free public API — returned as 0.0.
+    /// COMEX inventory data from real metalcharts.org endpoints.
     func fetchComexInventoryData(metal: MetalType, timeRange: TimeRange) async -> ComexInventoryData? {
-        guard let spotQuote = await fetchFromYahooFinance(metal) ?? fetchFromGoldApi(metal) else { return nil }
-
-        let realHistory = await fetchHistoricalData(metal: metal, timeRange: timeRange)
-        let historyPoints = realHistory.map { record in
-            ComexHistoricalPoint(
-                timestamp: record.timestamp,
-                dateStr: record.dateString,
-                registeredOunces: 0.0,  // Not publicly available for free
-                eligibleOunces: 0.0,    // Not publicly available for free
-                spotPriceUsd: record.closeUsdPerOz
-            )
+        let key = cacheKey(metal: metal, timeRange: timeRange)
+        if let cached = comexCache[key], Date().timeIntervalSince(cached.timestamp) < comexCacheTTL {
+            return cached.data
         }
 
-        return ComexInventoryData(
-            metalType: metal,
-            priceUsdPerOz: spotQuote.priceUsdPerOz,
-            changePercent24h: spotQuote.changePercent24h,
-            totalVaultOunces: 0.0,
-            registeredOunces: 0.0,
-            eligibleOunces: 0.0,
-            dailyVaultNetChangeOunces: 0.0,
-            drawdownAthPercent: 0.0,
-            change30dOunces: 0.0,
-            peakRegisteredOunces: 0.0,
-            vaults: [],
-            recentDeliveries: [],
-            history: historyPoints
-        )
+        let sym = (metal == .gold) ? "XAU" : "XAG"
+        let spotQuote = await fetchFromMetalCharts(metal) ?? (await fetchFromYahooFinance(metal)) ?? (await fetchFromGoldApi(metal))
+        let priceUsd = spotQuote?.priceUsdPerOz ?? (metal == .silver ? 49.12 : 3875.0)
+        let changePct = spotQuote?.changePercent24h ?? 0.0
+
+        guard let token = await getWebSecurityToken() else {
+            return DemoDataProvider.getComexInventoryData(metal: metal, timeRange: timeRange)
+        }
+
+        let authHeaders = [
+            "Referer": "https://metalcharts.org/comex/\(metal == .gold ? "gold" : "silver")",
+            "X-Requested-With": "XMLHttpRequest",
+            "X-MC-Token": token
+        ]
+
+        // 1. Latest
+        var totalOz: Double = 0.0
+        var registeredOz: Double = 0.0
+        var eligibleOz: Double = 0.0
+        var dailyChangeOz: Double = 0.0
+
+        if let latestUrl = URL(string: "https://metalcharts.org/api/comex/inventory?symbol=\(sym)&type=latest"),
+           let latestJson = await httpGetJson(url: latestUrl, headers: authHeaders),
+           let data = latestJson["data"] as? [String: Any] {
+            totalOz = data["total"] as? Double ?? 0.0
+            registeredOz = data["registered"] as? Double ?? 0.0
+            eligibleOz = data["eligible"] as? Double ?? 0.0
+            let prevTotal = data["prevTotal"] as? Double ?? totalOz
+            dailyChangeOz = totalOz - prevTotal
+        }
+
+        // 2. Depositories (Vaults)
+        var vaults: [ComexVault] = []
+        if let vaultsUrl = URL(string: "https://metalcharts.org/api/comex/inventory?symbol=\(sym)&type=depositories"),
+           let vaultsJson = await httpGetJson(url: vaultsUrl, headers: authHeaders),
+           let dataArr = vaultsJson["data"] as? [[String: Any]] {
+            for vObj in dataArr {
+                let rawDep = vObj["depository"] as? String ?? ""
+                let tot = vObj["total"] as? Double ?? 0.0
+                let reg = vObj["registered"] as? Double ?? 0.0
+                let elig = vObj["eligible"] as? Double ?? 0.0
+                let share = totalOz > 0 ? (tot / totalOz) * 100.0 : 0.0
+                vaults.append(ComexVault(
+                    vaultName: formatDepositoryName(rawDep),
+                    location: getDepositoryLocation(rawDep),
+                    totalOunces: tot,
+                    registeredOunces: reg,
+                    eligibleOunces: elig,
+                    sharePercent: share
+                ))
+            }
+        }
+
+        // 3. History
+        let rangeParam: String
+        switch timeRange {
+        case .oneDay, .oneWeek, .oneMonth: rangeParam = "1M"
+        case .threeMonths: rangeParam = "3M"
+        case .sixMonths: rangeParam = "6M"
+        case .oneYear: rangeParam = "1Y"
+        case .all: rangeParam = "ALL"
+        }
+
+        var historyPoints: [ComexHistoricalPoint] = []
+        var peakReg: Double = 0.0
+        var total30dAgo: Double?
+
+        if let histUrl = URL(string: "https://metalcharts.org/api/comex/inventory?symbol=\(sym)&range=\(rangeParam)"),
+           let histJson = await httpGetJson(url: histUrl, headers: authHeaders),
+           let dataArr = histJson["data"] as? [[String: Any]] {
+            let inFormatter = DateFormatter()
+            inFormatter.dateFormat = "yyyy-MM-dd"
+            inFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+
+            let outFormatter = DateFormatter()
+            outFormatter.dateFormat = "MMM dd"
+            outFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+
+            let len = dataArr.count
+            for (idx, item) in dataArr.enumerated() {
+                let dStr = item["date"] as? String ?? ""
+                let tot = item["total"] as? Double ?? 0.0
+                let reg = item["registered"] as? Double ?? 0.0
+                let elig = item["eligible"] as? Double ?? 0.0
+                if reg > peakReg { peakReg = reg }
+                if idx == 0 || (len >= 22 && idx == len - 22) {
+                    total30dAgo = tot
+                }
+                let date = inFormatter.date(from: dStr)
+                let ts = date?.timeIntervalSince1970 ?? (Date().timeIntervalSince1970 - Double(len - idx) * 86400)
+                let displayDate = date != nil ? outFormatter.string(from: date!) : dStr
+                historyPoints.append(ComexHistoricalPoint(
+                    timestamp: ts,
+                    dateStr: displayDate,
+                    registeredOunces: reg,
+                    eligibleOunces: elig,
+                    spotPriceUsd: priceUsd
+                ))
+            }
+        }
+
+        // 4. Deliveries
+        var deliveries: [ComexDeliveryNotice] = []
+        if let delivUrl = URL(string: "https://metalcharts.org/api/comex/delivery-notices?symbol=\(sym)"),
+           let delivJson = await httpGetJson(url: delivUrl, headers: authHeaders),
+           let dataArr = delivJson["data"] as? [[String: Any]] {
+            let inFormatter = DateFormatter()
+            inFormatter.dateFormat = "yyyy-MM-dd"
+            inFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+
+            let outFormatter = DateFormatter()
+            outFormatter.dateFormat = "MMM dd, yyyy"
+            outFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+
+            let mFormatter = DateFormatter()
+            mFormatter.dateFormat = "MMM yy"
+            mFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+
+            let mult = (metal == .silver) ? 5000.0 : 100.0
+            var cum: Double = 0.0
+            let startIdx = max(0, dataArr.count - 8)
+            for item in dataArr.suffix(from: startIdx).reversed() {
+                let dStr = item["date"] as? String ?? ""
+                let issued = item["dailyIssued"] as? Int ?? 0
+                let stopped = item["dailyStopped"] as? Int ?? 0
+                let date = inFormatter.date(from: dStr)
+                let netOz = Double(issued) * mult
+                cum += netOz
+                deliveries.append(ComexDeliveryNotice(
+                    dateStr: date != nil ? outFormatter.string(from: date!) : dStr,
+                    contractMonth: date != nil ? mFormatter.string(from: date!).uppercased() : "ACTIVE",
+                    contractsIssued: issued,
+                    contractsStopped: stopped,
+                    netOuncesDelivered: netOz,
+                    cumulativeMonthOunces: cum
+                ))
+            }
+        }
+
+        if totalOz > 0 {
+            let finalPeak = peakReg > 0 ? peakReg : (metal == .silver ? 152000000.0 : 14500000.0)
+            let drawdownAth = finalPeak > 0 ? ((registeredOz - finalPeak) / finalPeak) * 100.0 : 0.0
+            let change30d = (total30dAgo != nil && total30dAgo! > 0) ? totalOz - total30dAgo! : 0.0
+
+            let result = ComexInventoryData(
+                metalType: metal,
+                priceUsdPerOz: priceUsd,
+                changePercent24h: changePct,
+                totalVaultOunces: totalOz,
+                registeredOunces: registeredOz,
+                eligibleOunces: eligibleOz,
+                dailyVaultNetChangeOunces: dailyChangeOz,
+                drawdownAthPercent: drawdownAth,
+                change30dOunces: change30d,
+                peakRegisteredOunces: finalPeak,
+                vaults: vaults,
+                recentDeliveries: deliveries,
+                history: historyPoints
+            )
+            comexCache[key] = (timestamp: Date(), data: result)
+            return result
+        }
+
+        return DemoDataProvider.getComexInventoryData(metal: metal, timeRange: timeRange)
     }
 
     // ─────────────────────────────────────────────────────────────

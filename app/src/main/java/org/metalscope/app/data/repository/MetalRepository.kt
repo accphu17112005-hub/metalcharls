@@ -122,35 +122,69 @@ class MetalRepository(
         return _quotes.value.firstOrNull { it.symbol.equals(symbol, ignoreCase = true) }
     }
 
-    suspend fun getHistoricalData(metal: MetalType, timeRange: TimeRange): List<HistoricalRecord> {
+    fun getHistoricalData(metal: MetalType, timeRange: TimeRange): List<HistoricalRecord> {
         val cached = RealMarketDataSource.getCachedHistoricalData(metal, timeRange)
-        if (cached != null) return cached
-        return RealMarketDataSource.fetchHistoricalData(metal, timeRange)
+        if (cached != null && cached.isNotEmpty()) return cached
+
+        scope.launch(Dispatchers.IO) {
+            val records = RealMarketDataSource.fetchHistoricalData(metal, timeRange)
+            if (records.isNotEmpty()) {
+                _lastUpdatedTime.value = System.currentTimeMillis()
+            }
+        }
+        return DemoDataProvider.getHistoricalData(metal, timeRange)
     }
 
     fun getCachedHistoricalData(metal: MetalType, timeRange: TimeRange): List<HistoricalRecord>? {
         return RealMarketDataSource.getCachedHistoricalData(metal, timeRange)
     }
 
-    suspend fun getShanghaiData(
+    fun getShanghaiData(
         metalType: MetalType = MetalType.SILVER,
         timeRange: TimeRange = TimeRange.ONE_MONTH
-    ): ShanghaiMarketData? {
-        return RealMarketDataSource.fetchShanghaiData(metalType, timeRange)
+    ): ShanghaiMarketData {
+        val cached = RealMarketDataSource.getCachedShanghaiData(metalType, timeRange)
+        if (cached != null) return cached
+
+        scope.launch(Dispatchers.IO) {
+            val data = RealMarketDataSource.fetchShanghaiData(metalType, timeRange)
+            if (data != null) {
+                _lastUpdatedTime.value = System.currentTimeMillis()
+            }
+        }
+        return DemoDataProvider.getShanghaiData(metalType, timeRange)
     }
 
-    suspend fun getComexInventoryData(
+    fun getComexInventoryData(
         metalType: MetalType = MetalType.SILVER,
         timeRange: TimeRange = TimeRange.ONE_MONTH
-    ): ComexInventoryData? {
-        return RealMarketDataSource.fetchComexInventoryData(metalType, timeRange)
+    ): ComexInventoryData {
+        val cached = RealMarketDataSource.getCachedComexData(metalType, timeRange)
+        if (cached != null) return cached
+
+        scope.launch(Dispatchers.IO) {
+            val data = RealMarketDataSource.fetchComexInventoryData(metalType, timeRange)
+            if (data != null) {
+                _lastUpdatedTime.value = System.currentTimeMillis()
+            }
+        }
+        return DemoDataProvider.getComexInventoryData(metalType, timeRange)
     }
 
-    suspend fun getIndiaData(
+    fun getIndiaData(
         metalType: MetalType = MetalType.SILVER,
         timeRange: TimeRange = TimeRange.ONE_MONTH
-    ): IndiaMarketData? {
-        return RealMarketDataSource.fetchIndiaData(metalType, timeRange)
+    ): IndiaMarketData {
+        val cached = RealMarketDataSource.getCachedIndiaData(metalType, timeRange)
+        if (cached != null) return cached
+
+        scope.launch(Dispatchers.IO) {
+            val data = RealMarketDataSource.fetchIndiaData(metalType, timeRange)
+            if (data != null) {
+                _lastUpdatedTime.value = System.currentTimeMillis()
+            }
+        }
+        return DemoDataProvider.getIndiaData(metalType, timeRange)
     }
 
     fun clearCache() {

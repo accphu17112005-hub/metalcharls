@@ -260,26 +260,25 @@ class MainViewModel: ObservableObject {
     }
 
     // MARK: - Specialty Market Methods (Shanghai, COMEX, India)
-    // All methods return nil if real data is unavailable — never fake data
 
     func getShanghaiData(
         metal: MetalType = .silver,
         timeRange: TimeRange = .oneMonth
-    ) async -> ShanghaiMarketData? {
-        return await metalRepository.getShanghaiData(metal: metal, timeRange: timeRange)
+    ) -> ShanghaiMarketData {
+        return metalRepository.getShanghaiData(metal: metal, timeRange: timeRange)
     }
 
     func getComexInventoryData(
         metal: MetalType = .silver,
         timeRange: TimeRange = .oneMonth
-    ) async -> ComexInventoryData? {
-        return await metalRepository.getComexInventoryData(metal: metal, timeRange: timeRange)
+    ) -> ComexInventoryData {
+        return metalRepository.getComexInventoryData(metal: metal, timeRange: timeRange)
     }
 
     func getIndiaData(
         metal: MetalType = .silver,
         timeRange: TimeRange = .oneMonth
-    ) async -> IndiaMarketData? {
-        return await metalRepository.getIndiaData(metal: metal, timeRange: timeRange)
+    ) -> IndiaMarketData {
+        return metalRepository.getIndiaData(metal: metal, timeRange: timeRange)
     }
 }

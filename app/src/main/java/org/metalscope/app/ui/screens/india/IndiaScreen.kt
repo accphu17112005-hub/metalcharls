@@ -72,7 +72,7 @@ fun IndiaScreen(
     var selectedTimeRange by remember { mutableStateOf(TimeRange.ONE_MONTH) }
     var showPremiumOverlay by remember { mutableStateOf(true) }
 
-    val data = remember(selectedMetal, selectedTimeRange) {
+    val data = remember(selectedMetal, selectedTimeRange, uiState.lastUpdated) {
         viewModel.getIndiaData(selectedMetal, selectedTimeRange)
     }
 
